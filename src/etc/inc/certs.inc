@@ -140,6 +140,114 @@ function ca_chain(&$cert)
 }
 
 
+// Add cert trust file for specified CA cert, if add and trusted.  Otherwise remove cert trust file if exists.
+function ca_trusted_cert_add_rmv($id, $add, &$ca_certfile = '') {
+    global $config;
+
+    $ca_dir = getenv('SSL_CERT_DIR') ?: (ini_get('openssl.capath') ?: '/etc/ssl/certs');
+    $ca_hash = openssl_x509_parse(base64_decode($config['ca'][$id]['crt']))['hash'];
+    $ca_certfile = "$ca_dir/$ca_hash.0";
+
+    if ($add && isset($config['ca'][$id]['trusted'])) {
+
+        $cert_data = cert_get_config_meta_data($id) . cert_get_data($config['ca'][$id]['crt']);
+
+        // Check for missing or corrupt cert file.  Not malicious tampering.  A malicious actor would already have root privileges with access to the entire certs bundle as well as all files on the system.
+        if (@hash_file('md5', $ca_certfile) !== @hash('md5', $cert_data)) {
+            if (!file_exists($ca_dir)) {
+                @mkdir($ca_dir, 0755);
+            }
+            if (@file_put_contents($ca_certfile, $cert_data) === false) {
+                log_error(gettext("Error: cannot write $ca_certfile file in ca_trusted_cert_add_rmv()."));
+                return false;
+            }
+        }
+    } else {
+        return ca_trusted_cert_remove_by_name($ca_certfile, 'ca_trusted_cert_add_rmv()');
+    }
+
+    return true;
+}
+
+// Synchronize cert trust files with config CA certs.
+function ca_trusted_certs_synchronize() {
+    global $config;
+
+    $ca_dir = getenv('SSL_CERT_DIR') ?: (ini_get('openssl.capath') ?: '/etc/ssl/certs');
+
+    $res = true;
+
+    // Add missing cert trust files for CA certs in config that are trusted, and remove cert trust files of CA certs in config that are not trusted.
+    // Get list of trust files for CA certs from config.
+    if (is_array($config['ca'])) {
+        $add = true;
+        foreach($config['ca'] as $id => $ca) {
+            $res &= ca_trusted_cert_add_rmv($id, $add, $ca_certfile);
+            $ca_certfiles[] = $ca_certfile;
+        }
+    } else {
+        $ca_certfiles = array();
+    }
+
+    // Remove cert trust files that have no corresponding CA cert in config.  Leave symlinks and directories in place to allow trusted certs to also be added outside the certificate manager.
+    foreach (glob("$ca_dir/*") as $ca_certfile) {
+        if (!in_array($ca_certfile, $ca_certfiles) && !is_link($ca_certfile) && !is_dir($ca_certfile)) {
+            $res &= ca_trusted_cert_remove_by_name($ca_certfile, 'ca_trusted_certs_synchronize()');
+        }
+    }
+
+    return $res;
+}
+
+// Remove cert trust file by name.
+function ca_trusted_cert_remove_by_name($ca_certfile, $caller) {
+    @unlink($ca_certfile);
+    if (file_exists($ca_certfile)) {
+        log_error(sprintf(gettext("Error: cannot unlink %s file in %s."), $ca_certfile, $caller));
+        return false;
+    }
+    return true;
+}
+
+// Get config cert meta data (Reference ID and Description).
+function cert_get_config_meta_data($id) {
+    global $config;
+
+    $config_cert_meta_data  = "Config Info:\n";
+    $config_cert_meta_data .= "    Reference ID: {$config['ca'][$id]['refid']}\n";
+    $config_cert_meta_data .= "    Description: {$config['ca'][$id]['descr']}\n\n";
+
+    return $config_cert_meta_data;
+}
+
+// Get CA cert meta data and string.
+function cert_get_data($crt) {
+
+    // Export cert with meta data.
+    $crt_str = base64_decode($crt);
+    openssl_x509_export($crt_str, $crt_text, false);
+
+    // Get the cert fingerprint and include it in the text export.
+    $SA = "SHA1";
+    $fingerprint = openssl_x509_fingerprint($crt_str, $SA, false);
+    $fingerprint = hex_str_octets_delimit($fingerprint, ':', '', '');
+    $crt_text = str_replace('-----BEGIN CERTIFICATE-----', $SA.' Fingerprint='.strtoupper($fingerprint)."\n".'-----BEGIN CERTIFICATE-----', $crt_text);
+
+    return $crt_text;
+}
+
+// Put a hex string into delimited octets.
+function hex_str_octets_delimit($hex_str, $delimiter = ':', $width = null, $indent = '') {
+    for ($i=0, $j=strlen($hex_str); $i < $j; $i+=2) {
+        if ($width && ($i % ($width*2) == 0)) {
+            $hex_strx .= "\n" . $indent;
+        }
+        $hex_strx .= $hex_str[$i] . $hex_str[$i+1] . $delimiter;
+    }
+    return trim($hex_strx, $delimiter . ' ');
+}
+
+
 function cert_import(&$cert, $crt_str, $key_str)
 {
     $cert['crt'] = base64_encode($crt_str);

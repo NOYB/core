@@ -973,6 +973,22 @@ function system_trust_configure($verbose = false)
         }
     }
 
+        // Revert the above CA additions.
+#        copy($ca_root_nss, '/usr/local/openssl/cert.pem');
+#        copy($ca_root_nss, '/usr/local/etc/ssl/cert.pem');
+#        copy($ca_root_nss, '/etc/ssl/cert.pem');
+
+        // Restore file last modified timestamp.
+#        $dt = filemtime($ca_root_nss);
+#        if ($dt !== FALSE) {
+#            touch('/usr/local/openssl/cert.pem', $dt);
+#            touch('/usr/local/etc/ssl/cert.pem', $dt);
+#            touch('/etc/ssl/cert.pem', $dt);
+#        }
+
+    /* synchronize config trusted CA certificates to trusted certificates hash directory */
+    ca_trusted_certs_synchronize();
+
     service_log("done.\n", $verbose);
 
     /* collects all trusted certificates into /etc/ssl/certs directory */
