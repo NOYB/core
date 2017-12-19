@@ -35,6 +35,7 @@ require_once("util.inc");
 require_once("plugins.inc.d/openssh.inc");
 
 $version = shell_safe('opnsense-version');
+$version = str_replace('amd64/', '', $version);
 
 echo "\n*** {$config['system']['hostname']}.{$config['system']['domain']}: {$version} ***\n";
 
