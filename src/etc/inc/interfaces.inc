@@ -2306,6 +2306,36 @@ function interface_configure_mtu($device, $mtu, $ifconfig_details)
     }
 }
 
+// Relinquish the DHCP lease from the server.
+function dhcp_relinquish_lease($ifname, $realif, $ipv) {
+    $leases_db = '/var/db/dhclient.leases.' . $realif;
+    $conf_file = '/var/etc/dhclient_'.$ifname.'.conf';
+    $script_file = '/usr/local/opnsense/scripts/interfaces/dhclient-script';
+
+    $isc_dhclient = '/usr/local/sbin/dhclient';            # isc-dhclient-4.4.2P1
+    $shell_script = '/usr/local/etc/rc.dhcprelease.sh';
+
+    if (file_exists($leases_db) && file_exists($script_file)) {
+
+        if (file_exists($conf_file)) {
+            // Replace option 'dhcp-class-identifier' with 'vendor-class-identifier', for the NEW dhclient.
+            file_put_contents($conf_file, str_replace('dhcp-class-identifier', 'vendor-class-identifier', file_get_contents($conf_file)));
+        }
+
+        if (file_exists($isc_dhclient)) {
+            mwexecf($isc_dhclient.' -'.$ipv.' -d -r -lf '.$leases_db.' -cf '.$conf_file.' -sf '.$script_file);
+        } else if (file_exists($shell_script)) {
+            mwexecf($shell_script.' -C '.$conf_file.' -L '.$leases_db.' '.$if);
+        }
+
+        if (file_exists($conf_file)) {
+            // Replace option 'vendor-class-identifier' with 'dhcp-class-identifier', for the OLD dhclient.
+            file_put_contents($conf_file, str_replace('vendor-class-identifier', 'dhcp-class-identifier', file_get_contents($conf_file)));
+        }
+
+    }
+}
+
 function interface_configure($verbose = false, $interface = 'wan', $reload = false, $linkup = false)
 {
     global $config;

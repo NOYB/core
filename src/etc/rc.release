@@ -38,4 +38,13 @@ exit_on_bootup();
 
 $argument = isset($argv[1]) ? trim($argv[1]) : 'wan';
 
+// Send gratuitous release to the DHCP server before suspending.
+$relinquish_lease = ($argv[2]) ?: false;
+if ($relinquish_lease) {
+    $ifname = $argument;
+    $realif = get_real_interface($ifname);
+    $ipv = ($argv[3]) ?: 4;
+    dhcp_relinquish_lease($ifname, $realif, $ipv);
+}
+
 interface_suspend($argument);

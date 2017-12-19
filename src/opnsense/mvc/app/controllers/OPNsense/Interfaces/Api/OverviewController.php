@@ -323,7 +323,7 @@ class OverviewController extends ApiControllerBase
 
         if ($identifier != null) {
             $backend = new Backend();
-            $result['message'] = $backend->configdpRun('interface release', [$identifier]);
+            $result['message'] = $backend->configdpRun('interface release', [$identifier, $relinquish_lease = true, $ipv = 4]);
         }
 
         return $result;
