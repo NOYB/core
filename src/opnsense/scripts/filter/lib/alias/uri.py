@@ -24,6 +24,7 @@
     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 """
+import os
 import re
 import syslog
 import requests
@@ -65,6 +66,9 @@ class UriParser(BaseContentParser):
         req_opts = {'url': url, 'stream': True, 'timeout': self._timeout, 'headers': {'User-Agent': 'OPNsense'}}
         if self._ssl_no_verify:
             req_opts['verify'] = False
+        else:
+            # Look for OpenSSL style hash directory environment variable; default to "/etc/ssl/certs".
+            req_opts['verify'] = (os.environ.get('SSL_CERT_DIR') or '/etc/ssl/certs')
 
         if self._authtype is not None and self._password is not None:
             if self._authtype == 'Basic' and self._username is not None:

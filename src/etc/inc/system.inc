@@ -1162,6 +1162,14 @@ function system_cron_configure($verbose = false)
     $crontab_contents .= "SHELL=/bin/sh\n";
     $crontab_contents .= "PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\n";
     $crontab_contents .= "REQUESTS_CA_BUNDLE=/usr/local/etc/ssl/cert.pem\n";
+
+    # Create environment variables pointing to trusted certificates hash directory and bundle file.
+    # Used by LDAP in \OPNsense\core\src\opnsense\mvc\app\library\OPNsense\Auth\LDAP.php
+    # Used by update URL aliases in /usr/local/opnsense/scripts/filter/lib/alias/uri.py
+    # Used by ddclient in /usr/local/opnsense/service/templates/OPNsense/ddclient/ddclient.conf
+    $crontab_contents .= "SSL_CERT_DIR=/etc/ssl/certs\n";
+    $crontab_contents .= "SL_CERT_FILE=/etc/ssl/cert.pem\n";
+
     $crontab_contents .= "#minute\thour\tmday\tmonth\twday\tcommand\n";
 
     foreach ($autocron as $item) {

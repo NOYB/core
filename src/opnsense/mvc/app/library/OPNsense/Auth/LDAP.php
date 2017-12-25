@@ -356,7 +356,7 @@ class LDAP extends Base implements IAuthConnector
         // Note: All TLS options must be set before ldap_connect is called
         if ($this->ldapURLType != "standard") {
             ldap_set_option(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_HARD);
-            ldap_set_option(null, LDAP_OPT_X_TLS_CACERTFILE, '/usr/local/etc/ssl/cert.pem');
+            ldap_set_option(null, LDAP_OPT_X_TLS_CACERTDIR, getenv('SSL_CERT_DIR') ?: (ini_get('openssl.capath') ?: '/etc/ssl/certs'));
         } else {
             ldap_set_option(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }

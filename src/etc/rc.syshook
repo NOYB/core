@@ -43,6 +43,14 @@
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/local/sbin
 REQUESTS_CA_BUNDLE=/usr/local/etc/ssl/cert.pem
+
+# Create environment variables pointing to trusted certificates hash directory and bundle file.
+# Used by LDAP in \OPNsense\core\src\opnsense\mvc\app\library\OPNsense\Auth\LDAP.php
+# Used by update URL aliases in /usr/local/opnsense/scripts/filter/lib/alias/uri.py
+# Used by ddclient in /usr/local/opnsense/service/templates/OPNsense/ddclient/ddclient.conf
+SSL_CERT_DIR=/etc/ssl/certs
+SL_CERT_FILE=/etc/ssl/cert.pem
+
 SYSDIR="/usr/local/etc/rc.syshook.d"
 SYSLEVEL="${1}"
 

@@ -42,6 +42,14 @@ REQUESTS_CA_BUNDLE=/usr/local/etc/ssl/cert.pem
 ZPOOL_IMPORT_PATH=/dev
 export HOME PATH REQUESTS_CA_BUNDLE ZPOOL_IMPORT_PATH
 
+# Create environment variables pointing to trusted certificates hash directory and bundle file.
+# Used by LDAP in \OPNsense\core\src\opnsense\mvc\app\library\OPNsense\Auth\LDAP.php
+# Used by update URL aliases in /usr/local/opnsense/scripts/filter/lib/alias/uri.py
+# Used by ddclient in /usr/local/opnsense/service/templates/OPNsense/ddclient/ddclient.conf
+SSL_CERT_DIR=/etc/ssl/certs
+SL_CERT_FILE=/etc/ssl/cert.pem
+export SSL_CERT_DIR SL_CERT_FILE
+
 echo "Mounting filesystems..."
 
 grow_partition()
