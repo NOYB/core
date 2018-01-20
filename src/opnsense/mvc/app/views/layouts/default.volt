@@ -312,12 +312,12 @@
         </header>
 
         <!-- page content -->
-        <section class="page-content-main">
+        <section class="page-content-main"><h2 style="display:none">Main Page</h2>
           <div class="container-fluid">
             <div class="row">
                 <!-- notification banner dynamically inserted here (opnsense_status.js) -->
 
-                <section class="col-xs-12">
+                <section class="col-xs-12"><h3 style="display:none">Message Region</h3>
                     <div id="messageregion"></div>
                         {{ content() }}
                 </section>
