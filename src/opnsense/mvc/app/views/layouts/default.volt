@@ -13,6 +13,38 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <script>
+        // Prevent Chrome from disabling double tap zoom based on viewport width <= device-width.
+
+        viewport_width_set(window.innerWidth + 1);
+
+        window.addEventListener('orientationchange', function() {
+            orientationChanged().then(function() {
+                viewport_width_set(window.innerWidth + 1);
+            });
+        });
+
+        // Wait until innerWidth changes, for max 120 frames
+        function orientationChanged() {
+            const timeout = 120;
+            return new window.Promise(function(resolve) {
+                const go = (i, width0) => {
+                    window.innerWidth != width0 || i >= timeout ?
+                    resolve() :
+                    window.requestAnimationFrame(() => go(i + 1, width0));
+                };
+                go(0, window.innerWidth);
+            });
+        }
+
+        function viewport_width_set(device_width) {
+//alert("innerWidth: " + window.innerWidth + "\nclientWidth: " + document.documentElement.clientWidth);
+            device_width = isNaN(device_width) ? "device-width" : device_width;
+            var viewportmeta = document.querySelector("meta[name=viewport]");
+            viewportmeta.content = viewportmeta.content.replace(/width=[^,]+/, 'width=' + device_width);
+        }
+    </script>
+
     <title>{{headTitle|default("OPNsense") }} | {{system_hostname}}.{{system_domain}}</title>
     {% set theme_name = ui_theme|default('opnsense') %}
 

@@ -279,7 +279,38 @@ function create_head_base_content($page_title, $themename) {
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <title><?= gettext($page_title) ?> | <?= $product->name() ?></title>
+    <script>
+        // Prevent Chrome from disabling double tap zoom based on viewport width <= device-width.
+
+        viewport_width_set(window.innerWidth + 1);
+
+        window.addEventListener('orientationchange', function() {
+            orientationChanged().then(function() {
+                viewport_width_set(window.innerWidth + 1);
+            });
+        });
+
+        // Wait until innerWidth changes, for max 120 frames
+        function orientationChanged() {
+            const timeout = 120;
+            return new window.Promise(function(resolve) {
+                const go = (i, width0) => {
+                    window.innerWidth != width0 || i >= timeout ?
+                    resolve() :
+                    window.requestAnimationFrame(() => go(i + 1, width0));
+                };
+                go(0, window.innerWidth);
+            });
+        }
+
+        function viewport_width_set(device_width) {
+//alert("innerWidth: " + window.innerWidth + "\nclientWidth: " + document.documentElement.clientWidth);
+            device_width = isNaN(device_width) ? "device-width" : device_width;
+            var viewportmeta = document.querySelector("meta[name=viewport]");
+            viewportmeta.content = viewportmeta.content.replace(/width=[^,]+/, 'width=' + device_width);
+        }
+    </script>
+
 
     <!-- include (theme) style -->
     <link href="<?= cache_safe(get_themed_filename('/css/main.css')) ?>" rel="stylesheet" type="text/css">
