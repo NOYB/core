@@ -266,6 +266,29 @@ function session_auth()
     return true;
 }
 
+function create_head_base_content($page_title, $themename) {
+?>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="copyright" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title><?= gettext($page_title) ?> | <?= $product->name() ?></title>
+
+    <!-- include (theme) style -->
+    <link href="<?= cache_safe(get_themed_filename('/css/main.css')) ?>" rel="stylesheet" type="text/css">
+
+    <!-- Favicon -->
+    <link href="<?= cache_safe(get_themed_filename('/images/favicon.png')) ?>" rel="shortcut icon">
+<?php
+}
+
 /* Authenticate user - exit if failed */
 if (!session_auth()) {
     set_language();
@@ -318,21 +341,7 @@ function display_error_form($text)
 <html lang="<?= get_current_lang() ?>" class="no-js">
   <head>
 
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="copyright" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-    <title><?= gettext('Error') ?> | <?= $product->name() ?></title>
-
-    <link href="<?= cache_safe(get_themed_filename('/css/main.css')) ?>" rel="stylesheet">
-    <link href="<?= cache_safe(get_themed_filename('/images/favicon.png')) ?>" rel="shortcut icon">
+<?php create_head_base_content($http_code, $themename); ?>
 
     <script src="/ui/js/jquery-3.5.1.min.js"></script>
 
@@ -359,21 +368,8 @@ function display_login_form($Login_Error)
     ?><!doctype html>
 <html lang="<?= get_current_lang() ?>" class="no-js">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="copyright" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-    <title><?= gettext('Login') ?> | <?= $product->name() ?></title>
-
-    <link href="<?= cache_safe(get_themed_filename('/css/main.css')) ?>" rel="stylesheet">
-    <link href="<?= cache_safe(get_themed_filename('/images/favicon.png')) ?>" rel="shortcut icon">
+<?php create_head_base_content(gettext("Login"), $themename); ?>
 
     <script src="/ui/js/jquery-3.5.1.min.js"></script>
 

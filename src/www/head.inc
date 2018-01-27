@@ -16,21 +16,7 @@ $pagetitle .= html_safe(sprintf(' | %s.%s', $config['system']['hostname'], $conf
 ?><!doctype html>
 <html lang="<?= get_current_lang() ?>" class="no-js">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="copyright" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-    <title><?= $pagetitle ?></title>
-
-    <!-- include (theme) style -->
-    <link rel="stylesheet" type="text/css" href="<?= cache_safe(get_themed_filename('/css/main.css')) ?>">
+<?php create_head_base_content($pagetitle, $themename); ?>
 
     <!-- TODO: move to theme style -->
     <style>
@@ -61,9 +47,6 @@ $pagetitle .= html_safe(sprintf(' | %s.%s', $config['system']['hostname'], $conf
         position: absolute;
       }
     </style>
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="<?= cache_safe(get_themed_filename('/images/favicon.png')) ?>">
 
     <!-- legacy browser functions -->
     <script src="<?= cache_safe("/ui/js/polyfills.js") ?>"></script>
