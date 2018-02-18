@@ -8,12 +8,14 @@
         <label>Hide Identity</label>
         <type>checkbox</type>
         <help>If enabled, id.server and hostname.bind queries are refused.</help>
+        <input_label>Hide identity</input_label>
     </field>
     <field>
         <id>unbound.advanced.hideversion</id>
         <label>Hide Version</label>
         <type>checkbox</type>
         <help>If enabled, version.server and version.bind queries are refused.</help>
+        <input_label>Hide version</input_label>
     </field>
     <field>
         <id>unbound.advanced.prefetchkey</id>
@@ -23,6 +25,7 @@
             DNSKEYs are fetched earlier in the validation process when a Delegation signer is encountered.
             This helps lower the latency of requests but does utilize a little more CPU.
         </help>
+        <input_label>Prefetch DNS key</input_label>
     </field>
     <field>
         <id>unbound.advanced.dnssecstripped</id>
@@ -32,6 +35,7 @@
             DNSSEC data is required for trust-anchored zones. If such data is absent, the zone becomes bogus.
             If this is disabled and no DNSSEC data is received, then the zone is made insecure.
         </help>
+        <input_label>Harden DNSSEC</input_label>
     </field>
     <field>
         <id>unbound.advanced.belownxdomain</id>
@@ -51,6 +55,7 @@
             Helps to reduce the query rate towards targets but may lead to false negative responses
             if there are errors in the zone config.
         </help>
+        <input_label>Aggressive DNSSEC-Validated cache</input_label>
     </field>
     <field>
         <id>unbound.advanced.qnameminstrict</id>
@@ -62,6 +67,7 @@
             A lot of domains will not be resolvable when this option in enabled.
             Only use if you know what you are doing.
         </help>
+        <input_label>Enhance QNAME privacy</input_label>
     </field>
         <field>
         <id>unbound.advanced.outgoingnumtcp</id>
@@ -172,6 +178,7 @@
             Serve expired responses from the cache with a TTL of 0 without waiting for the actual resolution to finish.
             The TTL can be modified with "Expired Record Reply TTL value"
         </help>
+        <input_label>Serve expired responses from cache</input_label>
     </field>
     <field>
         <id>unbound.advanced.serveexpiredreplyttl</id>
@@ -203,6 +210,7 @@
             retrieve the record from an upstream server. This makes sure that the expired records will be served as long
             as there are queries for it.
         </help>
+        <input_label>Reset expired record TTL</input_label>
     </field>
     <field>
         <id>unbound.advanced.serveexpiredclienttimeout</id>
@@ -224,6 +232,7 @@
         <label>Extended Statistics</label>
         <type>checkbox</type>
         <help>If enabled, extended statistics are printed.</help>
+        <input_label>Extended statistics</input_label>
     </field>
     <field>
         <id>unbound.advanced.logqueries</id>
@@ -234,6 +243,7 @@
             Note that it takes time to print these lines, which makes the server (significantly) slower. Odd
             (non-printable) characters in names are printed as '?'.
         </help>
+        <input_label>Log queries</input_label>
     </field>
     <field>
         <id>unbound.advanced.logreplies</id>
@@ -245,6 +255,7 @@
             Note that it takes time to print these lines, which makes the server (significantly) slower. Odd
             (non-printable) characters in names are printed as '?'.
         </help>
+        <input_label>Log replies</input_label>
     </field>
     <field>
         <id>unbound.advanced.logtagqueryreply</id>
@@ -254,6 +265,7 @@
             If enabled, prints the word 'query: ' and 'reply: ' with logged queries and replies. This makes filtering
             logs easier.
         </help>
+        <input_label>Tag queries and replies</input_label>
     </field>
     <field>
         <id>unbound.advanced.loglocalactions</id>
@@ -264,6 +276,7 @@
             are like the local-zone type inform prints  out,  but  they  are
             also printed for the other types of local zones.
         </help>
+        <input_label>Log local zone actions</input_label>
     </field>
     <field>
         <id>unbound.advanced.logservfail</id>
@@ -275,6 +288,7 @@
             and printed at the error level, not the info level of debug info
             from verbosity.
         </help>
+        <input_label>Log SERVFAIL</input_label>
     </field>
     <field>
         <id>unbound.advanced.logverbosity</id>
@@ -314,6 +328,7 @@
             When enabled, this option can cause an increase of around 10% more DNS traffic and load
             on the server, but frequently requested items will not expire from the cache.
         </help>
+        <input_label>Prefetch</input_label>
     </field>
     <field>
         <id>unbound.advanced.unwantedreplythreshold</id>
@@ -396,6 +411,7 @@
             about every 120 seconds with an exponential backoff. If hosts do not respond within this time period,
             they are marked as down for the duration of the host cache TTL.
         </help>
+        <input_label>Prob down hosts</input_label>
     </field>
     <field>
         <id>unbound.advanced.infracachenumhosts</id>

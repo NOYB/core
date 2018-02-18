@@ -8,6 +8,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable this rule</help>
+        <input_label>Enable rule</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>rowtoggle</formatter>
@@ -32,6 +33,7 @@
         <label>Categories</label>
         <type>select_multiple</type>
         <help>For grouping purposes you may select multiple groups here to organize items.</help>
+        <input_label>Log packets handled by this rule</input_label>
         <grid_view>
             <formatter>category</formatter>
             <sequence>1</sequence>
@@ -92,6 +94,7 @@
         <type>checkbox</type>
         <advanced>true</advanced>
         <help>Use this option to invert the sense of the match.</help>
+        <input_label>Invert sense of source match</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -118,6 +121,7 @@
         <type>checkbox</type>
         <advanced>true</advanced>
         <help>Use this option to invert the sense of the match.</help>
+        <input_label>Invert sense of destination match</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -143,6 +147,7 @@
         <label>Log</label>
         <type>checkbox</type>
         <help>Log packets that are handled by this rule</help>
+        <input_label>Log packets handled by this rule</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>

@@ -253,7 +253,7 @@
     <table id="grid-phase1" class="table table-condensed table-hover table-striped">
         <thead>
           <tr>
-              <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle" data-sortable="false">{{ lang._('Enabled') }}</th>
+              <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle" data-sortable="false" data-css-class="text-center" data-header-css-class="text-center">{{ lang._('Enabled') }}</th>
               <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">{{ lang._('ikeid') }}</th>
               <th data-column-id="seqid" data-type="numeric" data-visible="false">{{ lang._('seqid') }}</th>
               <th data-column-id="type" data-type="string" data-width="7em">{{ lang._('Type') }}</th>
@@ -287,7 +287,7 @@
     <table id="grid-phase2" class="table table-condensed table-hover table-striped">
         <thead>
           <tr>
-              <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle" data-sortable="false">{{ lang._('Enabled') }}</th>
+              <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle" data-sortable="false" data-css-class="text-center" data-header-css-class="text-center">{{ lang._('Enabled') }}</th>
               <th data-column-id="id" data-type="numeric" data-identifier="true" data-visible="false">ID</th>
               <th data-column-id="uniqid" data-type="string" data-visible="false">{{ lang._('uniqid') }}</th>
               <th data-column-id="reqid" data-type="string" data-width="6em">{{ lang._('Reqid') }}</th>
@@ -308,8 +308,10 @@
       <tbody>
         <tr>
           <td>
-            <input name="enable" class="pending" type="checkbox" id="enable"/>
-            <strong>{{ lang._('Enable IPsec') }}</strong>
+            <label for="enable">
+              <input name="enable" class="pending" type="checkbox" id="enable"/>
+              <strong>{{ lang._('Enable IPsec') }}</strong>
+            </label>
           </td>
         </tr>
       </tbody>

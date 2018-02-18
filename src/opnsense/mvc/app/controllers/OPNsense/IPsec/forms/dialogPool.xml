@@ -3,6 +3,7 @@
         <id>pool.enabled</id>
         <label>Enabled</label>
         <type>checkbox</type>
+        <input_label>Enable pool</input_label>
     </field>
     <field>
         <id>pool.name</id>

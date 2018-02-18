@@ -9,12 +9,14 @@
         <type>checkbox</type>
         <help>When this device is configured as CARP master it will try to switch to master when powering up, this option will keep this one slave if there already is a master on the network. A reboot is required to take effect.</help>
         <advanced>true</advanced>
+        <input_label>Disable preempt</input_label>
     </field>
     <field>
         <id>hasync.disconnectppps</id>
         <label>Disconnect dialup interfaces</label>
         <type>checkbox</type>
         <help>When this device is configured as CARP backup it will disconnect all PPP type interfaces and try to reconnect them when becoming master again.</help>
+        <input_label>Disconnect dialup interfaces</input_label>
     </field>
     <field>
         <id>hasync.pfsyncinterface</id>
@@ -44,6 +46,7 @@
         <type>checkbox</type>
         <advanced>true</advanced>
         <help>Defer transmission of the first packet in a state until a peer has acknowledged that the associated state has been inserted. This adds small delays but allows traffic to flow when more than one firewall might actively handle packets ("active/active")</help>
+        <input_label>Defer pfsync</input_label>
     </field>
     <field>
         <type>header</type>
@@ -63,6 +66,7 @@
         <label>Verify peer</label>
         <type>checkbox</type>
         <help>In most cases the target host will be a directly attached neighbor in which case TLS verification can be ignored.</help>
+        <input_label>Verify peer</input_label>
     </field>
     <field>
         <id>hasync.username</id>

@@ -154,6 +154,7 @@
         <label>Disable HA sync</label>
         <type>checkbox</type>
         <help>Ignore this range from being transfered or updated by ha sync.</help>
+        <input_label>Disable HA sync</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>

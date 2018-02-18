@@ -4,6 +4,7 @@
         <label>Enable</label>
         <type>checkbox</type>
         <help>Enable the usage of DNS blocklists.</help>
+        <input_label>Enable block list</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>
@@ -12,6 +13,7 @@
     </field>
     <field>
         <id>blocklist.type</id>
+        <input_label>Force SafeSearch</input_label>
         <label>Type of DNSBL</label>
         <type>select_multiple</type>
         <help>Select which kind of DNSBL you want to use.</help>
@@ -111,6 +113,7 @@
         <type>checkbox</type>
         <advanced>true</advanced>
         <help>Use the DNS response code NXDOMAIN instead of a destination address.</help>
+        <input_label>Return NXDOMAIN</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>

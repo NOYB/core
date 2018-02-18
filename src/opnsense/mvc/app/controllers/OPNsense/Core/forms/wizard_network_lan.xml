@@ -4,6 +4,7 @@
         <label>Disable LAN</label>
         <type>checkbox</type>
         <help>Disable LAN, usually only relevant in "wan" only scenarios.</help>
+        <input_label>Disable LAN</input_label>
     </field>
     <field>
         <id>wizard.interfaces.lan.ipaddr</id>
@@ -16,5 +17,6 @@
         <label>Configure DHCP server</label>
         <type>checkbox</type>
         <help>Configure DHCP server for this network, when disabled dhcp services will not be available on this network after finishing the wizard.</help>
+        <input_label>Configure DHCP server</input_label>
     </field>
 </form>

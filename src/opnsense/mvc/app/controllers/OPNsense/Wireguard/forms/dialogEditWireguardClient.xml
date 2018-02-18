@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>This will enable or disable the peer.</help>
+        <input_label>Enable peer</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>

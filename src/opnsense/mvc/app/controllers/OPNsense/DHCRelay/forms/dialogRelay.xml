@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable or disable this relay.</help>
+        <input_label>Enable relay</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>
@@ -27,6 +28,7 @@
         <label>Agent Information</label>
         <type>checkbox</type>
         <help>Add the relay agent information option.</help>
+        <input_label>Add relay agent information</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>

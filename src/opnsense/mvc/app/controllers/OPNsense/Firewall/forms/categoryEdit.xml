@@ -21,6 +21,7 @@
         <label>Automatic</label>
         <type>checkbox</type>
         <help>Automatically added, will be removed when unused</help>
+        <input_label>Remove automatically added category when unused</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>

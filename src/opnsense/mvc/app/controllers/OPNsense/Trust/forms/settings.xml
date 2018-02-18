@@ -10,18 +10,21 @@
         <help>Allow local defined intermediate certificate authorities to be used in the local trust store.
             We advise to only store root certificates to prevent cross signed ones causing breakage when included but expired later in the chain.
         </help>
+        <input_label>Store intermediate</input_label>
     </field>
     <field>
         <id>trust.install_crls</id>
         <label>Store CRL's</label>
         <type>checkbox</type>
         <help>Store all configured CRL's in the default trust store.</help>
+        <input_label>Store CRL's</input_label>
     </field>
     <field>
         <id>trust.fetch_crls</id>
         <label>Auto fetch CRL's</label>
         <type>checkbox</type>
         <help>Schedule an hourly job to download CRLs using the defined Distributionpoints in the CAs deployed in our trust store.</help>
+        <input_label>Auto fetch CRL's</input_label>
     </field>
     <field>
         <type>header</type>
@@ -32,12 +35,14 @@
         <label>Enable legacy</label>
         <type>checkbox</type>
         <help>Enable Legacy Providers.</help>
+        <input_label>Enable legacy</input_label>
     </field>
     <field>
         <id>trust.enable_config_constraints</id>
         <label>Enable</label>
         <type>checkbox</type>
         <help>Enable custom constraints.</help>
+        <input_label>Enable</input_label>
     </field>
     <field>
         <id>trust.CipherString</id>

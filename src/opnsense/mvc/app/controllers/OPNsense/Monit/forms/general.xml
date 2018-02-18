@@ -4,6 +4,7 @@
       <label>Enable Monit</label>
       <type>checkbox</type>
       <help><![CDATA[Enable or disable monit.]]></help>
+      <input_label>Enable monit</input_label>
    </field>
    <field>
       <id>monit.general.interval</id>
@@ -48,6 +49,7 @@
       <label>Mail Server SSL Connection</label>
       <type>checkbox</type>
       <help><![CDATA[Enable encryption for mail server communication.]]></help>
+      <input_label>Encrypt mail server connection</input_label>
    </field>
    <field>
       <id>monit.general.sslversion</id>
@@ -62,6 +64,7 @@
       <type>checkbox</type>
       <help><![CDATA[Enable or disable SSL server certificate verification.]]></help>
       <advanced>true</advanced>
+      <input_label>Verify server SSL certificate</input_label>
    </field>
    <field>
       <id>monit.general.logfile</id>
@@ -102,6 +105,7 @@
       <type>checkbox</type>
       <help><![CDATA[Start the Monit httpd service.]]></help>
       <advanced>true</advanced>
+      <input_label>Start Monit HTTPD service</input_label>
    </field>
    <field>
       <id>monit.general.httpdUsername</id>
@@ -149,5 +153,6 @@
       <type>checkbox</type>
       <help><![CDATA[Automatically register in M/Monit by sending Monit credentials (see Monit Access List above).]]></help>
       <advanced>true</advanced>
+      <input_label>Register M/Monit credentials</input_label>
    </field>
 </form>

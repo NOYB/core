@@ -3,6 +3,7 @@
         <id>gateway_item.disabled</id>
         <label>Disabled</label>
         <type>checkbox</type>
+        <input_label>Disable gateway</input_label>
         <grid_view>
             <width>100</width>
             <type>boolean</type>
@@ -54,6 +55,7 @@
         <label>Upstream Gateway</label>
         <type>checkbox</type>
         <help>This will select the above gateway as a default gateway candidate.</help>
+        <input_label>Default gateway candidate</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -63,6 +65,7 @@
         <label>Far Gateway</label>
         <type>checkbox</type>
         <help>This will allow the gateway to exist outside of the interface subnet.</help>
+        <input_label>Far gateway</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -74,6 +77,7 @@
         <label>Disable Gateway Monitoring</label>
         <type>checkbox</type>
         <help>This will consider this gateway as always being "up".</help>
+        <input_label>Don't monitor gateway (always up)</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -86,6 +90,7 @@
         <type>checkbox</type>
         <style>monitor_opt</style>
         <help>Do not create a dedicated host route for this monitor.</help>
+        <input_label>Don't create dedicated host route</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -98,6 +103,7 @@
         <type>checkbox</type>
         <style>monitor_opt</style>
         <help>If this gateway goes down, force clients to reconnect over a different online gateway by killing states associated with this gateway. This option requires "default gateway switching" to be enabled, or this gateway assigned as part of a gateway group to trigger.</help>
+        <input_label>Kill gateway associated states</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -110,6 +116,7 @@
         <type>checkbox</type>
         <style>monitor_opt</style>
         <help>If another gateway comes up with a higher priority than this gateway, force clients to reconnect by killing states associated with this gateway. This option requires "default gateway switching" to be enabled, or this gateway assigned as part of a gateway group to trigger. The common use case for this option are metered connections over LTE that should only be used when no other gateway is online.</help>
+        <input_label>Kill gateway associated states</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -132,6 +139,7 @@
         <label>Mark Gateway as Down</label>
         <type>checkbox</type>
         <help>This will force this gateway to be considered "down".</help>
+        <input_label>Mark gateway as down</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>

@@ -3,6 +3,7 @@
         <id>vti.enabled</id>
         <label>Enabled</label>
         <type>checkbox</type>
+        <input_label>Enable Virtual Tunnel Interface</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>rowtoggle</formatter>
@@ -77,6 +78,7 @@
         <id>vti.skip_fw</id>
         <label>Skip firewall rules</label>
         <type>checkbox</type>
+        <input_label>Skip firewall rules</input_label>
         <help>
         By default inbound firewall rules only apply on the IPsec interface, outbound however passes both the virtual
         interface and the IPsec (enc0) interface, which makes the use of source NAT impossible. This toggle offers

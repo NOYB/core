@@ -337,7 +337,9 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_natreflection" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Reflection for destination NAT");?></td>
                 <td>
-                  <input name="natreflection" type="checkbox" id="natreflection" value="yes" <?= !empty($pconfig['natreflection']) ? 'checked="checked"' : '' ?>/>
+                    <label for="natreflection">
+                      <input name="natreflection" type="checkbox" id="natreflection" value="yes" <?= !empty($pconfig['natreflection']) ? 'checked="checked"' : '' ?>/>
+                    </label>
                   <div class="hidden" data-for="help_for_natreflection">
                     <?=gettext("When enabled, this automatically creates additional NAT redirect rules for access to port forwards on your external IP addresses from within your internal networks.");?>
                     <?=gettext("Individual rules may be configured to override this system setting on a per-rule basis.");?>
@@ -347,7 +349,9 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_enablebinatreflection" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Reflection for 1:1");?></td>
                 <td>
-                  <input name="enablebinatreflection" type="checkbox" id="enablebinatreflection" value="yes" <?=!empty($pconfig['enablebinatreflection']) ? "checked=\"checked\"" : "";?>/>
+                    <label for="enablebinatreflection">
+                      <input name="enablebinatreflection" type="checkbox" id="enablebinatreflection" value="yes" <?=!empty($pconfig['enablebinatreflection']) ? "checked=\"checked\"" : "";?>/>
+                    </label>
                   <div class="hidden" data-for="help_for_enablebinatreflection">
                     <?=gettext("Enables the automatic creation of additional NAT redirect rules for access to 1:1 mappings of your external IP addresses from within your internal networks.");?>
                     <?=gettext("Individual rules may be configured to override this system setting on a per-rule basis.");?>
@@ -357,7 +361,9 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_enablenatreflectionhelper" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Automatic outbound NAT for Reflection");?></td>
                 <td>
-                  <input name="enablenatreflectionhelper" type="checkbox" id="enablenatreflectionhelper" value="yes" <?=!empty($pconfig['enablenatreflectionhelper']) ? "checked=\"checked\"" : "";?> />
+                    <label for="enablenatreflectionhelper">
+                      <input name="enablenatreflectionhelper" type="checkbox" id="enablenatreflectionhelper" value="yes" <?=!empty($pconfig['enablenatreflectionhelper']) ? "checked=\"checked\"" : "";?> />
+                    </label>
                   <div class="hidden" data-for="help_for_enablenatreflectionhelper">
                     <?=gettext("Automatically create outbound NAT rules which assist inbound NAT rules that direct traffic back out to the same subnet it originated from.");?>
                   </div>
@@ -401,8 +407,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_skip_rules_gw_down" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Skip rules");?> </td>
                 <td>
-                  <input name="skip_rules_gw_down" type="checkbox" id="skip_rules_gw_down" value="yes" <?=!empty($pconfig['skip_rules_gw_down']) ? "checked=\"checked\"" : "";?> />
-                  <?=gettext("Skip rules when gateway is down"); ?>
+                    <label for="skip_rules_gw_down">
+                      <input name="skip_rules_gw_down" type="checkbox" id="skip_rules_gw_down" value="yes" <?=!empty($pconfig['skip_rules_gw_down']) ? "checked=\"checked\"" : "";?> />
+                      <?=gettext("Skip rules when gateway is down"); ?>
+                    </label>
                   <div class="hidden" data-for="help_for_skip_rules_gw_down">
                     <?=gettext("By default, when a rule has a specific gateway set, and this gateway is down, ".
                                         "rule is created and traffic is sent to default gateway. This option overrides that behavior ".
@@ -421,8 +429,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_lb_use_sticky" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Sticky connections");?> </td>
                 <td>
-                  <input name="lb_use_sticky" type="checkbox" id="lb_use_sticky" value="yes" <?= !empty($pconfig['lb_use_sticky']) ? 'checked="checked"' : '';?>/>
-                  <?=gettext("Use sticky connections"); ?>
+                    <label for="lb_use_sticky">
+                      <input name="lb_use_sticky" type="checkbox" id="lb_use_sticky" value="yes" <?= !empty($pconfig['lb_use_sticky']) ? 'checked="checked"' : '';?>/>
+                      <?=gettext("Use sticky connections"); ?>
+                    </label>
                   <div class="hidden" data-for="help_for_lb_use_sticky">
                     <?=gettext("Successive connections will be redirected to the servers " .
                                         "in a round-robin manner with connections from the same " .
@@ -448,8 +458,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_pf_share_forward" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext('Shared forwarding');?> </td>
                 <td>
-                  <input name="pf_share_forward" type="checkbox" id="pf_share_forward" value="yes" <?= !empty($pconfig['pf_share_forward']) ? 'checked="checked"' : '' ?>/>
-                  <?=gettext('Use shared forwarding between packet filter, traffic shaper and captive portal'); ?>
+                    <label for="pf_share_forward">
+                      <input name="pf_share_forward" type="checkbox" id="pf_share_forward" value="yes" <?= !empty($pconfig['pf_share_forward']) ? 'checked="checked"' : '' ?>/>
+                      <?=gettext('Use shared forwarding between packet filter, traffic shaper and captive portal'); ?>
+                    </label>
                   <div class="hidden" data-for="help_for_pf_share_forward">
                     <?= gettext('Using policy routing in the packet filter rules causes packets to skip ' .
                                 'processing for the traffic shaper and captive portal tasks. ' .
@@ -461,8 +473,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_pf_disable_force_gw" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext('Disable force gateway');?> </td>
                 <td>
-                  <input name="pf_disable_force_gw" type="checkbox" id="pf_disable_force_gw" value="yes" <?= !empty($pconfig['pf_disable_force_gw']) ? 'checked="checked"' : '' ?>/>
-                  <?=gettext('Disable automatic rules which force local services to use the assigned interface gateway.'); ?>
+                    <label for="pf_disable_force_gw">
+                      <input name="pf_disable_force_gw" type="checkbox" id="pf_disable_force_gw" value="yes" <?= !empty($pconfig['pf_disable_force_gw']) ? 'checked="checked"' : '' ?>/>
+                      <?=gettext('Disable automatic rules which force local services to use the assigned interface gateway.'); ?>
+                    </label>
                   <div class="hidden" data-for="help_pf_disable_force_gw">
                     <?= gettext('Outgoing packets from this firewall on an interface which has a gateway ' .
                                 'will normally use the specified gateway for that interface. ' .
@@ -481,7 +495,9 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_schedule_states" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Schedule States"); ?></td>
                 <td>
-                  <input name="schedule_states" type="checkbox" value="yes" <?=!empty($pconfig['schedule_states']) ? "checked=\"checked\"" :"";?> />
+                    <label for="schedule_states">
+                      <input name="schedule_states" type="checkbox" id="schedule_states" value="yes" <?=!empty($pconfig['schedule_states']) ? "checked=\"checked\"" :"";?> />
+                    </label>
                   <div class="hidden" data-for="help_for_schedule_states">
                     <?=gettext("By default schedules clear the states of existing connections when the expiration time has come. ".
                                         "This option overrides that behavior by not clearing states for existing connections."); ?>
@@ -499,8 +515,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_logdefaultblock" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext('Default block') ?></td>
                 <td>
-                  <input name="logdefaultblock" type="checkbox" value="yes" <?=!empty($pconfig['logdefaultblock']) ? "checked=\"checked\"" : ""; ?> />
-                  <?=gettext("Log packets matched from the default block rules");?>
+                  <label for="logdefaultblock">
+                    <input name="logdefaultblock" type="checkbox" id="logdefaultblock" value="yes" <?=!empty($pconfig['logdefaultblock']) ? "checked=\"checked\"" : ""; ?> />
+                    <?=gettext("Log packets matched from the default block rules");?>
+                  </label>
                   <div class="hidden" data-for="help_for_logdefaultblock">
                     <?=gettext("Packets that are blocked by the implicit default block rule will not be logged if you uncheck this option. Per-rule logging options are still respected.");?>
                   </div>
@@ -509,8 +527,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_logdefaultpass" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext('Default pass') ?></td>
                 <td>
-                  <input name="logdefaultpass" type="checkbox" id="logdefaultpass" value="yes" <?=!empty($pconfig['logdefaultpass']) ? "checked=\"checked\"" :""; ?> />
-                  <?=gettext("Log packets matched from the default pass rules");?>
+                  <label for="logdefaultpass">
+                    <input name="logdefaultpass" type="checkbox" id="logdefaultpass" value="yes" <?=!empty($pconfig['logdefaultpass']) ? "checked=\"checked\"" :""; ?> />
+                    <?=gettext("Log packets matched from the default pass rules");?>
+                  </label>
                   <div class="hidden" data-for="help_for_logdefaultpass">
                     <?=gettext("Packets that are allowed by the implicit default pass rule will be logged if you check this option. Per-rule logging options are still respected.");?>
                   </div>
@@ -519,22 +539,28 @@ include("head.inc");
               <tr>
                 <td><i class="fa fa-info-circle text-muted"></i> <?=gettext('Outbound NAT') ?></td>
                 <td>
-                  <input name="logoutboundnat" type="checkbox" id="logoutboundnat" value="yes" <?= !empty($pconfig['logoutboundnat']) ? 'checked="checked"' : '' ?> />
-                  <?= gettext('Log packets matched by automatic outbound NAT rules') ?>
+                  <label for="logoutboundnat">
+                    <input name="logoutboundnat" type="checkbox" id="logoutboundnat" value="yes" <?= !empty($pconfig['logoutboundnat']) ? 'checked="checked"' : '' ?> />
+                    <?= gettext('Log packets matched by automatic outbound NAT rules') ?>
+                  </label>
                 </td>
               </tr>
               <tr>
                 <td><i class="fa fa-info-circle text-muted"></i> <?=gettext('Bogon networks') ?></td>
                 <td>
-                  <input name="logbogons" type="checkbox" id="logbogons" value="yes" <?=!empty($pconfig['logbogons']) ? "checked=\"checked\"" : ""; ?> />
-                  <?=gettext("Log packets blocked by 'Block Bogon Networks' rules");?>
+                  <label for="logbogons">
+                    <input name="logbogons" type="checkbox" id="logbogons" value="yes" <?=!empty($pconfig['logbogons']) ? "checked=\"checked\"" : ""; ?> />
+                    <?=gettext("Log packets blocked by 'Block Bogon Networks' rules");?>
+                  </label>
                 </td>
               </tr>
               <tr>
                 <td><i class="fa fa-info-circle text-muted"></i> <?=gettext('Private networks') ?></td>
                 <td>
-                  <input name="logprivatenets" type="checkbox" id="logprivatenets" value="yes" <?= !empty($pconfig['logprivatenets']) ? 'checked="checked"' : '' ?> />
-                  <?=gettext("Log packets blocked by 'Block Private Networks' rules");?>
+                  <label for="logprivatenets">
+                    <input name="logprivatenets" type="checkbox" id="logprivatenets" value="yes" <?= !empty($pconfig['logprivatenets']) ? 'checked="checked"' : '' ?> />
+                    <?=gettext("Log packets blocked by 'Block Private Networks' rules");?>
+                  </label>
                 </td>
               </tr>
             </table>
@@ -548,7 +574,9 @@ include("head.inc");
               <tr>
                 <td><a id="help_keepcounters" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Keep counters");?></td>
                 <td>
-                  <input name="keepcounters" type="checkbox" <?= !empty($pconfig['keepcounters']) ? "checked=\"checked\"" : "";?>/>
+                  <label for="keepcounters">
+                    <input name="keepcounters" type="checkbox" id="keepcounters" <?= !empty($pconfig['keepcounters']) ? "checked=\"checked\"" : "";?>/>
+                  </label>
                   <div class="hidden" data-for="help_keepcounters">
                     <?= gettext('Preserve rule counters across rule updates.  Usually rule counters are reset to zero on every update of the ruleset.') ?><br />
                     <?= gettext('When this is set the system will try to match the counters to the still existing rules on filter reloads.') ?><br />
@@ -620,7 +648,9 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_state-policy" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Bind states to interface");?></td>
                 <td>
-                  <input name="state-policy" type="checkbox" <?= !empty($pconfig['state-policy']) ? "checked=\"checked\"" : "";?>/>
+                  <label for="state-policy">
+                    <input name="state-policy" type="checkbox" id="state-policy" <?= !empty($pconfig['state-policy']) ? "checked=\"checked\"" : "";?>/>
+                  </label>
                   <div class="hidden" data-for="help_for_state-policy">
                     <?= gettext('Set behaviour for keeping states, by default states are floating, but when this option is set they should match the interface.') ?><br />
                     <?= gettext('The default option (unchecked) matches states regardless of the interface, which is in most setups the best choice.') ?><br />
@@ -630,8 +660,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_disablefilter" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Disable Firewall");?></td>
                 <td>
-                  <input name="disablefilter" type="checkbox" value="yes" <?= !empty($pconfig['disablefilter']) ? "checked=\"checked\"" : "";?>/>
-                  <?=gettext("Disable all packet filtering.");?>
+                    <label for="disablefilter">
+                      <input name="disablefilter" type="checkbox" id="disablefilter" value="yes" <?= !empty($pconfig['disablefilter']) ? "checked=\"checked\"" : "";?>/>
+                      <?=gettext("Disable all packet filtering.");?>
+                    </label>
                   <div class="hidden" data-for="help_for_disablefilter">
                     <?= gettext('Warning: This will convert into a routing-only platform!') ?><br />
                     <?= gettext('Warning: This will also turn off NAT!') ?><br />
@@ -711,8 +743,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_bypassstaticroutes" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Static route filtering");?></td>
                 <td>
-                  <input name="bypassstaticroutes" type="checkbox" value="yes" <?=!empty($pconfig['bypassstaticroutes']) ? "checked=\"checked\"" : "";?>/>
-                  <?=gettext("Bypass firewall rules for traffic on the same interface");?>
+                    <label for="bypassstaticroutes">
+                      <input name="bypassstaticroutes" type="checkbox" id="bypassstaticroutes" value="yes" <?=!empty($pconfig['bypassstaticroutes']) ? "checked=\"checked\"" : "";?>/>
+                      <?=gettext("Bypass firewall rules for traffic on the same interface");?>
+                    </label>
                   <div class="hidden" data-for="help_for_bypassstaticroutes">
                     <?=gettext("This option only applies if you have defined one or more static routes. If it is enabled, traffic that enters and " .
                                         "leaves through the same interface will not be checked by the firewall. This may be desirable in some situations where " .
@@ -723,8 +757,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_disablereplyto" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext('Disable reply-to') ?></td>
                 <td>
-                  <input name="disablereplyto" type="checkbox" value="yes" <?=!empty($pconfig['disablereplyto']) ? "checked=\"checked\"" : "";?> />
-                  <?=gettext("Disable reply-to on WAN rules");?>
+                    <label for="disablereplyto">
+                      <input name="disablereplyto" type="checkbox" id="disablereplyto" value="yes" <?=!empty($pconfig['disablereplyto']) ? "checked=\"checked\"" : "";?> />
+                      <?=gettext("Disable reply-to on WAN rules");?>
+                    </label>
                   <div class="hidden" data-for="help_for_disablereplyto">
                     <?=gettext("With Multi-WAN you generally want to ensure traffic leaves the same interface it arrives on, hence reply-to is added automatically by default. " .
                                         "When using bridging, you must disable this behavior if the WAN gateway IP is different from the gateway IP of the hosts behind the bridged interface.");?>
@@ -734,8 +770,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_noantilockout" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Disable anti-lockout"); ?></td>
                 <td>
-                  <input name="noantilockout" type="checkbox" value="yes" <?= empty($pconfig['noantilockout']) ? '' : 'checked="checked"' ?>/>
-                  <?= gettext('Disable administration anti-lockout rule') ?>
+                    <label for="noantilockout">
+                      <input name="noantilockout" type="checkbox" id="noantilockout" value="yes" <?= empty($pconfig['noantilockout']) ? '' : 'checked="checked"' ?>/>
+                      <?= gettext('Disable administration anti-lockout rule') ?>
+                    </label>
                   <div class="hidden" data-for="help_for_noantilockout">
                     <?= sprintf(gettext("When this is unchecked, access to the web GUI or SSH " .
                                 "on the %s interface is always permitted, regardless of the user-defined firewall " .
@@ -797,8 +835,10 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_checkaliasesurlcert" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Check certificate of aliases URLs");?></td>
                 <td>
-                  <input name="checkaliasesurlcert" type="checkbox" value="yes" <?=!empty($pconfig['checkaliasesurlcert']) ? "checked=\"checked\"" : "";?> />
-                  <?=gettext("Verify HTTPS certificates when downloading alias URLs");?>
+                    <label for="checkaliasesurlcert">
+                      <input name="checkaliasesurlcert" type="checkbox" id="checkaliasesurlcert" value="yes" <?=!empty($pconfig['checkaliasesurlcert']) ? "checked=\"checked\"" : "";?> />
+                      <?=gettext("Verify HTTPS certificates when downloading alias URLs");?>
+                    </label>
                   <div class="hidden" data-for="help_for_checkaliasesurlcert">
                     <?=gettext("Make sure the certificate is valid for all HTTPS addresses on aliases. If it's not valid or is revoked, do not download it.");?>
                   </div>

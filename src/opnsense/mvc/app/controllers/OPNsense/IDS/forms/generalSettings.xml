@@ -8,12 +8,14 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable intrusion detection system.</help>
+        <input_label>Enable IDS</input_label>
     </field>
     <field>
         <id>ids.general.mode</id>
         <label>Capture mode</label>
         <type>dropdown</type>
         <help>Choose PCAP live capture mode for inspection only (IDS), Netmap to filter all traffic on the selected interfaces in IPS mode and Divert to integrate IPS in firewall rules.</help>
+        <input_label>Enable protection mode</input_label>
     </field>
     <field>
         <id>ids.general.promisc</id>
@@ -21,6 +23,7 @@
         <type>checkbox</type>
         <style>selectpicker ids_mode ids_mode_pcap ids_mode_netmap</style>
         <help>Enable promiscuous mode, for certain setups (like IPS with vlans), this is required to actually capture data on the physical interface.</help>
+        <input_label>Enable promiscuous mode</input_label>
     </field>
     <field>
         <id>ids.general.interfaces</id>
@@ -94,6 +97,7 @@
         <label>Enable syslog alerts</label>
         <type>checkbox</type>
         <help>Send alerts to system log in fast log format. This will not change the alert logging used by the product itself.</help>
+        <input_label>Enable syslog alerts</input_label>
     </field>
     <field>
         <id>ids.general.syslog_eve</id>
@@ -104,6 +108,7 @@
           This will not change the alert logging used by the product itself.
           Drop logs will only be send to the internal logger, due to restrictions in suricata.
         </help>
+        <input_label>Enable eve syslog output</input_label>
     </field>
     <field>
         <id>ids.general.verbosity</id>
@@ -130,6 +135,7 @@
         <type>checkbox</type>
         <help>Send package payload to the log for further analyses.</help>
         <advanced>true</advanced>
+        <input_label>Log package payload</input_label>
     </field>
     <field>
         <id>ids.general.eveLog.http.enable</id>
@@ -137,6 +143,7 @@
         <type>checkbox</type>
         <help>Send HTTP metadata to eve-log for further analyses.</help>
         <advanced>true</advanced>
+        <input_label>Enable eve HTTP logging</input_label>
     </field>
     <field>
         <id>ids.general.eveLog.http.extended</id>
@@ -144,6 +151,7 @@
         <type>checkbox</type>
         <help>Add extended information to eve HTTP logging.</help>
         <advanced>true</advanced>
+        <input_label>Eve HTTP extended logging</input_label>
     </field>
     <field>
         <id>ids.general.eveLog.http.dumpAllHeaders</id>
@@ -158,6 +166,7 @@
         <type>checkbox</type>
         <help>Send TLS metadata to eve-log for further analyses.</help>
         <advanced>true</advanced>
+        <input_label>Enable eve TLS logging</input_label>
     </field>
     <field>
         <id>ids.general.eveLog.tls.extended</id>
@@ -165,6 +174,7 @@
         <type>checkbox</type>
         <help>Add extended information to eve TLS logging. For example, SNI field.</help>
         <advanced>true</advanced>
+        <input_label>Eve TLS extended logging</input_label>
     </field>
     <field>
         <id>ids.general.eveLog.tls.sessionResumption</id>
@@ -172,6 +182,7 @@
         <type>checkbox</type>
         <help>Output TLS transaction where the session is resumed using a session id</help>
         <advanced>true</advanced>
+        <input_label>Eve TLS log session resumption</input_label>
     </field>
     <field>
         <id>ids.general.eveLog.tls.custom</id>

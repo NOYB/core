@@ -8,6 +8,7 @@
                 By default, if several SAs match, the newest one is preferred if it's at least 30 seconds old.
                 Select this option to always prefer old SAs over new ones.
             </help>
+            <input_label>Prefer older IPsec SAs</input_label>
         </field>
         <field>
             <id>ipsec.general.disablevpnrules</id>
@@ -17,6 +18,7 @@
                 This option only applies to legacy tunnel configurations, connections do require manual firewall
                 rules being setup.
             </help>
+            <input_label>Disable legacy auto-added VPN rules</input_label>
         </field>
         <field>
             <id>ipsec.general.passthrough_networks</id>
@@ -56,11 +58,13 @@
             <label>Accounting</label>
             <type>checkbox</type>
             <help>Enable RADIUS accounting</help>
+            <input_label>Enable RADIUS accounting</input_label>
         </field>
         <field>
             <id>ipsec.charon.plugins.eap-radius.class_group</id>
             <label>Group selection (class_group)</label>
             <type>checkbox</type>
+            <input_label>Group selection</input_label>
         </field>
     </tab>
     <tab id="ipsec-xauth-pam" description="xauth-pam">
@@ -75,12 +79,14 @@
             <label>Session</label>
             <type>checkbox</type>
             <help>Open/close a PAM session for each active IKE_SA</help>
+            <input_label>Open/close a PAM session</input_label>
         </field>
         <field>
             <id>ipsec.charon.plugins.xauth-pam.trim_email</id>
             <label>Trim_email</label>
             <type>checkbox</type>
             <help>If an email address is received as an XAuth username, trim it to just the username part</help>
+            <input_label>Trim email</input_label>
         </field>
     </tab>
     <tab id="ipsec-charon" description="Charon">
@@ -104,6 +110,7 @@
                     only the ones in the config will be sent.
                     This always happens for IKEv1 connections as the protocol only supports one set of traffic selectors per CHILD SA
             </help>
+            <input_label>Ignore acquire ts</input_label>
         </field>
         <field>
             <id>ipsec.charon.threads</id>
@@ -137,18 +144,21 @@
             <label>Make Before Break</label>
             <type>checkbox</type>
             <help>Initiate IKEv2 reauthentication with a make-before-break instead of a break-before-make scheme. Make-before-break uses overlapping IKE and CHILD SA during reauthentication by first recreating all new SAs before deleting the old ones. This behavior can be beneficial to avoid connectivity gaps during reauthentication, but requires support for overlapping SAs by the peer.</help>
+            <input_label>Initiate IKEv2 reauthentication</input_label>
         </field>
         <field>
             <id>ipsec.charon.install_routes</id>
             <label>Install routes</label>
             <type>checkbox</type>
             <help>Install routes into a separate routing table for established IPsec tunnels. If disabled a more efficient lookup for source and next-hop addresses is used.</help>
+            <input_label>Install routes</input_label>
         </field>
         <field>
             <id>ipsec.charon.cisco_unity</id>
             <label>Cisco Unity</label>
             <type>checkbox</type>
             <help>Send Cisco Unity vendor ID payload (IKEv1 only).</help>
+            <input_label>Send Cisco Unity vendor ID payload</input_label>
         </field>
         <field>
             <id>ipsec.charon.reqid_base</id>
@@ -202,12 +212,14 @@
             <label>Ike Name</label>
             <type>checkbox</type>
             <help>Prefix each log entry with the connection name and a unique numerical identifier for each IKE_SA.</help>
+            <input_label>Prefix log entries with connection and identifier</input_label>
         </field>
         <field>
             <id>ipsec.charon.syslog.daemon.log_level</id>
             <label>Log Level</label>
             <type>checkbox</type>
             <help>Add the log level of each message after the subsystem (e.g. [IKE2]).</help>
+            <input_label>Add message log level after subsystem</input_label>
         </field>
         <field>
             <type>header</type>
@@ -364,6 +376,7 @@
             <label>Save password</label>
             <type>checkbox</type>
             <help>Allow client to save Xauth password in local storage</help>
+            <input_label>Allow client to save Xauth password</input_label>
         </field>
         <field>
             <id>ipsec.charon.plugins.attr.x_28679</id>

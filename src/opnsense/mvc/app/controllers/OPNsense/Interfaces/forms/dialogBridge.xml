@@ -24,6 +24,7 @@
         <label>Enable link-local address</label>
         <type>checkbox</type>
         <help>By default, link-local addresses for bridges are disabled. You can enable them manually using this option. However, when a bridge interface has IPv6 addresses, IPv6 addresses on a member interface will be automatically removed before the interface is added.</help>
+        <input_label>Enable link-local address</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>
@@ -39,6 +40,7 @@
         <label>Enable</label>
         <type>checkbox</type>
         <help>Enable spanning tree options for this bridge.</help>
+        <input_label>Enable spanning tree</input_label>
         <advanced>true</advanced>
         <grid_view>
             <type>boolean</type>

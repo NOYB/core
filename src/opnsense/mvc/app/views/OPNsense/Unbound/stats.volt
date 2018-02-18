@@ -182,7 +182,7 @@
 <div class="content-box">
     <div class="content-box-main">
         <div class="col-sm-12 __mt">
-           <label>
+            <label for="auto_refresh">
                 <input id="auto_refresh" type="checkbox" checked="checked">
                 <span class="fa fa-refresh"></span> {{ lang._('Auto refresh') }}
             </label>

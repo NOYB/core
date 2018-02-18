@@ -7,6 +7,7 @@
         <id>cso.enabled</id>
         <label>Enabled</label>
         <type>checkbox</type>
+        <input_label>Enable client specific override</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>
@@ -42,6 +43,7 @@
             Block this client connection based on its common name.
             Don't use this option to permanently disable a client due to a compromised key or password. Use a CRL (certificate revocation list) instead.
         </help>
+        <input_label>Block client based on CN</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -59,6 +61,7 @@
             and --route-gateway will get lost and this will break client configs in many cases.
         </help>
         <advanced>true</advanced>
+        <input_label>Don't inhearit global push list</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -142,6 +145,7 @@
         <label>Register DNS</label>
         <type>checkbox</type>
         <help>Run ipconfig /flushdns and ipconfig /registerdns on connection initiation. This is known to kick Windows into recognizing pushed DNS servers.</help>
+        <input_label>Flush and Register DNS on connection</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>

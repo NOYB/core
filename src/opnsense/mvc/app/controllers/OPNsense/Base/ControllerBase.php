@@ -193,6 +193,7 @@ class ControllerBase extends ControllerRoot
                 case "help":
                 case "hint":
                 case "label":
+                case "input_label":
                     $result[$key] = gettext((string)$node);
                     break;
                 default:

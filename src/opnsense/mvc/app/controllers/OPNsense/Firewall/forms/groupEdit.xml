@@ -28,6 +28,7 @@
         <label>(no) GUI groups</label>
         <type>checkbox</type>
         <help>Prevent grouping these members in the interfaces menu section</help>
+        <input_label>Don't group in interfaces menu section</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>

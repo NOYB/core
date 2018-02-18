@@ -2,12 +2,14 @@
     <field>
         <type>header</type>
         <label>Organisation</label>
+        <input_label>Enable rule</input_label>
     </field>
     <field>
         <id>rule.enabled</id>
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable this rule</help>
+        <input_label>Enable this rule</input_label>
         <grid_view>
             <width>50</width>
             <type>boolean</type>
@@ -56,6 +58,7 @@
         <label>No XMLRPC Sync</label>
         <type>checkbox</type>
         <help>Exclude this item from the HA synchronization process. An already existing item with the same UUID on the synchronization target will not be altered or deleted as long as this is active.</help>
+        <input_label>Exclude from HA synchronization</input_label>
         <advanced>true</advanced>
         <grid_view>
             <visible>false</visible>
@@ -82,6 +85,7 @@
         <label>Invert Interface</label>
         <type>checkbox</type>
         <help>Use all but selected interfaces</help>
+        <input_label>Invert Interface</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -108,6 +112,7 @@
             If a packet matches a rule specifying quick, then that rule is considered the last matching rule and the specified action is taken.
             When a rule does not have quick enabled, the last matching rule wins.
         </help>
+        <input_label>Take action immediately on match</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -128,6 +133,7 @@
         <label>Allow options</label>
         <type>checkbox</type>
         <help>This allows packets with IP options to pass. Otherwise they are blocked by default.</help>
+        <input_label>Allow options to pass</input_label>
         <advanced>true</advanced>
         <grid_view>
             <visible>false</visible>
@@ -189,6 +195,7 @@
         <label>Invert Source</label>
         <type>checkbox</type>
         <help>Use this option to invert the sense of the match.</help>
+        <input_label>Invert the sense of match</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -222,6 +229,7 @@
         <label>Invert Destination</label>
         <type>checkbox</type>
         <help>Use this option to invert the sense of the match.</help>
+        <input_label>Invert the sense of match</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -236,6 +244,7 @@
             <sequence>70</sequence>
             <min-width>100</min-width>
         </grid_view>
+        <input_label>Invert the sense of match</input_label>
     </field>
     <field>
         <id>rule.destination_port</id>
@@ -255,6 +264,7 @@
         <label>Log</label>
         <type>checkbox</type>
         <help>Log packets that are handled by this rule</help>
+        <input_label>Log packets handled by this rule</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -284,6 +294,7 @@
         <label>TCP flags any</label>
         <type>checkbox</type>
         <help>Use this to choose TCP flags that must be cleared for this rule to match.</help>
+        <input_label>TCP flags clear for rule to match</input_label>
         <advanced>true</advanced>
         <grid_view>
             <visible>false</visible>
@@ -349,6 +360,7 @@
         <label>NO pfsync</label>
         <type>checkbox</type>
         <help>This prevents states created by this rule to be synced with pfsync.</help>
+        <input_label>NO pfsync</input_label>
         <advanced>true</advanced>
         <grid_view>
             <type>boolean</type>
@@ -550,6 +562,7 @@
         <type>checkbox</type>
         <style>disable_replyto</style>
         <help>Explicit disable reply-to for this rule</help>
+        <input_label>Log packets handled by this rule</input_label>
         <advanced>true</advanced>
         <grid_view>
             <type>boolean</type>

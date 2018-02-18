@@ -535,10 +535,14 @@ $( document ).ready(function() {
                 </tr>
                 <tr>
                   <td>
-                    <input name="donotbackuprrd" type="checkbox" id="dotnotbackuprrd" checked="checked" />
-                    <?=gettext("Do not backup RRD data."); ?><br/>
-                    <input name="encrypt" type="checkbox" id="encryptconf" />
-                    <?=gettext("Encrypt this configuration file."); ?><br/>
+                    <label for="dotnotbackuprrd">
+                      <input name="donotbackuprrd" type="checkbox" id="dotnotbackuprrd" checked="checked" />
+                      <?=gettext("Do not backup RRD data."); ?>
+                    </label><br/>
+                    <label for="encryptconf">
+                      <input name="encrypt" type="checkbox" id="encryptconf" />
+                      <?=gettext("Encrypt this configuration file."); ?>
+                    </label><br/>
                     <div class="hidden table-responsive __mt" id="encrypt_opts">
                       <table class="table table-condensed">
                         <tr>
@@ -581,15 +585,22 @@ $( document ).ready(function() {
                       </select>
                     </div>
                     <br/><input name="conffile" type="file" id="conffile" /><br/>
-                    <input name="rebootafterrestore" type="checkbox" id="rebootafterrestore" <?= !empty($pconfig['rebootafterrestore']) ? 'checked="checked"' : '' ?>/>
-                    <?=gettext("Reboot after a successful restore."); ?><br/>
-                    <input name="keepconsole" type="checkbox" id="keepconsole" <?= !empty($pconfig['keepconsole']) ? 'checked="checked"' : '' ?>/>
-                    <?=gettext("Exclude console settings from import."); ?><br/>
-                    <input name="flush_history" type="checkbox" id="flush_history" <?= !empty($pconfig['flush_history']) ? 'checked="checked"' : '' ?>/>
-                    <?=gettext("Flush (full) local configuration history."); ?><br/>
-
-                    <input name="decrypt" type="checkbox" id="decryptconf" <?= !empty($pconfig['decrypt']) ? 'checked="checked"' : '' ?>/>
-                    <?=gettext("Configuration file is encrypted."); ?>
+                    <label for="rebootafterrestore">
+                      <input name="rebootafterrestore" type="checkbox" id="rebootafterrestore" <?= !empty($pconfig['rebootafterrestore']) ? 'checked="checked"' : '' ?>/>
+                      <?=gettext("Reboot after a successful restore."); ?>
+                    </label><br/>
+                    <label for="keepconsole">
+                      <input name="keepconsole" type="checkbox" id="keepconsole" <?= !empty($pconfig['keepconsole']) ? 'checked="checked"' : '' ?>/>
+                      <?=gettext("Exclude console settings from import."); ?>
+                    </label><br/>
+                    <label for="flush_history">
+                      <input name="flush_history" type="checkbox" id="flush_history" <?= !empty($pconfig['flush_history']) ? 'checked="checked"' : '' ?>/>
+                      <?=gettext("Flush (full) local configuration history."); ?><br/>
+                    </label><br/>
+                    <label for="decryptconf">
+                      <input name="decrypt" type="checkbox" id="decryptconf" <?= !empty($pconfig['decrypt']) ? 'checked="checked"' : '' ?>/>
+                      <?=gettext("Configuration file is encrypted."); ?>
+                    </label>
                     <div class="hidden table-responsive __mt" id="decrypt_opts">
                       <table class="table table-condensed">
                         <tr>
@@ -634,7 +645,9 @@ $( document ).ready(function() {
                         </td>
                         <td style="width:78%">
 <?php if ($field['type'] == 'checkbox'): ?>
-                        <input name="<?=$fieldId;?>" type="checkbox" <?=!empty($pconfig[$fieldId]) ? "checked" : "";?> >
+                        <label for="<?=$fieldId;?>">
+                          <input name="<?=$fieldId;?>" type="checkbox" id="<?=$fieldId;?>" <?=!empty($pconfig[$fieldId]) ? "checked" : "";?> >
+                        </label>
 <?php elseif ($field['type'] == 'text'): ?>
                         <input name="<?=$fieldId;?>" value="<?=$pconfig[$fieldId];?>" type="text">
 <?php elseif ($field['type'] == 'file'): ?>

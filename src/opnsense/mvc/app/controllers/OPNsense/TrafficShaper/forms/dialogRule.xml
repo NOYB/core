@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>enable this rule</help>
+        <input_label>Enable rule</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>
@@ -60,6 +61,7 @@
         <label>Invert source</label>
         <type>checkbox</type>
         <help>invert source (not)</help>
+        <input_label>invert source (not)</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -86,6 +88,7 @@
         <label>Invert destination</label>
         <type>checkbox</type>
         <help>invert destination (not)</help>
+        <input_label>invert destination (not)</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>

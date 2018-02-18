@@ -8,6 +8,7 @@
         <label>Disabled</label>
         <type>checkbox</type>
         <help>Disable this rule so it will not be used.</help>
+        <input_label>Disable this rule</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>rowtoggle</formatter>
@@ -93,6 +94,7 @@
         <label>Invert Source</label>
         <type>checkbox</type>
         <help>Match everything except the specified source.</help>
+        <input_label>Invert the sense of the source match</input_label>
         <grid_view>
             <ignore>true</ignore>
             <column-id>source.not</column-id>
@@ -135,6 +137,7 @@
         <label>Invert Destination</label>
         <type>checkbox</type>
         <help>Match everything except the specified destination.</help>
+        <input_label>Invert the sense of the destination match</input_label>
         <grid_view>
             <ignore>true</ignore>
             <column-id>destination.not</column-id>
@@ -228,6 +231,7 @@
         <label>Log</label>
         <type>checkbox</type>
         <help>Log packets matching this rule.</help>
+        <input_label>Log packets handled by this rule</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>
@@ -237,6 +241,7 @@
         <label>No XMLRPC Sync</label>
         <type>checkbox</type>
         <help>Exclude this rule from synchronizing to HA peers.</help>
+        <input_label>Disable XMLRPC sync</input_label>
         <advanced>true</advanced>
         <grid_view>
             <visible>false</visible>
@@ -277,6 +282,7 @@
         <label>Firewall rule</label>
         <type>dropdown</type>
         <help>By default, firewall rules need to be created manually, which is also the advised option. Alternatively you can use Pass, which passes traffic on the nat rule (not visible in the rules tab) or register automatic interface rules which can be overruled via rules with a higher priority. Please keep in mind the destination for the rule should match the target defined in this NAT rule.</help>
+        <input_label>Pass traffic without inspecting firewall rules</input_label>
         <grid_view>
             <visible>false</visible>
         </grid_view>

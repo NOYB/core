@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable or disable this server.</help>
+        <input_label>Enable server</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>
@@ -41,6 +42,7 @@
             Please note this setting applies to the domain, so when multiple forwarders are defined for the same domain,
             all are assumed to use tcp only.
         </help>
+        <input_label>Forward TCP upstream</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>
@@ -54,6 +56,7 @@
         <help>
             If a forwarded query is met with a SERVFAIL error, and this option is enabled, Unbound will fall back to normal recursive resolution for this query as if no query forwarding had been specified. The fallback will only occur after a delay, so consider refining any server timeouts as needed. Please note this setting applies to the domain, so when multiple forwarders are defined for the same domain, all are assumed to use this setting.
         </help>
+        <input_label>Forward first</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>

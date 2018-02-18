@@ -3,6 +3,7 @@
         <id>local.enabled</id>
         <label>Enabled</label>
         <type>checkbox</type>
+        <input_label>Enable</input_label>
     </field>
     <field>
         <id>local.connection</id>

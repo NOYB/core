@@ -4,6 +4,7 @@
       <label>Enable service checks</label>
       <type>checkbox</type>
       <help><![CDATA[Enable or disable service checks.]]></help>
+      <input_label>Enable service checks</input_label>
    </field>
    <field>
       <id>service.name</id>

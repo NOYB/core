@@ -32,5 +32,6 @@
       <label>Show Remote Text</label>
       <type>checkbox</type>
       <help>Shows the text given by the server when connecting to the port. Will take 10+ seconds to display if checked.</help>
+      <input_label>Show text from server when connecting</input_label>
     </field>
 </form>

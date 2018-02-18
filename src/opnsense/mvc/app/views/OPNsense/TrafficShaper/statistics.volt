@@ -257,8 +257,13 @@
                     <table>
                         <tr>
                             <td>
-                              <input id="show_rules" type="checkbox"> {{ lang._('Show rules') }} <br/>
-                              <input id="show_flows" type="checkbox"> {{ lang._('Show active flows') }}
+                              <label for="show_rules">
+                                <input id="show_rules" type="checkbox"> {{ lang._('Show rules') }}
+                              </label>
+                              <br/>
+                              <label for="show_flows">
+                                <input id="show_flows" type="checkbox"> {{ lang._('Show active flows') }}
+                              </label>
                             </td>
                             <td>&nbsp;</td>
                             <td>

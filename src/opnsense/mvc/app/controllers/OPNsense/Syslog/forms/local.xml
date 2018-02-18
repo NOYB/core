@@ -4,6 +4,7 @@
         <label>Enable local logging</label>
         <type>checkbox</type>
         <help>Enable writing log files to the local disk.</help>
+        <input_label>Write log files to local disk</input_label>
     </field>
     <field>
         <id>syslog.general.maxpreserve</id>

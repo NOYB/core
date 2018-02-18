@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable this queue and its related rules</help>
+        <input_label>Enable queue and related rules</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>
@@ -50,6 +51,7 @@
         <label>Enable CoDel</label>
         <type>checkbox</type>
         <help>Enable CoDel active queue management</help>
+        <input_label>Enable CoDel active queue management</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -82,6 +84,7 @@
         <type>checkbox</type>
         <advanced>true</advanced>
         <help>Explicit Congestion Notification</help>
+        <input_label>Explicit Congestion Notification</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -93,6 +96,7 @@
         <label>Enable PIE</label>
         <type>checkbox</type>
         <help>Enable PIE active queue management</help>
+        <input_label>Enable PIE active queue management</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>

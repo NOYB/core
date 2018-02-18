@@ -8,6 +8,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable DHCPv6 server.</help>
+        <input_label>Enable DHCPv4 server</input_label>
     </field>
     <field>
         <id>dhcpv6.general.manual_config</id>
@@ -15,6 +16,7 @@
         <type>checkbox</type>
         <advanced>true</advanced>
         <help>Disable configuration file generation and manage the file (/usr/local/etc/kea/kea-dhcp6.conf) manually.</help>
+        <input_label>Manage configuration manually</input_label>
     </field>
     <field>
         <type>header</type>
@@ -67,6 +69,7 @@
         <label>Firewall rules</label>
         <type>checkbox</type>
         <help>Automatically add a basic set of firewall rules to allow dhcp traffic, more fine grained controls can be offered manually when disabling this option.</help>
+        <input_label>Add basic firewall rules for DHCP traffic</input_label>
     </field>
     <field>
         <type>header</type>
@@ -128,6 +131,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable High availability hook, requires the Control Agent to be enabled as well.</help>
+        <input_label>Enable High availability hook</input_label>
     </field>
     <field>
         <id>dhcpv6.ha.this_server_name</id>

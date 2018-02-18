@@ -33,6 +33,7 @@
         <label>Override DNS</label>
         <type>checkbox</type>
         <help>Allow DNS servers to be overridden by DHCP/PPP on WAN</help>
+        <input_label>Override DNS</input_label>
     </field>
     <field>
         <type>header</type>
@@ -42,16 +43,19 @@
         <id>wizard.unbound.enabled</id>
         <label>Enable Resolver</label>
         <type>checkbox</type>
+        <input_label>Enable Resolver</input_label>
     </field>
     <field>
         <id>wizard.unbound.dnssec</id>
         <label>Enable DNSSEC Support</label>
         <type>checkbox</type>
+        <input_label>Enable DNSSEC support</input_label>
     </field>
     <field>
         <id>wizard.unbound.dnssecstripped</id>
         <label>Harden DNSSEC data</label>
         <type>checkbox</type>
         <help>DNSSEC data is required for trust-anchored zones. If such data is absent, the zone becomes bogus. If this is disabled and no DNSSEC data is received, then the zone is made insecure.</help>
+        <input_label>Harden DNSSEC data</input_label>
     </field>
 </form>

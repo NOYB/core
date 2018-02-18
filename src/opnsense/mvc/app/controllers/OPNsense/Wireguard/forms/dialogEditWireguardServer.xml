@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>This will enable or disable the instance.</help>
+        <input_label>Enable instance</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>
@@ -99,6 +100,7 @@
         <label>Disable routes</label>
         <type>checkbox</type>
         <help>This will prevent installing routes. Usually you only enable this to do own routing decisions via a local gateway and gateway rules.</help>
+        <input_label>Prevent installing routes</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -120,6 +122,7 @@
         <label>Debug Log</label>
         <type>checkbox</type>
         <help>Enable the debug flag on this instance for enhanced error logging.</help>
+        <input_label>Debug Log</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>

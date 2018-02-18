@@ -47,6 +47,7 @@
         <id>gif.link2</id>
         <label>Disable Ingress filtering</label>
         <type>checkbox</type>
+        <input_label>Disable Ingress filtering</input_label>
         <help>Ingress filtering on outer tunnel source can break tunnel operation in an asymmetrically routed networks, in which case this can be disabled by marking this option.</help>
         <grid_view>
             <type>boolean</type>
@@ -58,6 +59,7 @@
         <id>gif.link1</id>
         <label>ECN friendly behavior</label>
         <type>checkbox</type>
+        <input_label>ECN friendly behavior</input_label>
         <help>Note that the ECN friendly behavior violates RFC2893. This should be used in mutual agreement with the peer.</help>
         <grid_view>
             <type>boolean</type>

@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Select if job is enabled or not</help>
+        <input_label>Enable job</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>rowtoggle</formatter>

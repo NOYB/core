@@ -8,6 +8,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable DHCPv4 server.</help>
+        <input_label>Enable DHCPv4 server</input_label>
     </field>
     <field>
         <id>dhcpv4.general.manual_config</id>
@@ -15,6 +16,7 @@
         <type>checkbox</type>
         <advanced>true</advanced>
         <help>Disable configuration file generation and manage the file (/usr/local/etc/kea/kea-dhcp4.conf) manually.</help>
+        <input_label>Manage configuration manually</input_label>
     </field>
     <field>
         <type>header</type>
@@ -61,6 +63,7 @@
         <label>Firewall rules</label>
         <type>checkbox</type>
         <help>Automatically add a basic set of firewall rules to allow dhcp traffic, more fine grained controls can be offered manually when disabling this option.</help>
+        <input_label>Add basic firewall rules for DHCP traffic</input_label>
     </field>
     <field>
         <id>dhcpv4.general.dhcp_socket_type</id>
@@ -128,6 +131,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable High availability hook, requires the Control Agent to be enabled as well.</help>
+        <input_label>Enable high availability hook</input_label>
     </field>
     <field>
         <id>dhcpv4.ha.this_server_name</id>

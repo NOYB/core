@@ -61,6 +61,7 @@
         <type>checkbox</type>
         <help>Always send the option, also when the client does not ask for it in the parameter request list.</help>
         <style>style_set</style>
+        <input_label>Force</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>

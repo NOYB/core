@@ -30,6 +30,7 @@
       Disable fragmentation.
       Can be helpful to determine the maximum size a transport is able to send.
       </help>
+      <input_label>Disable fragmentation</input_label>
     </field>
     <field>
        <id>ping.settings.interval</id>

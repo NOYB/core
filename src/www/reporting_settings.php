@@ -227,8 +227,10 @@ $(document).ready(function() {
                   <tr>
                     <td style="width:22%"><i class="fa fa-info-circle text-muted"></i> <?=gettext("Statistics");?></td>
                     <td>
+                      <label for="unboundenable">
                         <input name="unboundenable" type="checkbox" id="unboundenable" value="yes" <?=!empty($pconfig['unboundenable']) ? "checked=\"checked\"" : ""?> />
                         &nbsp;<strong><?=gettext("Enables local gathering of statistics.");?></strong>
+                      </label>
                     </td>
                   </tr>
                   <tr>
@@ -252,8 +254,10 @@ $(document).ready(function() {
                   <tr>
                     <td style="width:22%"><i class="fa fa-info-circle text-muted"></i> <?=gettext("Round-Robin-Database");?></td>
                     <td>
-                      <input name="rrdenable" type="checkbox" id="rrdenable" value="yes" <?=!empty($pconfig['rrdenable']) ? "checked=\"checked\"" : ""?> />
-                      &nbsp;<strong><?=gettext("Enables the RRD graphing backend.");?></strong>
+                      <label for="rrdenable">
+                        <input name="rrdenable" type="checkbox" id="rrdenable" value="yes" <?=!empty($pconfig['rrdenable']) ? "checked=\"checked\"" : ""?> />
+                        &nbsp;<strong><?=gettext("Enables the RRD graphing backend.");?></strong>
+                      </label>
                     </td>
                   </tr>
                   <tr>

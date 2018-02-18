@@ -4,5 +4,6 @@
         <label>Enable WireGuard</label>
         <type>checkbox</type>
         <help>This will activate WireGuard and start all enabled instances.</help>
+        <input_label>Enable and start WireGuard</input_label>
     </field>
 </form>

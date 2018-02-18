@@ -99,7 +99,9 @@
                                 <input type="checkbox" id="resolve" name="resolve" value="yes">
                             </td>
                             <td>
-                                <strong><?=gettext("Name resolution");?></strong>
+                                <label for="resolve">
+                                    <strong><?=gettext("Name resolution");?></strong>
+                                </label>
                                 <p class="text-muted">
                                     <small>
                                         {{ lang._('Enable this to attempt to resolve names when displaying the tables. By enabling name resolution, the query may take longer.') }}

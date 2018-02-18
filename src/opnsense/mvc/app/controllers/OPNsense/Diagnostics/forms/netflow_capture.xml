@@ -16,6 +16,7 @@
         <label>Capture local</label>
         <type>checkbox</type>
         <help>Collect NetFlow data on this firewall for use with Insight. Note that the local cache only holds the latest 100 MB of data.</help>
+        <input_label>Collect NetFlow data</input_label>
     </field>
     <field>
         <id>netflow.capture.version</id>

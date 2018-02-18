@@ -40,6 +40,7 @@
  #                   color              color picker for selecting a color
  #                   datetime-local     local time picker
  # label       :   attribute label (visible text)
+ # input_label :   input control label (typically used on checkboxes and radio buttons)
  # size        :   size (width in characters) attribute if applicable
  # height      :   height (length in characters) attribute if applicable
  # help        :   help text
@@ -92,7 +93,12 @@
         {% elseif type == "hidden" %}
             <input type="hidden" id="{{ id }}" class="{{style|default('')}}" {% if type_formatter is defined %}type_formatter="{{type_formatter}}"{% endif %} >
         {% elseif type == "checkbox" %}
+            <label for="{{ id }}">
             <input type="checkbox"  class="{{style|default('')}}" id="{{ id }}" aria-label="{{label|safe}}">
+              {% if input_label|default(false) %}
+                {{input_label}}
+              {% endif %}
+            </label>
         {% elseif type in ["select_multiple", "dropdown"] %}
             <div id="select_{{ id }}">
             <select aria-label="{{label|safe}}" {% if type == 'select_multiple' %}multiple="multiple"{% endif %}

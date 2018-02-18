@@ -8,6 +8,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable this rule</help>
+        <input_label>Enable rule</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>rowtoggle</formatter>
@@ -103,6 +104,7 @@
         <label>Log</label>
         <type>checkbox</type>
         <help>Log packets that are handled by this rule</help>
+        <input_label>Log packets handled by this rule</input_label>
         <grid_view>
             <ignore>true</ignore>
         </grid_view>

@@ -35,6 +35,7 @@
         <id>instance.enabled</id>
         <label>Enabled</label>
         <type>checkbox</type>
+        <input_label>Enable Instance</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>
@@ -169,6 +170,7 @@
         <type>checkbox</type>
         <style>role role_server_tun role_server_ovpn</style>
         <help>Do not set up a dynamic pool for the server directive. IP addresses will only be pushed to a client if specified in a CSO, or they can be statically set in the client configuration.</help>
+        <input_label>No server directive pool</input_label>
         <grid_view>
             <visible>false</visible>
         </grid_view>
@@ -252,6 +254,7 @@
             and for servers, to prevent man-in-the-middle attacks where an authorized client attempts to connect to another client by impersonating
             the server.
         </help>
+        <input_label>Verify Remote Certificate</input_label>
         <grid_view>
             <visible>false</visible>
         </grid_view>
@@ -292,6 +295,7 @@
         <style>role role_server</style>
         <type>checkbox</type>
         <help>When the CA used supplies an authorityInfoAccess OCSP URI extension, it will be used to validate the client certificate.</help>
+        <input_label>Use OCSP to validate client certificate</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -387,6 +391,7 @@
         <advanced>true</advanced>
         <style>role role_server</style>
         <help>Use the authenticated username as the common-name, rather than the common-name from the client certificate.</help>
+        <input_label>Use authenticated username as CN</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -399,6 +404,7 @@
         <type>dropdown</type>
         <style>selectpicker role role_server</style>
         <help>When authenticating users, enforce a match between the Common Name of the client certificate and the username given at login.</help>
+        <input_label>Require username and CN match</input_label>
         <grid_view>
             <visible>false</visible>
         </grid_view>
@@ -483,6 +489,7 @@ Set to 0 to disable, remember to change your client as well.
         Require, as a condition for authentication, that a tunnel address will be provisioned either from a local defined client-specific override or offered by an authenticator (such as RADIUS) .
         This is similar to OpenVPN's 'ccd-exclusive' option, but stricter as we expect the client to receive a tunnel address for the protocol used.
         </help>
+        <input_label>Require client provisioning</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -588,6 +595,7 @@ Set to 0 to disable, remember to change your client as well.
         <type>checkbox</type>
         <style>role role_server</style>
         <help>Run ipconfig /flushdns and ipconfig /registerdns on connection initiation. This is known to kick Windows into recognizing pushed DNS servers.</help>
+        <input_label>Flush and Register DNS on connection</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -670,6 +678,7 @@ Set to 0 to disable, remember to change your client as well.
         <type>checkbox</type>
         <advanced>true</advanced>
         <help>Announce to TCP sessions running over the tunnel that they should limit their send packet sizes such that after OpenVPN has encapsulated them, the resulting UDP packet size that OpenVPN sends to its peer will not exceed the recommended size.</help>
+        <input_label>MSS fix</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -683,6 +692,7 @@ Set to 0 to disable, remember to change your client as well.
         <advanced>true</advanced>
         <style>role role_server</style>
         <help>Conditionally use stub compression for clients configured with compression. This functionality is deprecated in OpenVPN.</help>
+        <input_label>Use stub compression (deprecated)</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -696,6 +706,7 @@ Set to 0 to disable, remember to change your client as well.
         <advanced>true</advanced>
         <style>role role_server</style>
         <help>Save ip address pool to disk</help>
+        <input_label>Persist address pool (save to disk)</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>

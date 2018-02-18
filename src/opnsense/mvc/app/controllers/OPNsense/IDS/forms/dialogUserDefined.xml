@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable this fingerprint rule.</help>
+        <input_label>Enable fingerprint rule</input_label>
     </field>
     <field>
         <id>rule.source</id>
@@ -34,6 +35,7 @@
         <label>Bypass</label>
         <type>checkbox</type>
         <help>Set bypass keyword. Increases traffic throughput. Suricata reads a packet, decodes it, checks it in the flow table. If the corresponding flow is local bypassed then it simply skips all streaming, detection and output and the packet goes directly out in IDS mode and to verdict in IPS mode.</help>
+        <input_label>Bypass IDS keyword</input_label>
     </field>
     <field>
         <id>rule.description</id>

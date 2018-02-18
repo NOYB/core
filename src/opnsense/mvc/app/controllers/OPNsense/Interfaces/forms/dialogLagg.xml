@@ -42,6 +42,7 @@
         <type>checkbox</type>
         <style>proto proto_lacp</style>
         <help>Enable lacp fast-timeout on the interface.</help>
+        <input_label>LACP fast-timeout</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>

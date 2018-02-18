@@ -4,6 +4,7 @@
       <label>Enable alert</label>
       <type>checkbox</type>
       <help><![CDATA[Enable or disable alert.]]></help>
+      <input_label>Enable alert</input_label>
    </field>
    <field>
       <id>alert.recipient</id>
@@ -16,6 +17,7 @@
       <label>Not on</label>
       <type>checkbox</type>
       <help><![CDATA[Do not send alerts for the following events but on all others.]]></help>
+      <input_label>Do not alert for following events</input_label>
    </field>
    <field>
       <id>alert.events</id>

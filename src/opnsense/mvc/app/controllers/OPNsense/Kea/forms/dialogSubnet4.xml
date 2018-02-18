@@ -41,6 +41,7 @@
         <label>Match client-id</label>
         <type>checkbox</type>
         <help>By default, KEA uses client-identifiers instead of MAC addresses to locate clients, disabling this option changes back to matching on MAC address which is used by most dhcp implementations.</help>
+        <input_label>Use client-identifiers</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>
@@ -56,6 +57,7 @@
         <label>Auto collect option data</label>
         <type>checkbox</type>
         <help>Automatically update option data for relevant attributes as routers, dns servers and ntp servers when applying settings from the gui.</help>
+        <input_label>Automatically update option data</input_label>
         <grid_view>
             <type>boolean</type>
             <formatter>boolean</formatter>

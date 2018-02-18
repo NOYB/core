@@ -12,6 +12,7 @@
       <label>Promiscuous</label>
       <type>checkbox</type>
       <help>When set, the system will capture all traffic present on the interface in stead of the traffic heading to the firewall.</help>
+      <input_label>Capture all traffic present on the interface</input_label>
     </field>
     <field>
       <id>packetcapture.settings.fam</id>
@@ -24,6 +25,7 @@
       <label>Invert Protocol</label>
       <type>checkbox</type>
       <help>invert protocol (not)</help>
+      <input_label>Invert protocol (not)</input_label>
     </field>
     <field>
       <id>packetcapture.settings.protocol</id>
@@ -50,6 +52,7 @@
       <label>Invert Port</label>
       <type>checkbox</type>
       <help>invert port (not)</help>
+      <input_label>Invert port (not)</input_label>
     </field>
     <field>
        <id>packetcapture.settings.port</id>

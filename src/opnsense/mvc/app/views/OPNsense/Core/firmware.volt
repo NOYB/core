@@ -1056,8 +1056,10 @@
                             <tr data-advanced="true">
                                 <td style="width: 150px;"><i class="fa fa-info-circle text-muted"></i> {{ lang._('Reboot') }}</td>
                                 <td>
-                                    <input type="checkbox" id="firmware_reboot">
-                                    {{ lang._('Always reboot after a successful update') }}
+                                    <label for="firmware_reboot">
+                                        <input type="checkbox" id="firmware_reboot">
+                                        {{ lang._('Always reboot after a successful update') }}
+                                    </label>
                                 </td>
                                 <td></td>
                             </tr>

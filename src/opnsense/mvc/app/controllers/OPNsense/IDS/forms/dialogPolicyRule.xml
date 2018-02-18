@@ -4,6 +4,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable this rule.</help>
+        <input_label>Enable rule</input_label>
         <grid_view>
             <width>100</width>
             <type>boolean</type>

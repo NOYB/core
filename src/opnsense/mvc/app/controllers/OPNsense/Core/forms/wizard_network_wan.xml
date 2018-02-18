@@ -78,11 +78,13 @@
         <label>Block RFC1918 Private Networks</label>
         <type>checkbox</type>
         <help>When set, this option blocks traffic from IP addresses that are reserved for private networks as per RFC 1918 (10/8, 172.16/12, 192.168/16) as well as loopback addresses (127/8) and Carrier-grade NAT addresses (100.64/10). This option should only be set for WAN interfaces that use the public IP address space.</help>
+        <input_label>Block RFC1918 private networks</input_label>
     </field>
     <field>
         <id>wizard.interfaces.wan.blockbogons</id>
         <label>Block bogon networks</label>
         <type>checkbox</type>
         <help>When set, this option blocks traffic from IP addresses that are reserved (but not RFC 1918) or not yet assigned by IANA.</help>
+        <input_label>Block bogon networks</input_label>
     </field>
 </form>

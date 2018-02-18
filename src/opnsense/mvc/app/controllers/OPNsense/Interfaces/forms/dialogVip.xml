@@ -77,6 +77,7 @@
       <type>checkbox</type>
       <help>Disable expansion of this entry into IPs on NAT lists (e.g. 192.168.1.0/24 expands to 256 entries.</help>
       <style>mode mode_proxyarp</style>
+      <input_label>Disable NAT lists expansion to IPs</input_label>
       <grid_view>
         <type>boolean</type>
         <mode>proxyarp</mode>
@@ -91,6 +92,7 @@
       <type>checkbox</type>
       <help>Assigning services to the virtual IP's interface will automatically include this address. Check to prevent binding to this address instead.</help>
       <style>mode mode_carp mode_ipalias</style>
+      <input_label>Prevent binding to this address</input_label>
       <grid_view>
         <type>boolean</type>
         <mode>carp ipalias</mode>
@@ -151,6 +153,7 @@
         <label>No XMLRPC Sync</label>
         <type>checkbox</type>
         <help>Exclude this item from HA synchronization. Enable manually for the same item on both master and backup to prevent changes, deletions, or syncing. If this setting is removed from the backup but kept on the master, the item will be deleted on the backup during synchronization. Useful for Unicast CARP: after initial sync, enable this and adjust Unicast IPs. Additional IP aliases in the same VHID group can then sync without overwriting their parent CARP VIP.</help>
+        <input_label>Exclude from HA synchronization</input_label>
         <style>mode mode_carp mode_ipalias</style>
         <grid_view>
             <type>boolean</type>

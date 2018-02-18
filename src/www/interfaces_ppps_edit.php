@@ -704,8 +704,10 @@ include("head.inc");
                       <tr style="display:none" class="act_show_advanced">
                         <td><a id="help_for_uptime" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?= gettext("Uptime Logging"); ?></td>
                         <td>
-                          <input type="checkbox" value="on" id="uptime" name="uptime" <?=!empty($pconfig['uptime']) ? "checked=\"checked\"" : ""; ?> />
-                          <?= gettext("Enable persistent logging of connection uptime."); ?>
+                          <label for="uptime">
+                            <input type="checkbox" value="on" id="uptime" name="uptime" <?=!empty($pconfig['uptime']) ? "checked=\"checked\"" : ""; ?> />
+                            <?= gettext("Enable persistent logging of connection uptime."); ?>
+                          </label>
                           <div class="hidden" data-for="help_for_uptime">
                             <?= gettext("This option causes cumulative uptime to be recorded and displayed on the Status Interfaces page."); ?>
                           </div>
@@ -719,8 +721,10 @@ include("head.inc");
                       <tr style="display:none" class="act_show_advanced">
                         <td style="width:22%"><a id="help_for_ondemand" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?= gettext("Dial On Demand"); ?></td>
                         <td style="width:78%">
-                          <input type="checkbox" value="on" id="ondemand" name="ondemand" <?=!empty($pconfig['ondemand']) ? "checked=\"checked\"" : ""; ?> />
-                          <?= gettext("Enable Dial-on-Demand mode"); ?>
+                          <label for="ondemand">
+                            <input type="checkbox" value="on" id="ondemand" name="ondemand" <?=!empty($pconfig['ondemand']) ? "checked=\"checked\"" : ""; ?> />
+                            <?= gettext("Enable Dial-on-Demand mode"); ?>
+                          </label>
                           <div class="hidden" data-for="help_for_ondemand">
                             <?= gettext("This option causes the interface to operate in dial-on-demand mode. Do NOT enable if you want your link to be always up. " .
                             "The interface is configured, but the actual connection of the link is delayed until qualifying outgoing traffic is detected."); ?>
@@ -741,8 +745,10 @@ include("head.inc");
                       <tr style="display:none" class="act_show_advanced">
                         <td><a id="help_for_vjcomp" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?= gettext("Compression"); ?></td>
                         <td>
-                          <input type="checkbox" value="on" id="vjcomp" name="vjcomp" <?= !empty($pconfig['vjcomp']) ? 'checked="checked"' : '' ?> />
-                          <?= gettext("Disable vjcomp(compression) (auto-negotiated by default)."); ?>
+                          <label for="vjcomp">
+                            <input type="checkbox" value="on" id="vjcomp" name="vjcomp" <?= !empty($pconfig['vjcomp']) ? 'checked="checked"' : '' ?> />
+                            <?= gettext("Disable vjcomp(compression) (auto-negotiated by default)."); ?>
+                          </label>
                           <div class="hidden" data-for="help_for_vjcomp">
                             <?=gettext("This option enables Van Jacobson TCP header compression, which saves several bytes per TCP data packet. " .
                               "You almost always want this option. This compression ineffective for TCP connections with enabled modern extensions like time " .
@@ -753,8 +759,10 @@ include("head.inc");
                       <tr style="display:none" class="act_show_advanced">
                         <td><a id="help_for_tcpmssfix" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?= gettext("TCPmssFix"); ?></td>
                         <td>
-                          <input type="checkbox" value="on" id="tcpmssfix" name="tcpmssfix" <?=!empty($pconfig['tcpmssfix']) ? "checked=\"checked\"" : ""; ?> />
-                          <?= gettext("Disable tcpmssfix (enabled by default)."); ?>
+                          <label for="tcpmssfix">
+                            <input type="checkbox" value="on" id="tcpmssfix" name="tcpmssfix" <?=!empty($pconfig['tcpmssfix']) ? "checked=\"checked\"" : ""; ?> />
+                            <?= gettext("Disable tcpmssfix (enabled by default)."); ?>
+                          </label>
                           <div class="hidden" data-for="help_for_tcpmssfix">
                             <?=gettext("This option causes mpd to adjust incoming and outgoing TCP SYN segments so that the requested maximum segment size is not greater than the amount ".
                               "allowed by the interface MTU. This is necessary in many setups to avoid problems caused by routers that drop ICMP Datagram Too Big messages. Without these messages, ".
@@ -767,8 +775,10 @@ include("head.inc");
                       <tr style="display:none" class="act_show_advanced">
                         <td><a id="help_for_shortseq" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("ShortSeq");?></td>
                         <td>
-                          <input type="checkbox" value="on" id="shortseq" name="shortseq" <?=!empty($pconfig['shortseq']) ? "checked=\"checked\"" : ""; ?> />
-                          <?= gettext("Disable shortseq (auto-negotiated by default)."); ?>
+                          <label for="shortseq">
+                            <input type="checkbox" value="on" id="shortseq" name="shortseq" <?=!empty($pconfig['shortseq']) ? "checked=\"checked\"" : ""; ?> />
+                            <?= gettext("Disable shortseq (auto-negotiated by default)."); ?>
+                          </label>
                           <div class="hidden" data-for="help_for_shortseq">
                             <?= gettext("This option is only meaningful if multi-link PPP is negotiated. It proscribes shorter multi-link fragment headers, saving two bytes on every frame. " .
                             "It is not necessary to disable this for connections that are not multi-link."); ?>
@@ -778,8 +788,10 @@ include("head.inc");
                       <tr style="display:none" class="act_show_advanced">
                         <td><a id="help_for_acfcomp" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("ACFComp"); ?></td>
                         <td>
-                          <input type="checkbox" value="on" id="acfcomp" name="acfcomp" <?=!empty($pconfig['acfcomp']) ? "checked=\"checked\"" : ""; ?> />
-                          <?= gettext("Disable acfcomp (compression) (auto-negotiated by default)."); ?>
+                          <label for="acfcomp">
+                            <input type="checkbox" value="on" id="acfcomp" name="acfcomp" <?=!empty($pconfig['acfcomp']) ? "checked=\"checked\"" : ""; ?> />
+                            <?= gettext("Disable acfcomp (compression) (auto-negotiated by default)."); ?>
+                          </label>
                           <div class="hidden" data-for="help_for_acfcomp">
                             <?= gettext("Address and control field compression. This option only applies to asynchronous link types. It saves two bytes per frame."); ?>
                           </div>
@@ -788,8 +800,10 @@ include("head.inc");
                       <tr style="display:none" class="act_show_advanced">
                         <td><a id="help_for_protocomp" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("ProtoComp"); ?></td>
                         <td>
-                          <input type="checkbox" value="on" id="protocomp" name="protocomp" <?=!empty($pconfig['protocomp']) ? "checked=\"checked\"" :""; ?> />
-                          <?= gettext("Disable protocomp (compression) (auto-negotiated by default)."); ?>
+                          <label for="protocomp">
+                            <input type="checkbox" value="on" id="protocomp" name="protocomp" <?=!empty($pconfig['protocomp']) ? "checked=\"checked\"" :""; ?> />
+                            <?= gettext("Disable protocomp (compression) (auto-negotiated by default)."); ?>
+                          </label>
                           <div class="hidden" data-for="help_for_protocomp">
                             <?= gettext("Protocol field compression. This option saves one byte per frame for most frames."); ?>
                           </div>

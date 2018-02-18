@@ -8,18 +8,21 @@
         <label>Disable hardware checksum offload</label>
         <type>checkbox</type>
         <help>Checking this option will disable hardware checksum offloading. Checksum offloading is broken in some hardware, particularly some Realtek cards. Rarely, drivers may have problems with checksum offloading and some specific NICs.</help>
+        <input_label>Disable hardware checksum offload</input_label>
     </field>
     <field>
         <id>settings.disablesegmentationoffloading</id>
         <label>Disable hardware TCP segmentation offload</label>
         <type>checkbox</type>
         <help>Checking this option will disable hardware TCP segmentation offloading (TSO, TSO4, TSO6). This offloading is broken in some hardware drivers, and may impact performance with some specific NICs.</help>
+        <input_label>Disable hardware TCP segmentation offload</input_label>
     </field>
     <field>
         <id>settings.disablelargereceiveoffloading</id>
         <label>Disable hardware large receive offload</label>
         <type>checkbox</type>
         <help>Checking this option will disable hardware large receive offloading (LRO). This offloading is broken in some hardware drivers, and may impact performance with some specific NICs.</help>
+        <input_label>Disable hardware large receive offload</input_label>
     </field>
     <field>
         <id>settings.disablevlanhwfilter</id>
@@ -37,12 +40,14 @@
         <type>checkbox</type>
         <help>If checked, IPv6 interface configuration will be ignored and all forwarding traffic will be blocked. Use with care.</help>
         <!-- XXX this should be hidden under advanced eventually -->
+        <input_label>Disable IPv6</input_label>
     </field>
     <field>
         <id>settings.dhcp6_debug</id>
         <label>Debug logging</label>
         <type>checkbox</type>
         <help>Modify logging for IPv6 clients to give full diagnostics.</help>
+        <input_label>IPv6 clients full diagnostics logging</input_label>
     </field>
     <field>
         <id>settings.dhcp6_norelease</id>
@@ -50,6 +55,7 @@
         <type>checkbox</type>
         <help>Do not send a release message on client exit to prevent the release of an allocated address or prefix on the server.</help>
         <advanced>true</advanced>
+        <input_label>Do not send release message to server on client exit</input_label>
     </field>
     <field>
         <id>settings.dhcp6_ratimeout</id>

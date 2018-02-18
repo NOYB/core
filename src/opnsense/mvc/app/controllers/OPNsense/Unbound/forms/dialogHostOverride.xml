@@ -13,6 +13,7 @@
         <label>Enabled</label>
         <type>checkbox</type>
         <help>Enable the override for this host</help>
+        <input_label>Enable override</input_label>
         <grid_view>
             <width>6em</width>
             <type>boolean</type>

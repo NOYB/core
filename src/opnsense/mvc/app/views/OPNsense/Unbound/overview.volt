@@ -854,7 +854,7 @@
                         <div class="col-md-2"></div>
                         <div class="col-md-2">
                             <div class="vertical-center">
-                                <label class="h-100" style="margin-right: 5px;">{{ lang._('Logarithmic') }}</label>
+                                <label for="toggle-log-qchart" class="h-100" style="margin-right: 5px;">{{ lang._('Logarithmic') }}</label>
                                 <input id="toggle-log-qchart" type="checkbox"></input>
                             </div>
                         </div>
@@ -885,7 +885,7 @@
                         <div class="col-md-2"></div>
                         <div class="col-md-2">
                             <div class="vertical-center">
-                                <label class="h-100" style="margin-right: 5px;">{{ lang._('Logarithmic') }}</label>
+                                <label for="toggle-log-cchart" class="h-100" style="margin-right: 5px;">{{ lang._('Logarithmic') }}</label>
                                 <input id="toggle-log-cchart" type="checkbox"></input>
                             </div>
                         </div>

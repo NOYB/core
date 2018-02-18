@@ -3,6 +3,7 @@
         <id>unbound.general.enabled</id>
         <label>Enable Unbound</label>
         <type>checkbox</type>
+        <input_label>Enable unbound</input_label>
     </field>
     <field>
         <id>unbound.general.port</id>
@@ -25,6 +26,7 @@
     <field>
         <id>unbound.general.dnssec</id>
         <label>Enable DNSSEC Support</label>
+        <input_label>DNSSEC Support</input_label>
         <type>checkbox</type>
     </field>
     <field>
@@ -32,6 +34,7 @@
         <label>Enable DNS64 Support</label>
         <type>checkbox</type>
         <help>If this option is set, Unbound will synthesize AAAA records from A records if no actual AAAA records are present.</help>
+        <input_label>DNS64 Support</input_label>
     </field>
     <field>
         <id>unbound.general.dns64prefix</id>
@@ -44,12 +47,14 @@
         <label>Enable AAAA-only mode</label>
         <type>checkbox</type>
         <help>If this option is set, Unbound will remove all A records from the answer section of all responses.</help>
+        <input_label>AAAA-only mode</input_label>
     </field>
     <field>
         <id>unbound.general.regdhcp</id>
         <label>Register ISC DHCP4 Leases</label>
         <type>checkbox</type>
         <help>If this option is set, then machines that specify their hostname when requesting a DHCP lease will be registered in Unbound, so that their name can be resolved.</help>
+        <input_label>Register DHCP4 Leases</input_label>
     </field>
     <field>
         <id>unbound.general.regdhcpdomain</id>
@@ -65,6 +70,7 @@
             <![CDATA[If this option is set, then DHCP static mappings will be registered in Unbound, so that their name can be resolved.
             You should also set the domain in <a href="/system_general.php">System: Settings: General</a> to the proper value.]]>
         </help>
+        <input_label>Register DHCP Static Mappings</input_label>
     </field>
     <field>
         <id>unbound.general.noreglladdr6</id>
@@ -74,6 +80,7 @@
             If this option is set, then IPv6 link-local addresses will not be registered in Unbound,
             preventing return of unreachable address when more than one listen interface is configured.
         </help>
+        <input_label>Don't register IPv6 Link-Local addresses</input_label>
     </field>
     <field>
         <id>unbound.general.noregrecords</id>
@@ -86,12 +93,14 @@
             Use this to control which interface IP addresses are mapped to the system host/domain name
             as well as to restrict the amount of information exposed in replies to queries for the system host/domain name.]]>
         </help>
+        <input_label>Don't register system A/AAAA records</input_label>
     </field>
     <field>
         <id>unbound.general.txtsupport</id>
         <label>TXT Comment Support</label>
         <type>checkbox</type>
         <help>If this option is set, then any descriptions associated with Host entries and DHCP Static mappings will create a corresponding TXT record.</help>
+        <input_label>Create descriptions TXT records</input_label>
     </field>
     <field>
         <id>unbound.general.cacheflush</id>
@@ -101,6 +110,7 @@
             If this option is set, the DNS cache will be flushed during each daemon reload.
             This is the default behavior for Unbound, but may be undesired when multiple dynamic interfaces require frequent reloading.
         </help>
+        <input_label>Flush DNS cache</input_label>
     </field>
     <field>
         <id>unbound.general.safesearch</id>
@@ -108,6 +118,7 @@
         <type>checkbox</type>
         <style>safesearch</style>
         <help>Force the usage of SafeSearch on Google, DuckDuckGo, Bing, Qwant, PixaBay and YouTube</help>
+        <input_label>Force SafeSearch</input_label>
     </field>
     <field>
         <id>unbound.general.local_zone_type</id>
@@ -140,5 +151,6 @@
             as well as overrides for TXT records for domains. This allows automatic proxy configuration in your network
             but you should not enable it if you are not using WPAD or if you want to configure it by yourself.
         </help>
+        <input_label>Add CNAME records for WPAD host of configured domains and override TXT records</input_label>
     </field>
 </form>

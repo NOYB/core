@@ -29,6 +29,7 @@
         <style>export_option</style>
         <type>checkbox</type>
         <help>Use a random local source port (lport) for traffic from the client. Without this set, two clients may not run concurrently.</help>
+        <input_label>Allow concurrent clients</input_label>
     </field>
     <field>
         <id>openvpn_export.p12_password</id>
@@ -42,6 +43,7 @@
         <label>Validate server subject</label>
         <type>checkbox</type>
         <help>Verify the server certificate name when the client connects</help>
+        <input_label>Verify server certificate name</input_label>
     </field>
     <field>
         <id>openvpn_export.cryptoapi</id>
@@ -49,6 +51,7 @@
         <type>checkbox</type>
         <style>export_option</style>
         <help>Load the certificate and private key from the Windows Certificate System Store (Windows/OpenSSL Only).</help>
+        <input_label>Use Windows certificate system store</input_label>
     </field>
     <field>
         <id>openvpn_export.auth_nocache</id>
@@ -56,6 +59,7 @@
         <type>checkbox</type>
         <style>export_option</style>
         <help>Sets auth-nocache in the exported configuration when password authentication is used. This prevents OpenVPN from caching passwords in memory.</help>
+        <input_label>Don't cache passwords</input_label>
     </field>
     <field>
         <id>openvpn_export.static_challenge</id>
@@ -63,6 +67,7 @@
         <type>checkbox</type>
         <style>export_option</style>
         <help>Ask the user for its one time password token separately (instead of as part the password).</help>
+        <input_label>Prompt user for OTP token</input_label>
     </field>
     <field>
         <id>openvpn_export.plain_config</id>

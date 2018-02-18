@@ -20,6 +20,7 @@
         <id>connection.enabled</id>
         <label>Enabled</label>
         <type>checkbox</type>
+        <input_label>Enable connection</input_label>
     </field>
     <field>
         <id>connection.proposals</id>
@@ -58,6 +59,7 @@
           Aggressive Mode is considered less secure because the ID and HASH payloads are exchanged unprotected.
           This allows a passive attacker to snoop peer identities and even worse, start dictionary attacks on the Preshared Key
         </help>
+        <input_label>IKEv1 Aggressive Mode</input_label>
     </field>
     <field>
         <id>connection.version</id>
@@ -81,6 +83,7 @@
           However, due to the design of MOBIKE, IKEv2 always floats to UDP port 4500 starting from the second exchange.
           Some implementations don’t like this behavior, hence it can be disabled
         </help>
+        <input_label>Enable MOBIKE</input_label>
     </field>
     <field>
         <id>connection.local_addrs</id>
@@ -138,6 +141,7 @@
           Usually this is not required but it can help to work around connectivity issues with too restrictive intermediary
           firewalls that block ESP packets
         </help>
+        <input_label>Encapsulate UDP ESP packets</input_label>
     </field>
     <field>
         <id>connection.reauth_time</id>
@@ -223,6 +227,7 @@
           Disabling certificate requests can be useful if too many trusted root CA certificates are installed,
           as each certificate request increases the size of the initial IKE packets
         </help>
+        <input_label>Offer trusted root CA certificates to peer</input_label>
     </field>
     <field>
         <id>connection.send_cert</id>

@@ -20,6 +20,7 @@
         <label>Disabled</label>
         <type>checkbox</type>
         <help>Deny authentication, only applicable for local users</help>
+        <input_label>Deny local user authentication</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
@@ -48,6 +49,7 @@
         <label>Scrambled Password</label>
         <type>checkbox</type>
         <help>Generate a scrambled password to prevent local database logins for this user.</help>
+        <input_label>Scramble password to prevent logins</input_label>
         <grid_view>
             <visible>false</visible>
             <type>boolean</type>
