@@ -158,6 +158,7 @@ function ifgroup_setup()
 function filter_configure_sync($verbose = false, $load_aliases = true)
 {
     global $config;
+#    global $config, $rl_arr;
 
     service_log('Configuring firewall.', $verbose);
 
@@ -316,12 +317,19 @@ function filter_configure_sync($verbose = false, $load_aliases = true)
 
     service_log('.', $verbose);
 
+#    // adjust max table entries size default for IPv6 bogons
+#    if (is_bogonsv6_used() && table_entries_size('default') <= 1000000) {
+#        $rl_arr['table-entries']['default'] = 1000000;
+#    }
+#
     $limitrules = '';
 
     if (!empty($config['system']['maximumtableentries'])) {
         $limitrules .= "set limit table-entries {$config['system']['maximumtableentries']}\n";
         set_single_sysctl('net.pf.request_maxcount', $config['system']['maximumtableentries']);
     } else {
+#        $limitrules .= "set limit table-entries {$rl_arr['table-entries']['default']}\n";
+#        set_single_sysctl('net.pf.request_maxcount', $rl_arr['table-entries']['default']);
         $max_table_entries = filter_current_table_entries();
         $req_table_entries = filter_default_table_entries();
         if ($max_table_entries <= $req_table_entries) {
@@ -355,6 +363,7 @@ function filter_configure_sync($verbose = false, $load_aliases = true)
         $limitrules .= "set limit src-nodes {$config['system']['maximumstates']}\n";
     } else {
         $max_states = filter_default_state_size();
+#        $max_states = state_size('default');
         $limitrules .= "set limit states {$max_states}\n";
         $limitrules .= "set limit src-nodes {$max_states}\n";
     }
@@ -414,10 +423,30 @@ function filter_configure_sync($verbose = false, $load_aliases = true)
 
     mwexecf('ifconfig > %s', '/tmp/ifconfig.debug');
     $fobj->truncate(0)->write($rules);
+#    // Get pf rules limits array
+#    if (!file_exists("/var/run/booting") && file_exists("/tmp/rules.limits.json")) {
+#        $rl_arr = json_decode(file_get_contents("/tmp/rules.limits.json"), true);
+#    }
+#
+#    // Apply configured pf rules limits settings
     @file_put_contents('/tmp/rules.limits', $limitrules);
 
     mwexecf('/sbin/pfctl -Of %s', '/tmp/rules.limits');
     $load_failed = mwexecfm('/sbin/pfctl -f %s > %s', ['/tmp/rules.debug', '/tmp/rules.debug.error']);
+
+#    // Capture active pf rules limits settings
+#    $rl_lines = str_getCSV(`pfctl -sm`, "\n");
+#    foreach ($rl_lines as $rl_line) {
+#        $rl_line_arr = preg_split('/[\s\t]+/', $rl_line);
+#        $rl_arr[reset($rl_line_arr)]['active'] = end($rl_line_arr);
+#    }
+#
+#    // Save default and active pf rules limits settings array so are available
+#    $rl_arr_json = json_encode($rl_arr);
+#    if (@file_get_contents("/tmp/rules.limits.json") !== $rl_arr_json) {
+#        @file_put_contents("/tmp/rules.limits.json", $rl_arr_json);
+#    }
+#
     foreach ($sched_kill_states as $label) {
         mwexecf('/sbin/pfctl -k label -k %s', $label);
     }
@@ -738,8 +767,10 @@ function filter_get_time_based_rule_status($schedule)
 }
 
 function filter_current_table_entries()
+#function state_size($item = 'active')
 {
     return shell_safe('pfctl -sm | grep table-entries | awk \'{print $4}\'');
+#    $rl_arr = json_decode(@file_get_contents("/tmp/rules.limits.json"), true);
 }
 
 function filter_default_table_entries()
@@ -763,6 +794,24 @@ function filter_default_state_size()
 {
     /* be cautious and only allocate 10% of system memory to the state table */
     return (int)(get_single_sysctl('hw.physmem') / 1048576) * 100;
+
+#    $rl_arr['states']['default'] = $max_states;
+#    return is_numeric($rl_arr['states'][$item]) ? $rl_arr['states'][$item] : '';
+#}
+#
+#function tables_size($item = 'active') {
+#    $rl_arr = json_decode(@file_get_contents("/tmp/rules.limits.json"), true);
+#    return is_numeric($rl_arr['tables'][$item]) ? $rl_arr['tables'][$item] : '';
+#}
+#
+#function table_entries_size($item = 'active') {
+#    $rl_arr = json_decode(@file_get_contents("/tmp/rules.limits.json"), true);
+#    return is_numeric($rl_arr['table-entries'][$item]) ? $rl_arr['table-entries'][$item] : '';
+#}
+#
+#function fragment_entries_size($item = 'active') {
+#    $rl_arr = json_decode(@file_get_contents("/tmp/rules.limits.json"), true);
+#    return is_numeric($rl_arr['frags'][$item]) ? $rl_arr['frags'][$item] : '';
 }
 
 function filter_current_hostid()
