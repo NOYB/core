@@ -339,7 +339,7 @@ class OverviewController extends ApiControllerBase
 
         if ($identifier != null) {
             $backend = new Backend();
-            $result['message'] = $backend->configdpRun('interface renew', [$identifier]);
+            $result['message'] = $backend->configdpRun('interface renew', [$identifier, $request_fresh_address = true]);
         }
 
         return $result;

@@ -2336,6 +2336,15 @@ function dhcp_relinquish_lease($ifname, $realif, $ipv) {
     }
 }
 
+// Request a fresh address lease from the server.
+function dhcp_request_fresh_address($realif) {
+    $leases_db = '/var/db/dhclient.leases.' . $realif;
+
+    if (file_exists($leases_db)) {
+        mwexecf('/bin/rm -f '.$leases_db);
+    }
+}
+
 function interface_configure($verbose = false, $interface = 'wan', $reload = false, $linkup = false)
 {
     global $config;

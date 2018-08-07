@@ -38,4 +38,13 @@ exit_on_bootup();
 
 $argument = isset($argv[1]) ? trim($argv[1]) : 'wan';
 
+// Request a fresh address.  Not the previous address.
+$request_fresh_address = ($argv[2]) ?: false;
+if ($request_fresh_address) {
+    $ifname = $argument;
+    $realif = get_real_interface($ifname);
+    $ipv = ($argv[3]) ?: 4;
+    dhcp_request_fresh_address($realif);
+}
+
 interface_configure(false, $argument, true);
