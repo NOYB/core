@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig['logoutboundnat'] = !empty($config['syslog']['logoutboundnat']);
     $pconfig['logbogons'] = empty($config['syslog']['nologbogons']);
     $pconfig['logprivatenets'] = empty($config['syslog']['nologprivatenets']);
+    $pconfig['loglinets'] = empty($config['syslog']['nologlinets']);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pconfig = $_POST;
     $input_errors = array();
@@ -283,6 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $config['syslog']['nologdefaultpass'] = empty($pconfig['logdefaultpass']);
         $config['syslog']['nologbogons'] = empty($pconfig['logbogons']);
         $config['syslog']['nologprivatenets'] = empty($pconfig['logprivatenets']);
+        $config['syslog']['nologlinets'] = empty($pconfig['loglinets']);
         $config['syslog']['logoutboundnat'] = !empty($pconfig['logoutboundnat']);
 
         write_config();
@@ -564,6 +566,15 @@ include("head.inc");
                   <label for="logprivatenets">
                     <input name="logprivatenets" type="checkbox" id="logprivatenets" value="yes" <?= !empty($pconfig['logprivatenets']) ? 'checked="checked"' : '' ?> />
                     <?=gettext("Log packets blocked by 'Block Private Networks' rules");?>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td><i class="fa fa-info-circle text-muted"></i> <?=gettext('Local Identification Networks') ?></td>
+                <td>
+                  <label for="loglinets">
+                    <input name="loglinets" type="checkbox" id="loglinets" value="yes" <?= !empty($pconfig['loglinets']) ? 'checked="checked"' : '' ?> />
+                    <?=gettext("Log packets blocked by 'Block Local Identification Networks' rules");?>
                   </label>
                 </td>
               </tr>

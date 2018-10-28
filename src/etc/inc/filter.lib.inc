@@ -331,9 +331,10 @@ function filter_core_rules_system($fw, $defaults)
         );
     }
 
-    // block bogons and private nets
+    // block bogons, private nets and local identification nets
     $bogontmpl = ['type' => 'block', 'log' => !isset($config['syslog']['nologbogons']), 'disablereplyto' => 1];
     $privtmpl = ['type' => 'block', 'log' => !isset($config['syslog']['nologprivatenets']), 'disablereplyto' => 1];
+    $lintmpl = ['type' => 'block', 'log' => !isset($config['syslog']['nologlinets']), 'disablereplyto' => 1];
     foreach ($fw->getInterfaceMapping() as $intf => $intfinfo) {
         // only render disabled rules for actual interfaces that can have a bogon option set
         if (!empty($intfinfo['virtual'])) {
@@ -369,9 +370,18 @@ function filter_core_rules_system($fw, $defaults)
             ['direction' => 'in', 'interface' => $intf, 'ipprotocol' => 'inet6',
             '#ref' => "interfaces.php?if=" . $intf . "#blockpriv",
             'descr' => "Block private networks from " . $intfinfo['descr'],
-            'from' => 'fd00::/8,fe80::/10,::/128',
+            'from' => 'fd00::/8,fe80::/10,::/128,fc00::/7',
             'disabled' => $ipv6_disabled || empty($intfinfo['blockpriv'])],
             $privtmpl
+        );
+        $fw->registerFilterRule(
+            5,
+            ['direction' => 'in', 'interface' => $intf, 'ipprotocol' => 'inet',
+            '#ref' => "interfaces.php?if=" . $intf . "#blocklin",
+            'descr' => "Block local identification networks from ".$intfinfo['descr'],
+            'from' => '0.0.0.0/8',
+            'disabled' => !isset($intfinfo['blocklin'])],
+          $lintmpl
         );
     }
 
