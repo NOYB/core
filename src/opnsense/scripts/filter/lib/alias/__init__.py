@@ -42,13 +42,17 @@ from .base import BaseContentParser
 
 
 class Alias(object):
-    def __init__(self, elem, known_aliases=[], ttl=-1, ssl_no_verify=False, timeout=120):
+    def __init__(self, elem, known_aliases=[], ttl=-1, ssl_no_verify=False, timeout=120, erpn=False, erlbkn=False, erlln=False, erlin=False):
         """ construct alias object
             :param elem: ElementTree alias item
             :param known_aliases: all known alias names
             :param ttl: time to live in seconds (for other then ip/network types)
             :param ssl_no_verify: disable ssl verify when fetching content
             :param timeout: request timeout in seconds
+            :param erpn: exclude reserved private networks flag
+            :param erlbkn: exclude reserved loop back networks flag
+            :param erlln: exclude reserved link-local networks flag
+            :param erlin: exclude reserved local identification networks flag
             :return: None
         """
         self._known_aliases = known_aliases
@@ -67,6 +71,10 @@ class Alias(object):
         self._type = None
         self._items = list()
         self._resolve_content = set()
+        self._erpn = erpn
+        self._erlbkn = erlbkn
+        self._erlln = erlln
+        self._erlin = erlin
         for subelem in elem:
             if subelem.tag == 'type':
                 self._type = subelem.text
@@ -80,6 +88,18 @@ class Alias(object):
                     self._ttl = int(float(tmp))
             elif subelem.tag in ('aliasurl', 'address', 'url') and subelem.text is None:
                 self._items = set()
+            elif subelem.tag == 'erpn':
+                if subelem.text == '1':
+                    self._erpn = True
+            elif subelem.tag == 'erlbkn':
+                if subelem.text == '1':
+                    self._erlbkn = True
+            elif subelem.tag == 'erlln':
+                if subelem.text == '1':
+                    self._erlln = True
+            elif subelem.tag == 'erlin':
+                if subelem.text == '1':
+                    self._erlin = True
             elif subelem.tag == 'aliasurl':
                 self._items = set(sorted(subelem.text.split()))
             elif subelem.tag == 'address' and len(self._items) == 0:
@@ -94,6 +114,21 @@ class Alias(object):
         self._filename_alias_hash = '/var/db/aliastables/%s.md5.txt' % self._name
         # the generated alias contents, without dependencies
         self._filename_alias_content = '/var/db/aliastables/%s.self.txt' % self._name
+        # select reserved addresses to exclude
+        self._reserved_private_networks = ['100.64.0.0/10', '192.168.0.0/16', '172.16.0.0/12', '10.0.0.0/8', 'fc00::/7']
+        self._reserved_loopback_networks = ['127.0.0.0/8', '::1/128']
+        self._reserved_link_local_networks = ['169.254.0.0/16', 'fe80::/10']
+        self._reserved_local_identification_networks = ['0.0.0.0/8']
+        self._reserved_addresses = []
+        if self._erpn:
+            self._reserved_addresses.extend(self._reserved_private_networks)
+        if self._erlbkn:
+            self._reserved_addresses.extend(self._reserved_loopback_networks)
+        if self._erlln:
+            self._reserved_addresses.extend(self._reserved_link_local_networks)
+        if self._erlin:
+            self._reserved_addresses.extend(self._reserved_local_identification_networks)
+        self._properties['reserved_addresses'] = self._reserved_addresses
 
     def get_pf_addr_count(self):
         return self._pf_addresses

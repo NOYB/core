@@ -463,6 +463,7 @@
             $("#row_alias\\.interface").hide();
             $("#row_alias\\.path_expression").hide();
             $("#row_alias\\.expire").hide();
+            $("#row_alias\\.exclude_reserved_networks").hide();
             switch ($(this).val()) {
                 case 'authgroup':
                     $("#alias_type_authgroup").show();
@@ -493,9 +494,11 @@
                 case 'urltable':
                 case 'host':
                     $("#row_alias\\.updatefreq").show();
+                    $("#row_alias\\.exclude_reserved_networks").show();
                     /* FALLTHROUGH */
                 case 'url':
                     $("#row_alias\\.authtype").show();
+                    $("#row_alias\\.exclude_reserved_networks").show();
 
                     $("#alias\\.authtype").change(function() {
                         $("#alias\\.username").hide();
@@ -1008,6 +1011,57 @@
                                     </td>
                                     <td>
                                         <span class="help-block" id="help_block_alias.interface"></span>
+                                    </td>
+                                </tr>
+                                <tr id="row_alias.exclude_reserved_networks">
+                                    <td>
+                                        <div class="control-label" id="control_label_alias.exclude_reserved_networks">
+                                            <a id="help_for_alias.exclude_reserved_networks" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a>
+                                            <b>{{lang._('Exclude Reserved Networks')}}</b>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label for="alias.exclude_reserved_private_networks">
+                                          <input type="checkbox" id="alias.exclude_reserved_private_networks">
+                                          Exclude Reserved Private Networks
+                                        </label>
+                                        <div class="hidden" data-for="help_for_alias.exclude_reserved_networks">
+                                          <small>Exclude reserved private networks (RFC 1918) from the list for compatibility with private network interfaces.<br/>
+                                                 ( IPv4: 100.64.0.0/10, 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8 )<br/>
+                                                 ( IPv6: fc00::/7 )</small>
+                                        </div>
+                                        <br/>
+                                        <label for="alias.exclude_reserved_loopback_networks">
+                                          <input type="checkbox" id="alias.exclude_reserved_loopback_networks">
+                                          Exclude Reserved Loopback Networks
+                                        </label>
+                                        <div class="hidden" data-for="help_for_alias.exclude_reserved_networks">
+                                          <small>Exclude reserved loopback networks (RFC ????) from the list for compatibility with ???? server interfaces.<br>
+                                                 ( IPv4: 127.0.0.0/8 )<br/>
+                                                 ( IPv6: ::1/128 )</small>
+                                        </div>
+                                        <br/>
+                                        <label for="alias.exclude_reserved_link_local_networks">
+                                          <input type="checkbox" id="alias.exclude_reserved_link_local_networks">
+                                          Exclude Reserved Link-Local Networks
+                                        </label>
+                                        <div class="hidden" data-for="help_for_alias.exclude_reserved_networks">
+                                          <small>Exclude reserved link local networks (RFC ????) from the list for compatibility with ???? server interfaces.<br>
+                                                 ( IPv4: 169.254.0.0/16 )<br/>
+                                                 ( IPv6: fe80::/10 )</small>
+                                        </div>
+                                        <br/>
+                                        <label for="alias.exclude_reserved_local_identification_networks">
+                                          <input type="checkbox" id="alias.exclude_reserved_local_identification_networks">
+                                          Exclude Reserved Local Identification Networks
+                                        </label>
+                                        <div class="hidden" data-for="help_for_alias.exclude_reserved_networks">
+                                          <small>Exclude reserved local identification networks (RFC 6890) from the list for compatibility with DHCP server interfaces.<br>
+                                                 ( IPv4: 0.0.0.0/8 )</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="help-block" id="help_block_alias.exclude_reserved_networks"></span>
                                     </td>
                                 </tr>
                                 <tr id="row_alias.counters">

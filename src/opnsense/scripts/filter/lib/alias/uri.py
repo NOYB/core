@@ -41,6 +41,7 @@ class UriParser(BaseContentParser):
         super().__init__(**kwargs)
         self._timeout = timeout
         self._ssl_no_verify = ssl_no_verify
+        self._reserved_addresses = kwargs['reserved_addresses']
         self._authtype = authtype
         self._username = username
         self._password = password
@@ -112,7 +113,8 @@ class UriParser(BaseContentParser):
                     for line in lines:
                         for raw_address in self._parse_line(line):
                             for address in super().iter_addresses(raw_address):
-                                yield address
+                                if address not in self._reserved_addresses:
+                                    yield address
 
                 syslog.syslog(syslog.LOG_NOTICE, 'processing alias url %s took %0.2fs' % (url, time.time() - stime))
             else:
