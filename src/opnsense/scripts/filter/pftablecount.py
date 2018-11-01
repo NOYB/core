@@ -72,6 +72,10 @@ if __name__ == '__main__':
             filename = "/var/db/aliastables/%s.txt" % table_name
             if os.path.isfile(filename):
                 tmp = open(filename).read()
+#                # exclude full line comments from planned size
+#                flcmts = 1 if tmp.startswith("#") else 0
+#                flcmts += tmp.count('\n#')
+#                planned_size  = tmp.count('\n') + 1 - flcmts if len(tmp) > 0 else 0
                 planned_size  = tmp.count('\n') + 1 if len(tmp) > 0 else 0
                 # if planned size doesn't fit the table, make sure we report intented size
                 # used size can be divert a bit if pfctl optimizes as well.

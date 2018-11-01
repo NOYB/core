@@ -110,6 +110,9 @@ class Alias(object):
             else:
                 self._properties[subelem.tag] = subelem.text
 
+        # save the downloaded alias content
+        self._filename_alias_downloaded = '/var/db/aliastables/%s.downloaded.txt' % self._name
+        self._properties['filename_alias_downloaded'] = self._filename_alias_downloaded
         # we'll save the calculated hash for the unparsed alias content
         self._filename_alias_hash = '/var/db/aliastables/%s.md5.txt' % self._name
         # the generated alias contents, without dependencies
@@ -253,7 +256,7 @@ class Alias(object):
                     # errors in specific types may raise unexpected errors (in which case we rollback)
                     syslog.syslog(syslog.LOG_ERR, 'alias resolve error %s (%s)' % (self._name, e))
                     self._resolve_content = set(undo_content.split("\n")) if undo_content is not False else set()
-
+#                    self._resolve_content = set(undo_content.splitlines())
                 resolve_content_str = '\n'.join(sorted(self._resolve_content))
                 if undo_content != resolve_content_str:
                     # Always save last recorded content to disk when changed, even when we're not responsible
@@ -274,7 +277,7 @@ class Alias(object):
                         os.utime(self._filename_alias_hash, None)
             else:
                 self._resolve_content = set(open(self._filename_alias_content).read().split())
-
+#                self._resolve_content = set(open(self._filename_alias_content).read().splitlines())
         # return the addresses and networks of this alias
         return self._resolve_content
 

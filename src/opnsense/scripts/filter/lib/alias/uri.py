@@ -33,6 +33,7 @@ import urllib3
 import jq
 from .base import BaseContentParser
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from pathlib import Path
 
 
 class UriParser(BaseContentParser):
@@ -42,6 +43,7 @@ class UriParser(BaseContentParser):
         self._timeout = timeout
         self._ssl_no_verify = ssl_no_verify
         self._reserved_addresses = kwargs['reserved_addresses']
+        self._filename_alias_downloaded = kwargs['filename_alias_downloaded']
         self._authtype = authtype
         self._username = username
         self._password = password
@@ -70,6 +72,9 @@ class UriParser(BaseContentParser):
         else:
             # Look for OpenSSL style hash directory environment variable; default to "/etc/ssl/certs".
             req_opts['verify'] = (os.environ.get('SSL_CERT_DIR') or '/etc/ssl/certs')
+
+        dl_file_name = Path(url).stem
+#        dl_file_name = os.path.splitext(os.path.basename(url))[0]
 
         if self._authtype is not None and self._password is not None:
             if self._authtype == 'Basic' and self._username is not None:
@@ -108,10 +113,23 @@ class UriParser(BaseContentParser):
                             for address in super().iter_addresses(raw_address):
                                 yield address
                 else:
-                    lines = req.raw.read().decode(errors='replace').splitlines()
+                    dl_content = req.raw.read().decode(errors='replace')
+                    with open(self._filename_alias_downloaded +  ' (' + dl_file_name + ')', 'w') as downloaded:
+                        downloaded.write(dl_content)
+                    lines = dl_content.splitlines()
                     syslog.syslog(syslog.LOG_NOTICE, 'fetch alias url %s (lines: %s)' % (url, len(lines)))
+#                    cmt_ord = 0
                     for line in lines:
                         for raw_address in self._parse_line(line):
+#                    # Retain full line comments in downloaded URL table files so we can view and use them.
+#                    # Convert lines beginning with '$', ';' or '/' to # comments and retain them and their post sort order.
+#                    if re.match("^[$;/#]+", line):
+#                        cmt_ord += 1
+#                        line = "#" + str(cmt_ord).zfill(2) + line
+#                        yield line
+#                        continue
+#                        raw_address = re.split(r'[\s,;|#]+', line)[0]
+#                        if raw_address and not raw_address.startswith('//'):
                             for address in super().iter_addresses(raw_address):
                                 if address not in self._reserved_addresses:
                                     yield address
