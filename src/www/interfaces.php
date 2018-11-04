@@ -1757,6 +1757,7 @@ include("head.inc");
                           <td style="width:78%">
                             <label for="blockpriv">
                               <input name="blockpriv" type="checkbox" id="blockpriv" value="yes" <?=!empty($pconfig['blockpriv']) ? "checked=\"checked\"" : ""; ?> />
+                              <?=gettext("Block private networks"); ?>
                             </label>
                             <div class="hidden" data-for="help_for_blockpriv">
                               <?=gettext("When set, this option blocks traffic from IP addresses that are reserved for private networks " .
@@ -1770,6 +1771,7 @@ include("head.inc");
                           <td>
                             <label for="blockbogons">
                               <input name="blockbogons" type="checkbox" id="blockbogons" value="yes" <?=!empty($pconfig['blockbogons']) ? "checked=\"checked\"" : ""; ?> />
+                              <?=gettext("Block bogon networks"); ?>
                             </label>
                             <div class="hidden" data-for="help_for_blockbogons">
                               <?=gettext("When set, this option blocks traffic from IP addresses that are reserved " .
@@ -1826,6 +1828,7 @@ include("head.inc");
                           <td>
                             <label for="promisc">
                               <input id="promisc" name="promisc" type="checkbox" value="yes" <?=!empty($pconfig['promisc']) ? 'checked="checked"' : '' ?>/>
+                              <?=gettext("Put interface into permanently promiscuous mode"); ?>
                             </label>
                             <div class="hidden" data-for="help_for_promisc">
                               <?=gettext(
@@ -1916,6 +1919,7 @@ include("head.inc");
                           <td style="width:78%">
                             <label for="hw_settings_overwrite">
                               <input id="hw_settings_overwrite" name="hw_settings_overwrite" type="checkbox" value="yes" <?=!empty($pconfig['hw_settings_overwrite']) ? 'checked="checked"' : '' ?>/>
+                              <?=gettext("Use interface specific custom hardware settings"); ?>
                             </label>
                             <div class="hidden" data-for="help_for_hw_settings_overwrite">
                               <?=gettext("Overwrite custom interface hardware settings with settings specified below"); ?>
@@ -2128,6 +2132,7 @@ include("head.inc");
                           <td>
                             <label for="dhcpoverridemtu">
                               <input name="dhcpoverridemtu" type="checkbox" id="dhcpoverridemtu" value="yes" <?= !empty($pconfig['dhcpoverridemtu']) ? 'checked="checked"' : '' ?>/>
+                              <?=gettext("Don't use ISP supplied MTU"); ?>
                             </label>
                             <div class="hidden" data-for="help_for_dhcpoverridemtu">
                               <?= gettext('An ISP may incorrectly set an MTU value which can cause intermittent network disruption. By default this ' .
@@ -2367,6 +2372,7 @@ include("head.inc");
                           </td>
                         </tr>
                         <tr class="dhcpv6_basic">
+                              <?= gettext("Request only an IPv6 prefix") ?>
                           <td><a id="help_for_dhcp6-ia-pd-len" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Prefix delegation size"); ?></td>
                           <td>
                             <select name="dhcp6-ia-pd-len" class="selectpicker" data-style="btn-default" id="dhcp6-ia-pd-len">
@@ -2407,6 +2413,7 @@ include("head.inc");
                           <td>
                             <label for="dhcp6prefixonly">
                               <input name="dhcp6prefixonly" type="checkbox" id="dhcp6prefixonly" value="yes" <?=!empty($pconfig['dhcp6prefixonly']) ? "checked=\"checked\"" : "";?> />
+                              <?= gettext("Send IPv6 prefix hint") ?>
                             </label>
                             <div class="hidden" data-for="help_for_dhcp6prefixonly">
                               <?= gettext('Only request an IPv6 prefix; do not request an IPv6 address.') ?>
@@ -2427,6 +2434,7 @@ include("head.inc");
                           <td>
                             <label for="dhcp6-ia-pd-send-hint">
                               <input name="dhcp6-ia-pd-send-hint" type="checkbox" id="dhcp6-ia-pd-send-hint" value="yes" <?=!empty($pconfig['dhcp6-ia-pd-send-hint']) ? "checked=\"checked\"" : "";?> />
+                              <?= gettext("Use IPv4 connectivity") ?>
                             </label>
                             <div class="hidden" data-for="help_for_dhcp6-ia-pd-send-hint">
                               <?=gettext("Send an IPv6 prefix hint to indicate the desired prefix size for delegation"); ?>
@@ -2838,6 +2846,7 @@ include("head.inc");
                           <td style="width:78%">
                             <label for="persistcommonwireless">
                               <input name="persistcommonwireless" type="checkbox" value="yes" id="persistcommonwireless" <?=!empty($pconfig['persistcommonwireless']) ? "checked=\"checked\"" : "";?> />
+                              <?= gettext("Persist common settings") ?>
                             </label>
                             <div class="hidden" data-for="help_for_persistcommonwireless">
                               <?=gettext("Enabling this preserves the common wireless configuration through interface deletions and reassignments.");?>
@@ -3079,6 +3088,7 @@ include("head.inc");
                           <td>
                             <label for="puremode">
                               <input name="puremode" type="checkbox" value="11g" id="puremode" <?php if ($pconfig['puremode'] == '11g') echo "checked=\"checked\"";?> />
+                              <?= gettext("802.11g only") ?>
                             </label>
                             <div class="hidden" data-for="help_for_puremode">
                               <?=gettext("When operating as an access point in 802.11g mode, allow only 11g-capable stations to associate (11b-only stations are not permitted to associate)."); ?>
@@ -3091,6 +3101,7 @@ include("head.inc");
                           <td>
                             <label for="apbridge_enable">
                               <input name="apbridge_enable" type="checkbox" value="yes" id="apbridge_enable" <?=!empty($pconfig['apbridge_enable']) ? "checked=\"checked\"" : "";?> />
+                              <?= gettext("Allow intra BSS communication") ?>
                             </label>
                             <div class="hidden" data-for="help_for_apbridge_enable">
                               <?=gettext("When operating as an access point, enable this if you want to pass packets between wireless clients directly."); ?>
@@ -3104,6 +3115,7 @@ include("head.inc");
                           <td>
                             <label for="wme_enable">
                               <input name="wme_enable" type="checkbox" id="wme_enable" value="yes" <?=!empty($pconfig['wme_enable']) ? "checked=\"checked\"" : "";?> />
+                              <?= gettext("Use WME") ?>
                             </label>
                             <div class="hidden" data-for="help_for_wme_enable">
                               <?=gettext("Setting this option will force the card to use WME (wireless QoS)."); ?>
@@ -3115,6 +3127,7 @@ include("head.inc");
                           <td>
                             <label for="hidessid_enable">
                               <input name="hidessid_enable" type="checkbox" id="hidessid_enable" value="yes" <?=!empty($pconfig['hidessid_enable']) ? "checked=\"checked\"" : "";?> />
+                              <?= gettext("Don't broadcast SSID") ?>
                             </label>
                             <div class="hidden" data-for="help_for_hidessid_enable">
                               <?=gettext("Setting this option will force the card to NOT broadcast its SSID (this might create problems for some clients)."); ?>
@@ -3335,6 +3348,7 @@ include("head.inc");
                           <td>
                             <label for="wpa_strict_rekey">
                               <input name="wpa_strict_rekey" type="checkbox" value="yes"  id="wpa_strict_rekey" <?php if ($pconfig['wpa_strict_rekey']) echo "checked=\"checked\""; ?> />
+                              <?= gettext("Regenerate key when client disassociates") ?>
                             </label>
                             <div class="hidden" data-for="help_for_wpa_strict_rekey">
                               <?=gettext("Setting this option will force the AP to rekey whenever a client disassociates."); ?>
@@ -3346,6 +3360,7 @@ include("head.inc");
                           <td>
                             <label for="ieee8021x">
                               <input name="ieee8021x" type="checkbox" value="yes"  id="ieee8021x" <?=!empty($pconfig['ieee8021x']) ? "checked=\"checked\"" : "";?> />
+                              <?= gettext("Enable IEEE802.1X authentication") ?>
                             </label>
                             <div class="hidden" data-for="help_for_ieee8021x">
                               <?=gettext("Setting this option will enable 802.1x authentication."); ?><br/>
@@ -3411,6 +3426,7 @@ include("head.inc");
                           <td>
                             <label for="rsn_preauth">
                               <input name="rsn_preauth" id="rsn_preauth" type="checkbox" value="yes" <?=!empty($pconfig['rsn_preauth']) ? "checked=\"checked\"" : ""; ?> />
+                              <?= gettext("802.1X roaming preauth") ?>
                             </label>
                           </td>
                         </tr>

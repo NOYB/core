@@ -816,6 +816,7 @@ endif; ?>
                   <td>
                     <label for="ldap_read_properties">
                       <input id="ldap_read_properties" name="ldap_read_properties" type="checkbox" <?= empty($pconfig['ldap_read_properties']) ? '' : 'checked="checked"';?> />
+                      <?= gettext('Read properties') ?>
                     </label>
                     <div class="hidden" data-for="help_for_ldap_read_properties">
                       <?= gettext("Normally the authentication only tries to bind to the remote server, ".
@@ -888,6 +889,7 @@ endif; ?>
                   <td>
                     <label for="sync_memberof">
                       <input id="sync_memberof" name="sync_memberof" type="checkbox" <?= empty($pconfig['sync_memberof']) ? '' : 'checked="checked"';?> />
+                      <?= gettext('Synchronize specified groups') ?>
                     </label>
                     <div class="hidden" data-for="help_for_sync_memberof">
                       <?= gettext("Synchronize groups specified by memberOf or class attribute after login, this option requires to enable read properties. ".
@@ -927,6 +929,7 @@ endif; ?>
                   <td>
                     <label for="sync_memberof_constraint">
                       <input id="sync_memberof_constraint" name="sync_memberof_constraint" type="checkbox" <?= empty($pconfig['sync_memberof_constraint']) ? '' : 'checked="checked"';?> />
+                      <?= gettext('Constraint groups') ?>
                     </label>
                     <div class="hidden" data-for="help_for_sync_memberof_constraint">
                       <?= gettext("Constraint allowed groups to those selected in the container section. This may offer additional security in cases where users are able to inject memberOf attributes in different trees.");?>
@@ -955,6 +958,7 @@ endif; ?>
                   <td>
                     <label for="sync_create_local_users">
                       <input id="sync_create_local_users" name="sync_create_local_users" type="checkbox" <?= empty($pconfig['sync_create_local_users']) ? '' : 'checked="checked"';?> />
+                      <?= gettext('Automatically create new user') ?>
                     </label>
                     <div class="hidden" data-for="help_for_sync_create_local_users">
                       <?= gettext(
@@ -992,6 +996,7 @@ endif; ?>
 <?php elseif ($field['type'] == 'checkbox'): ?>
                         <label for="<?=$fieldname;?>">
                           <input name="<?=$fieldname;?>" type="checkbox" id="<?=$fieldname;?>" value="1" <?=!empty($pconfig[$fieldname]) ? "checked=\"checked\"" : ""; ?>/>
+                          <?= gettext('') ?>
                         </label>
 <?php endif ?>
 <?php if (!empty($field['help'])): ?>

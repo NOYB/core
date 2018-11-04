@@ -339,6 +339,7 @@ include("head.inc");
                 <td>
                     <label for="natreflection">
                       <input name="natreflection" type="checkbox" id="natreflection" value="yes" <?= !empty($pconfig['natreflection']) ? 'checked="checked"' : '' ?>/>
+                      <?=gettext("Reflection for port forwards"); ?>
                     </label>
                   <div class="hidden" data-for="help_for_natreflection">
                     <?=gettext("When enabled, this automatically creates additional NAT redirect rules for access to port forwards on your external IP addresses from within your internal networks.");?>
@@ -351,6 +352,7 @@ include("head.inc");
                 <td>
                     <label for="enablebinatreflection">
                       <input name="enablebinatreflection" type="checkbox" id="enablebinatreflection" value="yes" <?=!empty($pconfig['enablebinatreflection']) ? "checked=\"checked\"" : "";?>/>
+                      <?=gettext("Reflection for 1:1"); ?>
                     </label>
                   <div class="hidden" data-for="help_for_enablebinatreflection">
                     <?=gettext("Enables the automatic creation of additional NAT redirect rules for access to 1:1 mappings of your external IP addresses from within your internal networks.");?>
@@ -363,6 +365,7 @@ include("head.inc");
                 <td>
                     <label for="enablenatreflectionhelper">
                       <input name="enablenatreflectionhelper" type="checkbox" id="enablenatreflectionhelper" value="yes" <?=!empty($pconfig['enablenatreflectionhelper']) ? "checked=\"checked\"" : "";?> />
+                      <?=gettext("Automatic outbound NAT for reflection"); ?>
                     </label>
                   <div class="hidden" data-for="help_for_enablenatreflectionhelper">
                     <?=gettext("Automatically create outbound NAT rules which assist inbound NAT rules that direct traffic back out to the same subnet it originated from.");?>
@@ -497,6 +500,7 @@ include("head.inc");
                 <td>
                     <label for="schedule_states">
                       <input name="schedule_states" type="checkbox" id="schedule_states" value="yes" <?=!empty($pconfig['schedule_states']) ? "checked=\"checked\"" :"";?> />
+                      <?=gettext("Schedule expiration clear states"); ?>
                     </label>
                   <div class="hidden" data-for="help_for_schedule_states">
                     <?=gettext("By default schedules clear the states of existing connections when the expiration time has come. ".
@@ -576,6 +580,7 @@ include("head.inc");
                 <td>
                   <label for="keepcounters">
                     <input name="keepcounters" type="checkbox" id="keepcounters" <?= !empty($pconfig['keepcounters']) ? "checked=\"checked\"" : "";?>/>
+                    <?=gettext("Preserve rule counters"); ?>
                   </label>
                   <div class="hidden" data-for="help_keepcounters">
                     <?= gettext('Preserve rule counters across rule updates.  Usually rule counters are reset to zero on every update of the ruleset.') ?><br />
@@ -650,6 +655,7 @@ include("head.inc");
                 <td>
                   <label for="state-policy">
                     <input name="state-policy" type="checkbox" id="state-policy" <?= !empty($pconfig['state-policy']) ? "checked=\"checked\"" : "";?>/>
+                    <?=gettext("Bind states to interface"); ?>
                   </label>
                   <div class="hidden" data-for="help_for_state-policy">
                     <?= gettext('Set behaviour for keeping states, by default states are floating, but when this option is set they should match the interface.') ?><br />

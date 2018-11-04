@@ -283,6 +283,7 @@ include("head.inc");
                     <td style="width:78%">
                       <label for="disabled">
                         <input name="disabled" type="checkbox" id="disabled" value="yes" <?= !empty($pconfig['disabled']) ? "checked=\"checked\"" : ""; ?> />
+                        <?=gettext("Disable this rule"); ?>
                       </label>
                       <div class="hidden" data-for="help_for_disabled">
                         <strong><?=gettext("Disable this rule"); ?></strong><br />
@@ -351,6 +352,7 @@ include("head.inc");
                     <td>
                       <label for="srcnot">
                         <input name="srcnot" id="srcnot" type="checkbox" value="yes" <?= !empty($pconfig['srcnot']) ? "checked=\"checked\"" : "";?> />
+                        <?=gettext("Invert the sense of the source match"); ?>
                       </label>
                       <div class="hidden" data-for="help_for_src_invert">
                         <?=gettext("Use this option to invert the sense of the match."); ?>
@@ -451,6 +453,7 @@ include("head.inc");
                     <td>
                       <label for="dstnot">
                         <input name="dstnot" id="dstnot" type="checkbox" value="yes" <?= !empty($pconfig['dstnot']) ? "checked=\"checked\"" : "";?> />
+                        <?=gettext("Invert the sense of the destination match"); ?>
                       </label>
                       <div class="hidden" data-for="help_for_dst_invert">
                         <?=gettext("Use this option to invert the sense of the match."); ?>
@@ -567,6 +570,7 @@ include("head.inc");
                     <td style="width:78%">
                       <label for="noscrub">
                         <input type="checkbox" name="noscrub" id="noscrub" <?= !empty($pconfig['noscrub']) ? "checked=\"checked\"" : ""; ?> />
+                        <?=gettext("Disable scrub (normalization)"); ?>
                       </label>
                       <div class="hidden" data-for="help_for_noscrub">
                         <?=gettext("Enabling this option will disable scrub (normalization) for traffic matching this rule."); ?>
@@ -610,6 +614,7 @@ include("head.inc");
                       <td style="width:78%">
                           <label for="no-df">
                             <input name="no-df" id="no-df" type="checkbox" value="1" <?= !empty($pconfig['no-df']) ? "checked=\"checked\"" : ""; ?> />
+                            <?=gettext("Do not fragment"); ?>
                           </label>
                           <div class="hidden" data-for="help_for_nodf">
                             <?=gettext("Clears the dont-fragment bit from a matching IP packet."); ?>
@@ -621,6 +626,7 @@ include("head.inc");
                       <td style="width:78%">
                           <label for="random-id">
                             <input name="random-id" id="random-id" type="checkbox" value="1" <?= !empty($pconfig['random-id']) ? "checked=\"checked\"" : ""; ?> />
+                            <?=gettext("Force use of randome IP id"); ?>
                           </label>
                           <div class="hidden" data-for="help_for_randomid">
                             <?=gettext("Replaces the IP identification field with random values to compensate for ".
