@@ -1831,6 +1831,35 @@ class UIBootgrid {
                     return "<span class=\"fa fa-fw fa-times\" data-value=\"0\" data-row-id=\"" + cell.getData()[this.options.datakey] + "\"></span>";
                 }
             },
+            "boolean-show-true": (cell, formatterParams, onRendered) => {
+                onRendered(() => {
+                    this._onCellRendered(cell, formatterParams);
+                });
+
+                if (parseInt(cell.getValue(), 2) === 1) {
+                    return "<span class=\"fa fa-fw fa-check\" data-value=\"1\" data-row-id=\"" + cell.getData()[this.options.datakey] + "\"></span>";
+                } else {
+                    return "<span class=\"fa fa-fw fa-times hidden\" data-value=\"0\" data-row-id=\"" + cell.getData()[this.options.datakey] + "\"></span>";
+                }
+            },
+            "boolean-show-false": (cell, formatterParams, onRendered) => {
+                onRendered(() => {
+                    this._onCellRendered(cell, formatterParams);
+                });
+
+                if (parseInt(cell.getValue(), 2) === 1) {
+                    return "<span class=\"fa fa-fw fa-check hidden\" data-value=\"1\" data-row-id=\"" + cell.getData()[this.options.datakey] + "\"></span>";
+                } else {
+                    return "<span class=\"fa fa-fw fa-times\" data-value=\"0\" data-row-id=\"" + cell.getData()[this.options.datakey] + "\"></span>";
+                }
+            },
+            "hyperlink": (cell, formatterParams, onRendered) => {
+                 onRendered(() => {
+                    this._onCellRendered(cell, formatterParams);
+                });
+
+                   return '<a target="_blank" rel="noopener noreferrer" href="'+encodeURI(cell.getData().url)+'">'+cell.getValue()+'</a>'
+                },
             bytes: (cell, formatterParams, onRendered) => {
                 onRendered(() => {
                     this._onCellRendered(cell, formatterParams);
