@@ -2235,8 +2235,8 @@ include("head.inc");
                           <td>
                             <input name="adv_dhcp_option_modifiers" type="text" id="adv_dhcp_option_modifiers" value="<?=$pconfig['adv_dhcp_option_modifiers'];?>" />
                             <div class="hidden" data-for="help_for_dhcp_option_modifiers">
-                              <?=gettext("The values in this field are DHCP option modifiers applied to obtained DHCP lease. [modifier option declaration [, ...]] <br />" .
-                              "modifiers: (default, supersede, prepend, append)"); ?>
+                              <?=gettext("The values in this field are DHCP option modifiers applied to obtained DHCP lease. [modifier {[option declaration] [, ...]} [; ...]] <br />" .
+                              "modifiers: (default, supersede, prepend, append, ignore)"); ?>
                             </div>
                           </td>
                         </tr>
