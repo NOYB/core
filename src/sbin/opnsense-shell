@@ -108,6 +108,13 @@ esac
 # endless loop
 while : ; do
 
+# Blank unused top of console lines.
+echo
+echo
+echo
+echo
+echo
+
 ${CMD_BANNER}
 
 # We `set -e' to force exit if we encounter an error.
@@ -177,6 +184,8 @@ case ${OPCODE} in
 	${CMD_RESTORE}
 	;;
 *)
+    # Blank unused top of console lines.
+    clear
 	;;
 esac
 
