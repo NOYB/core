@@ -718,7 +718,8 @@ include("head.inc");
 ?>
                 <td><a id="help_for_maximumstates" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Firewall Maximum States");?></td>
                 <td>
-                  <input name="maximumstates" type="text" id="maximumstates" value="<?=$pconfig['maximumstates'];?>" />
+                  <input name="maximumstates" type="text" id="maximumstates" value="<?=$pconfig['maximumstates'];?>" placeholder="<?= filter_default_state_size(); ?>"/>
+<!--                  <input name="maximumstates" type="text" id="maximumstates" value="<?=$pconfig['maximumstates'];?>" placeholder="<?=$pf_state_size_default?>" />-->
                   <div class="hidden" data-for="help_for_maximumstates">
                     <?=gettext("Maximum number of connections to hold in the firewall state table.");?><br/>
                     <?=gettext("Note: Leave this blank for the default. On your system the default size is:");?> <?= filter_default_state_size() ?>
@@ -734,6 +735,7 @@ include("head.inc");
                 <td><a id="help_for_maximumfrags" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Firewall Maximum Fragments");?></td>
                 <td>
                   <input name="maximumfrags" type="text" id="maximumfrags" value="<?=$pconfig['maximumfrags'];?>" />
+<!--                  <input name="maximumfrags" type="text" id="maximumfrags" value="<?=$pconfig['maximumfrags'];?>" placeholder="<?=$pf_frag_entries_size_default?>"/>-->
                   <div class="hidden" data-for="help_for_maximumfrags">
                     <?=gettext("Sets the maximum number of entries in the memory pool used for fragment reassembly.");?><br/>
                     <?=gettext("Note: Leave this blank for the default.");?>
@@ -748,17 +750,18 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_maximumtableentries" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Firewall Maximum Table Entries");?></td>
                 <td>
-                  <input name="maximumtableentries" type="text" id="maximumtableentries" value="<?= html_safe($pconfig['maximumtableentries']) ?>"/>
+                  <input name="maximumtableentries" type="text" id="maximumtableentries" value="<?= html_safe($pconfig['maximumtableentries']) ?>" placeholder="<?= filter_default_table_entries(); ?>"/>
+<!--                  <input name="maximumtableentries" type="text" id="maximumtableentries" value="<?= html_safe($pconfig['maximumtableentries']) ?>" placeholder="<?=$pf_table_entries_size_default?>"/>-->
 <!--                  <input name="maximumtableentries" type="text" id="maximumtableentries" value="<?= html_safe($pconfig['maximumtableentries']) ?>" />-->
                   <div class="hidden" data-for="help_for_maximumtableentries">
                     <?= gettext('Maximum number of table entries for systems such as aliases, sshlockout, bogons, etc, combined.') ?><br/>
-                    <?=gettext("Note: Leave this blank for the default.");?>
+                    <?=gettext("Note: Leave this blank for the default. On your system the default size is:");?> <?= filter_default_table_entries(); ?>
 <?php
-                     if (empty($pconfig['maximumtableentries'])) :?>
+#                     if (empty($pconfig['maximumtableentries'])) :?>
 <!--                    <?=gettext("Note: Leave this blank for the default. On your system the default size is:");?> <?=$pf_table_entries_size_default?>-->
-                        <?= gettext("On your system the default size is:");?> <?= filter_default_table_entries(); ?>
+<!--                        <?= gettext("On your system the default size is:");?> <?= filter_default_table_entries(); ?>-->
 <?php
-                      endif;?>
+#                      endif;?>
                   </div>
                 </td>
               </tr>
@@ -846,7 +849,8 @@ include("head.inc");
               <tr>
                 <td><a id="help_for_aliasesresolveinterval" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Aliases Resolve Interval");?></td>
                 <td>
-                  <input name="aliasesresolveinterval" type="text" value="<?=$pconfig['aliasesresolveinterval']; ?>" />
+                  <input name="aliasesresolveinterval" type="text" value="<?=$pconfig['aliasesresolveinterval']; ?>" placeholder="300" />
+<!--                  <input name="aliasesresolveinterval" type="text" value="<?=$pconfig['aliasesresolveinterval']; ?>" placeholder="300" />-->
                   <div class="hidden" data-for="help_for_aliasesresolveinterval">
                     <?=gettext("Interval, in seconds, that will be used to resolve hostnames configured on aliases.");?>
                     <br />
