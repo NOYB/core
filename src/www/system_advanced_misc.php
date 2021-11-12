@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig['max_mfs_tmp'] = $config['system']['max_mfs_tmp'] ?? null;
     $pconfig['use_swap_file'] = isset($config['system']['use_swap_file']);
     $pconfig['rrdbackup'] = !empty($config['system']['rrdbackup']) ? $config['system']['rrdbackup'] : null;
+    $pconfig['logsdatabackup'] = !empty($config['system']['logsdatabackup']) ? $config['system']['logsdatabackup'] : null;
     $pconfig['netflowbackup'] = !empty($config['system']['netflowbackup']) ? $config['system']['netflowbackup'] : null;
     $pconfig['captiveportalbackup'] = !empty($config['system']['captiveportalbackup']) ? $config['system']['captiveportalbackup'] : null;
     $pconfig['powerd_ac_mode'] = "hadp";
@@ -190,6 +191,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $config['system']['rrdbackup'] = $pconfig['rrdbackup'];
         } elseif (isset($config['system']['rrdbackup'])) {
             unset($config['system']['rrdbackup']);
+        }
+
+        if (!empty($pconfig['logsdatabackup'])) {
+            $config['system']['logsdatabackup'] = $pconfig['logsdatabackup'];
+        } elseif (isset($config['system']['logsdatabackup'])) {
+            unset($config['system']['logsdatabackup']);
         }
 
         if (!empty($pconfig['netflowbackup'])) {
@@ -327,6 +334,23 @@ include("head.inc");
                   <br />
                   <div class="hidden" data-for="help_for_rrdbackup">
                     <?=gettext("This will periodically backup the RRD data so it can be restored automatically on the next boot.");?>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><a id="help_for_logsdatabackup" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Periodic Logs Data Backup");?></td>
+                <td>
+                  <select name="logsdatabackup" class="selectpicker" data-style="btn-default" id="logsdatabackup">
+                    <option value='0' <?= $pconfig['logsdatabackup'] == 0 ? "selected='selected'" : '' ?>><?= gettext('Power off') ?></option>
+<?php for ($x = 1; $x <= 24; $x++): ?>
+                    <option value="<?= $x ?>" <?= $pconfig['logsdatabackup'] == $x ? 'selected="selected"' : '';?>>
+                      <?= $x == 1 ? gettext('1 hour') : sprintf(gettext('%s hours'), $x) ?>
+                    </option>
+<?php endfor ?>
+                    <option value='-1' <?= $pconfig['logsdatabackup'] == -1 ? "selected='selected'" : '' ?>><?= gettext('Disabled') ?></option>
+                  </select>
+                  <div class="hidden" data-for="help_for_logsdatabackup">
+                    <?=gettext("This will periodically backup the logs data so it can be restored automatically on the next boot.");?>
                   </div>
                 </td>
               </tr>
@@ -480,7 +504,7 @@ include("head.inc");
                   </label>
                   <div class="hidden" data-for="help_for_use_mfs_var">
                     <?= gettext('Set this if you wish to use /var/log as a RAM disk (memory file system disks) ' .
-                      'rather than using the hard disk. Setting this will cause the log data to be lost on reboot.') ?>
+                      'rather than using the hard disk. Setting this will cause the log data to be lost on reboot, unless periodic logs data backup is enabled.'); ?>
                   </div>
                 </td>
               </tr>

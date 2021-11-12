@@ -277,6 +277,14 @@ function core_cron()
         $jobs[]['autocron'] = ['/usr/local/etc/rc.syshook.d/backup/20-rrd', '0', '*/' . $config['system']['rrdbackup']];
     }
 
+    if (!empty($config['system']['logsdatabackup']) && $config['system']['logsdatabackup'] > 0) {
+        $jobs[]['autocron'] = array(
+            '/usr/local/etc/rc.syshook.d/backup/20-logsdata',
+            '0',
+            '*/' . $config['system']['logsdatabackup']
+        );
+    }
+
     if (!empty($config['system']['netflowbackup']) && $config['system']['netflowbackup'] > 0) {
         $jobs[]['autocron'] = ['/usr/local/etc/rc.syshook.d/backup/20-netflow', '0', '*/' . $config['system']['netflowbackup']];
     }
