@@ -59,6 +59,41 @@ export default class LiveLog extends BaseTableWidget {
             }
 
             const data = JSON.parse(event.data);
+
+            // Time display format: Use or override log raw time format
+            var timefmt = 
+                "{{ timefmt }}" == 'Web_GUI_Language' ? "{{ langcode }}"
+              : "{{ timefmt }}" == 'Client_Locale' ? 'default'
+              : "{{ timefmt }}";
+
+var timefmt = 'default';
+
+            // Implement as Intl.DateTimeFormat object for efficiency (toLocaleString).
+            if (timefmt == "{{ langcode }}" || timefmt == 'default') {
+                var IDTF_obj = new Intl.DateTimeFormat(timefmt, { month:'short', day:'2-digit', hour:'numeric', hourCycle:'h23', minute: 'numeric', second: 'numeric'});
+            }
+
+            switch (timefmt) {
+                case 'Log_Raw':
+//                    data.timestamp = data.timestamp;
+                    break;
+                case 'Log_Long':
+                    data.timestamp = data.timestamp.substring(0,22).replace('T', ' ');
+//                    data.timestamp = data.timestamp.replace(/:[0-9]{2}$/, '').replace('T', ' ');
+                    break;
+                case 'Log_Long_No_TZ':
+                    data.timestamp = data.timestamp.substring(0,19).replace('T', ' ');
+//                    data.timestamp = data.timestamp.replace(/(([+-](\d{2}:?\d{2}|\d{1,2}))|Z)$/g, '').replace('T', ' ');
+                    break;
+                case 'Log_Short':
+                    data.timestamp = data.timestamp.substring(5,19).replace('T', ' ');
+//                    data.timestamp = data.timestamp.replace(/^\d{4}-|(([+-](\d{2}:?\d{2}|\d{1,2}))|Z)$/g, '').replace('T', ' ');
+                    break;
+                default:
+                    data.timestamp = IDTF_obj.format(new Date(data.timestamp)).replace(/[.,]/g, '');
+//                    data.timestamp = new Date(data.timestamp).toLocaleString(timefmt, { month:'short', day:'2-digit', hour:'numeric', hourCycle:'h23', minute: 'numeric', second: 'numeric'}).replace(/[.,]/g, '');
+            }
+
             super.updateTable('live-log-table', [
                 [
                     data.timestamp,

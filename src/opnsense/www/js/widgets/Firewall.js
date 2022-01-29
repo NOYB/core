@@ -178,11 +178,45 @@ export default class Firewall extends BaseTableWidget {
             </a>
         `);
 
+        // Time display format: Use or override log raw time format
+        var timefmt = 
+            "{{ timefmt }}" == 'Web_GUI_Language' ? "{{ langcode }}"
+          : "{{ timefmt }}" == 'Client_Locale' ? 'default'
+          : "{{ timefmt }}";
+
+var timefmt = 'default';
+
+        // Implement as Intl.DateTimeFormat object for efficiency (toLocaleString).
+        if (timefmt == "{{ langcode }}" || timefmt == 'default') {
+            var IDTF_obj = new Intl.DateTimeFormat(timefmt, { month:'short', day:'2-digit', hour:'numeric', hourCycle:'h23', minute: 'numeric', second: 'numeric'});
+        }
+
+        switch (timefmt) {
+            case 'Log_Raw':
+//                data.__timestamp__ = data.__timestamp__;
+                break;
+            case 'Log_Long':
+                data.__timestamp__ = data.__timestamp__.substring(0,22).replace('T', ' ');
+//                data.__timestamp__ = data.__timestamp__.replace(/:[0-9]{2}$/, '').replace('T', ' ');
+                break;
+            case 'Log_Long_No_TZ':
+                data.__timestamp__ = data.__timestamp__.substring(0,19).replace('T', ' ');
+//                data.__timestamp__ = data.__timestamp__.replace(/(([+-](\d{2}:?\d{2}|\d{1,2}))|Z)$/g, '').replace('T', ' ');
+                break;
+            case 'Log_Short':
+                data.__timestamp__ = data.__timestamp__.substring(5,19).replace('T', ' ');
+//                data.__timestamp__ = data.__timestamp__.replace(/^\d{4}-|(([+-](\d{2}:?\d{2}|\d{1,2}))|Z)$/g, '').replace('T', ' ');
+                break;
+            default:
+                data.__timestamp__ = IDTF_obj.format(new Date(data.__timestamp__)).replace(/[.,]/g, '');
+//                data.__timestamp__ = new Date(data.__timestamp__).toLocaleString(timefmt, { month:'short', day:'2-digit', hour:'numeric', hourCycle:'h23', minute: 'numeric', second: 'numeric'}).replace(/[.,]/g, '');
+        }
+
         super.updateTable('fw-top-table', [
             [
                 popover.prop('outerHTML'),
                 /* Format time based on client browser locale */
-                (new Intl.DateTimeFormat(undefined, {hour: 'numeric', minute: 'numeric'})).format(new Date(data.__timestamp__)),
+                data.__timestamp__,
                 this.ifMap[data.interface] ?? data.interface,
                 `<span class="ip-tooltip" style="cursor: pointer; data-toggle="tooltip" title="${data.src}">${data.src}</span>`,
                 `<span class="ip-tooltip" style="cursor: pointer; data-toggle="tooltip" title="${data.dst}">${data.dst}</span>`,

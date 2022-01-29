@@ -534,6 +534,17 @@
         }
     }
 
+    // Time display format: Use or override log raw time format
+    var timefmt = 
+        "{{ timefmt }}" == 'Web_GUI_Language' ? "{{ langcode }}"
+      : "{{ timefmt }}" == 'Client_Locale' ? 'default'
+      : "{{ timefmt }}";
+
+    // Implement as Intl.DateTimeFormat object for efficiency (toLocaleString).
+    if (timefmt == "{{ langcode }}" || timefmt == 'default') {
+        var IDTF_obj = new Intl.DateTimeFormat(timefmt, { month:'short', day:'2-digit', hour:'numeric', hourCycle:'h23', minute: 'numeric', second: 'numeric'});
+    }
+
     $(document).ready(function() {
         function fetch_log(last_digest=null, limit=null) {
             const map = {
@@ -738,6 +749,28 @@
                     },
                     interface: function(column, row, onRendered) {
                         return interfaceMap[row[column.id]] ?? row[column.id];
+                    },
+                    timestamp: function (column, row, onRendered) {
+                        switch (timefmt) {
+                            case 'Log_Raw':
+                                return row[column.id];
+                                break;
+                            case 'Log_Long':
+                                return row[column.id].substring(0,22).replace('T', ' ');
+//                                return row[column.id].replace(/:[0-9]{2}$/, '').replace('T', ' ');
+                                break;
+                            case 'Log_Long_No_TZ':
+                                return row[column.id].substring(0,19).replace('T', ' ');
+//                                return row[column.id].replace(/(([+-](\d{2}:?\d{2}|\d{1,2}))|Z)$/g, '').replace('T', ' ');
+                                break;
+                            case 'Log_Short':
+                                return row[column.id].substring(5,19).replace('T', ' ');
+//                                return row[column.id].replace(/^\d{4}-|(([+-](\d{2}:?\d{2}|\d{1,2}))|Z)$/g, '').replace('T', ' ');
+                                break;
+                            default:
+                                return IDTF_obj.format(new Date(row[column.id])).replace(/[.,]/g, '');
+//                                return new Date(row[column.id]).toLocaleString(timefmt, { month:'short', day:'2-digit', hour:'numeric', hourCycle:'h23', minute: 'numeric', second: 'numeric'}).replace(/[.,]/g, '');
+                        }
                     },
                     info: function(column, row, onRendered) {
                         onRendered((cell) => {
@@ -1481,7 +1514,7 @@
                 <th data-column-id="__digest__" data-identifier="true" data-sortable="false" data-visible="false">{{ lang._('Digest') }}</th>
                 <th data-column-id="interface" data-type="string" data-formatter="interface" data-sortable="false" data-width="80">{{ lang._('Interface') }}</th>
                 <th data-column-id="dir" data-type="string" data-formatter="direction" data-sortable="false" data-width="30"></th>
-                <th data-column-id="__timestamp__" data-sortable="false" data-width="150">{{ lang._('Time') }}</th>
+                <th data-column-id="__timestamp__" data-formatter="timestamp" data-sortable="false" data-width="150">{{ lang._('Time') }}</th>
                 <th data-column-id="protoname" data-sortable="false" data-formatter="proto" data-width="80">{{ lang._('Protocol') }}</th>
                 <th data-column-id="src" data-type="string" data-formatter="appendPort" data-sortable="false">{{ lang._('Source') }}</th>
                 <th data-column-id="srchostname" data-type="string" data-formatter="lookup" data-sortable="false" data-visible="false">{{ lang._('Source Hostname') }}</th>
