@@ -93,6 +93,18 @@ class AliasUtilController extends ApiControllerBase
     {
         $data = json_decode((new Backend())->configdpRun("filter list table", [$alias]), true) ?? [];
         return $this->searchRecordsetBase($data['items'] ?? []);
+                if ($sortcolumn == 'ip') {
+                    if ($sort_order == 'desc') {
+                        $formatted_full = array_reverse($formatted_full);
+                     }
+                } else {
+                    array_multisort(
+                        array_column($formatted_full, $sortcolumn),
+                        $sort_order == 'asc' ? SORT_ASC : SORT_DESC,
+                        SORT_NATURAL | SORT_FLAG_CASE,
+                        $formatted_full
+                    );
+                }
     }
 
     /**
