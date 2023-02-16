@@ -20,6 +20,7 @@
             <name>Name</name>
             <versions>Versions</versions>
             <updates>Updates</updates>
+            <boottime>Boot time</boottime>
             <datetime>Current date/time</datetime>
             <loadavg>Load average</loadavg>
             <uptime>Uptime</uptime>
