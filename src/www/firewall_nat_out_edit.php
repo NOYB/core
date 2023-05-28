@@ -107,13 +107,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $pconfig['source'] = $a_out[$configId]['source']['network'];
         }
         $pconfig['source_not'] = !empty($a_out[$configId]['source']['not']);
+        $pconfig['source_portnot'] = !empty($a_out[$configId]['source']['portnot']);
 
         if (!is_numeric($pconfig['source_subnet'])) {
               $pconfig['source_subnet'] = 32;
         }
         address_to_pconfig($a_out[$configId]['destination'], $pconfig['destination'],
           $pconfig['destination_subnet'], $pconfig['destination_not'],
-          $none, $none);
+          $none, $none, $pconfig['dst_portnot']);
     }
 
     // initialize unused elements
@@ -174,6 +175,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if ($pconfig['source'] == "any" && !empty($pconfig['source_not'])) {
         $input_errors[] = gettext("Negating source address of \"any\" is invalid.");
     }
+    if ($pconfig['sourceport'] == "" && !empty($pconfig['source_portnot'])) {
+        $input_errors[] = gettext("Negating source port of \"any\" is invalid.");
+    }
     if (!is_specialnet($pconfig['destination']) && !is_ipaddroralias($pconfig['destination'])) {
         $input_errors[] = gettext("A valid destination must be specified.");
     }
@@ -182,6 +186,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     if ($pconfig['destination'] == "any" && !empty($pconfig['destination_not'])) {
         $input_errors[] = gettext("Negating destination address of \"any\" is invalid.");
+    }
+    if ($pconfig['dstport'] == "" && !empty($pconfig['dst_portnot'])) {
+        $input_errors[] = gettext("Negating destination port of \"any\" is invalid.");
     }
 
     if (!empty($pconfig['targetip']) && !is_ipaddr($pconfig['targetip']) && !is_subnet($pconfig['targetip'])
@@ -310,8 +317,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (isset($pconfig['destination_not']) && $pconfig['destination'] != "any") {
             $natent['destination']['not'] = true;
         }
+        if (isset($pconfig['dst_portnot']) && $pconfig['dstport'] != "") {
+            $natent['destination']['portnot'] = true;
+        }
+
         if (isset($pconfig['source_not']) && $pconfig['source'] != "any") {
             $natent['source']['not'] = true;
+        }
+        if (isset($pconfig['source_portnot']) && $pconfig['sourceport'] != "") {
+            $natent['source']['portnot'] = true;
         }
 
         $natent['updated'] = make_config_revision_entry();
@@ -550,6 +564,18 @@ include("head.inc");
                   </td>
                 </tr>
                 <tr>
+                  <td> <a id="help_for_src_port_invert" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?= gettext('Source port invert') ?></td>
+                  <td>
+                    <label for="source_portnot">
+                      <input name="source_portnot" id="source_portnot" type="checkbox" value="yes" <?= !empty($pconfig['source_portnot']) ? 'checked="checked"' : '' ?> />
+                      <?=gettext("Invert the sense of the source port match"); ?>
+                    </label>
+                    <div class="hidden" data-for="help_for_src_port_invert">
+                      <?=gettext("Use this option to invert the sense of the match."); ?>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
                   <td><a id="help_for_src_port" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?= gettext('Source port') ?></td>
                   <td>
                     <table class="table table-condensed">
@@ -638,6 +664,18 @@ include("head.inc");
                     </table>
                     <div class="hidden" data-for="help_for_destination">
                       <?=gettext("Enter the destination network for the outbound NAT mapping.");?>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td> <a id="help_for_dst_port_invert" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?= gettext('Destination port invert') ?></td>
+                  <td>
+                    <label for="dst_portnot">
+                      <input name="dst_portnot" id="dst_portnot" type="checkbox" value="yes" <?= !empty($pconfig['dst_portnot']) ? 'checked="checked"' : '' ?> />
+                      <?=gettext("Invert the sense of the destination port match"); ?>
+                    </label>
+                    <div class="hidden" data-for="help_for_dst_port_invert">
+                      <?=gettext("Use this option to invert the sense of the match."); ?>
                     </div>
                   </td>
                 </tr>

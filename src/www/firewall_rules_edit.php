@@ -165,6 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
           $pconfig['srcnot'],
           $pconfig['srcbeginport'],
           $pconfig['srcendport'],
+          $pconfig['srcportnot'],
           true
         );
 
@@ -175,6 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
           $pconfig['dstnot'],
           $pconfig['dstbeginport'],
           $pconfig['dstendport'],
+          $pconfig['dstportnot'],
           true
         );
 
@@ -633,10 +635,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         pconfig_to_address($filterent['source'], $pconfig['src'],
           '', !empty($pconfig['srcnot']),
-          $pconfig['srcbeginport'], $pconfig['srcendport']);
+          $pconfig['srcbeginport'], $pconfig['srcendport'], !empty($pconfig['srcportnot']));
         pconfig_to_address($filterent['destination'], $pconfig['dst'],
           '', !empty($pconfig['dstnot']),
-          $pconfig['dstbeginport'], $pconfig['dstendport']);
+          $pconfig['dstbeginport'], $pconfig['dstendport'], !empty($pconfig['dstportnot']));
 
         $filterent['updated'] = make_config_revision_entry();
 
@@ -1162,6 +1164,18 @@ include("head.inc");
                     </td>
                   </tr>
                   <tr class="hidden advanced_opt_src">
+                    <td> <a id="help_for_src_port_invert" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Source port range") . " / ".gettext("Invert");?> </td>
+                    <td>
+                      <label for="srcportnot">
+                        <input <?=!empty($pconfig['associated-rule-id']) ? "disabled" : "";?> name="srcportnot" id="srcportnot" type="checkbox" value="yes" <?= !empty($pconfig['srcportnot']) ? "checked=\"checked\"" : "";?> />
+                        <?=gettext("Invert the sense of the source port range match"); ?>
+                      </label>
+                      <div class="hidden" data-for="help_for_src_port_invert">
+                        <?=gettext("Use this option to invert the sense of the match."); ?>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="hidden advanced_opt_src">
                     <td><a id="help_for_srcport" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Source port range"); ?></td>
                     <td>
                       <table class="table table-condensed">
@@ -1240,6 +1254,18 @@ include("head.inc");
                     <td><i class="fa fa-info-circle text-muted"></i> <?=gettext("Destination"); ?></td>
                     <td>
                       <input id="dst" name="dst" type="text" value="<?=$pconfig['dst'];?>"  class="net_selector_multi"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td> <a id="help_for_dst_port_invert" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Destination port range") . " / ".gettext("Invert");?> </td>
+                    <td>
+                      <label for="dstportnot">
+                        <input <?=!empty($pconfig['associated-rule-id']) ? "disabled" : "";?> name="dstportnot" id="dstportnot" type="checkbox" value="yes" <?= !empty($pconfig['dstportnot']) ? "checked=\"checked\"" : "";?> />
+                        <?=gettext("Invert the sense of the destination port range match"); ?>
+                      </label>
+                      <div class="hidden" data-for="help_for_dst_port_invert">
+                        <?=gettext("Use this option to invert the sense of the match."); ?>
+                      </div>
                     </td>
                   </tr>
                   <tr>

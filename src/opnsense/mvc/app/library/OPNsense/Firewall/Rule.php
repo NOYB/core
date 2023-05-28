@@ -108,12 +108,24 @@ abstract class Rule
                     // convert 'any' to upper or lower bound when provided in range. e.g. 80:any --> 80:65535
                     $port = str_replace('any', strpos($port, ':any') !== false ? '65535' : '1', $port);
                 }
+                // invert tcp/udp port match (convert to != unary or ANTIPORTS alias)
+                $invert = false;
+                $antiports_alias_ext = '';
+#                if(isset($rule[$tag]['portnot'])) {
+#                if(isset($rule['source']['portnot']) || isset($rule['destination']['portnot'])) {
+                if ($rule['source']['portnot'] || $rule['destination']['portnot']) {
+                    $invert = true;
+                    $antiports_alias_ext = '_ANTIPORTS';
+                }
                 if ($port == 'any') {
                     $rule[$pfield] = null;
                 } elseif (Util::isPort($port)) {
+                    if ($invert) {
+                        $port = (str_contains($port, ':')) ? str_replace(':', '<>', $port) : '!=' . $port;
+                    }
                     $rule[$pfield] = $port;
                 } elseif (Util::isAlias($port)) {
-                    $rule[$pfield] = '$' . $port;
+                    $rule[$pfield] = '$' . $port . $antiports_alias_ext;
                     if (!Util::isAlias($port, true)) {
                         // unable to map port
                         $rule['disabled'] = true;

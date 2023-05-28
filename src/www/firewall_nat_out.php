@@ -433,6 +433,7 @@ include("head.inc");
                       *
 <?php
                       elseif (isset($natent['sourceport']) && is_alias($natent['sourceport'])):?>
+                      <?= isset($natent['source']['portnot']) ? '!' : '' ?>
                       <span title="<?=htmlspecialchars(get_alias_description($natent['sourceport']));?>" data-toggle="tooltip"  data-html="true">
                         <?=htmlspecialchars(pprint_port($natent['sourceport'])); ?>&nbsp;
                       </span>
@@ -442,6 +443,7 @@ include("head.inc");
                       </a>
 <?php
                       else:?>
+                      <?= isset($natent['source']['portnot']) ? '!' : '' ?>
                       <?=htmlspecialchars($natent['sourceport'])?>
 <?php
                       endif;?>
@@ -469,6 +471,7 @@ include("head.inc");
                       *
 <?php
                       elseif (isset($natent['dstport']) && is_alias($natent['dstport'])):?>
+                      <?= isset($natent['destination']['portnot']) ? '!' : '' ?>
                       <span title="<?=htmlspecialchars(get_alias_description($natent['dstport']));?>" data-toggle="tooltip"  data-html="true">
                         <?=htmlspecialchars(pprint_port($natent['dstport'])); ?>&nbsp;
                       </span>
@@ -478,6 +481,7 @@ include("head.inc");
                       </a>
 <?php
                       else:?>
+                      <?= isset($natent['destination']['portnot']) ? '!' : '' ?>
                       <?=htmlspecialchars($natent['dstport'])?>
 <?php
                       endif;?>

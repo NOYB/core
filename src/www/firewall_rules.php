@@ -832,6 +832,7 @@ $( document ).ready(function() {
                           <?= is_alias($rule->getUIFromAddress()) ? filter_rule_item_alias_tooltip($rule->getUIFromAddress()) : htmlspecialchars($rule->getUIFromAddress());?>
                       </td>
                       <td class="view-info hidden-xs hidden-sm">
+                          <?=$rule->isUIFromPortNot() ? '!' : '';?>
                         <?= is_alias($rule->getUIFromPort()) ? filter_rule_item_alias_tooltip($rule->getUIFromPort()) : htmlspecialchars(pprint_port($rule->getUIFromPort()));?>
                       </td>
                       <td class="view-info hidden-xs hidden-sm">
@@ -839,6 +840,7 @@ $( document ).ready(function() {
                           <?= is_alias($rule->getUIToAddress()) ? filter_rule_item_alias_tooltip($rule->getUIToAddress()) : htmlspecialchars($rule->getUIToAddress());?>
                       </td>
                       <td class="view-info hidden-xs hidden-sm">
+                          <?=$rule->isUIToPortNot() ? '!' : '';?>
                           <?= is_alias($rule->getUIToPort()) ? filter_rule_item_alias_tooltip($rule->getUIToPort()) : htmlspecialchars(pprint_port($rule->getUIToPort()));?>
                       </td>
                       <td class="view-info hidden-xs hidden-sm">
@@ -913,9 +915,10 @@ $( document ).ready(function() {
 
                     <td class="view-info hidden-xs hidden-sm">
 <?php                 if (isset($filterent['source']['port']) && is_alias($filterent['source']['port'])): ?>
+                        <?=!empty($filterent['source']['portnot']) ? '!' : '';?>
                         <?=filter_rule_item_alias_tooltip($filterent['source']['port']);?>
 <?php                 else: ?>
-                        <?=htmlspecialchars(pprint_port(isset($filterent['source']['port']) ? $filterent['source']['port'] : null)); ?>
+                        <?=htmlspecialchars(pprint_port(isset($filterent['source']['port']) ? $filterent['source']['port'] : null, $filterent['source']['portnot'])); ?>
 <?php                 endif; ?>
                     </td>
 
@@ -925,9 +928,10 @@ $( document ).ready(function() {
 
                     <td class="view-info hidden-xs hidden-sm">
 <?php                 if (isset($filterent['destination']['port']) && is_alias($filterent['destination']['port'])): ?>
+                        <?=!empty($filterent['destination']['portnot']) ? '!' : '';?>
                         <?=filter_rule_item_alias_tooltip($filterent['destination']['port']);?>
 <?php                 else: ?>
-                        <?=htmlspecialchars(pprint_port(isset($filterent['destination']['port']) ? $filterent['destination']['port'] : null)); ?>
+                        <?=htmlspecialchars(pprint_port(isset($filterent['destination']['port']) ? $filterent['destination']['port'] : null, $filterent['destination']['portnot'])); ?>
 <?php                 endif; ?>
                     </td>
 

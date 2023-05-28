@@ -100,15 +100,25 @@ class SNatRule extends Rule
                 }
             }
             foreach (array("sourceport", "dstport", "natport") as $fieldname) {
+                // invert tcp/udp port match (convert to != unary or ANTIPORTS alias)
+                $invert = false;
+                $antiports_alias_ext = '';
+                if(isset($rule[$fieldname]['portnot'])) {
+                    $invert = true;
+                    $antiports_alias_ext = '_ANTIPORTS';
+                }
                 if (!empty($rule[$fieldname]) && Util::isAlias($rule[$fieldname])) {
                     if (!Util::isAlias($rule[$fieldname], true)) {
                         // unable to map port
                         $this->log("SNAT / unable to map port " . $rule[$fieldname] . ", empty?");
                         $rule['disabled'] = true;
                     }
-                    $rule[$fieldname] = "$" . $rule[$fieldname];
+                    $rule[$fieldname] = "$" . $rule[$fieldname] . $antiports_alias_ext;
                 } elseif (!empty($rule[$fieldname])) {
                     $rule[$fieldname] = str_replace('-', ':', $rule[$fieldname]); // range interpretation
+                    if ($invert) {
+                        $rule[$fieldname] = (str_contains($rule[$fieldname], ':')) ? str_replace(':', '<>', $rule[$fieldname]) : '!=' . $rule[$fieldname];
+                    }
                 }
             }
             if (empty($rule['poolopts']) || $rule['poolopts'] != "source-hash") {

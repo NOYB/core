@@ -275,7 +275,7 @@ function get_specialnets($only_enabled = false)
     return $specialnets;
 }
 
-function pprint_port($port)
+function pprint_port($port, $portnot = null)
 {
     global $wkports;
 
@@ -290,6 +290,10 @@ function pprint_port($port)
         } else {
             $pport .= $srcport[0] . " - " . $srcport[1];
         }
+    }
+
+    if (isset($portnot)) {
+        $pport = "! " . $pport;
     }
 
     return $pport;
@@ -310,7 +314,7 @@ function gentitle($breadcrumbs, $navlevelsep = ': ')
     return join($navlevelsep, $output) . "$gentitle_suffix";
 }
 
-function address_to_pconfig($adr, &$padr, &$pmask, &$pnot, &$pbeginport, &$pendport, $merge_mask = false)
+function address_to_pconfig($adr, &$padr, &$pmask, &$pnot, &$pbeginport, &$pendport, &$pportnot, $merge_mask = false)
 {
     if (isset($adr['any'])) {
         $padr = "any";
@@ -349,9 +353,15 @@ function address_to_pconfig($adr, &$padr, &$pmask, &$pnot, &$pbeginport, &$pendp
         $pbeginport = "any";
         $pendport = "any";
     }
+
+    if (isset($adr['portnot'])) {
+        $pportnot = 1;
+    } else {
+        $pportnot = 0;
+    }
 }
 
-function pconfig_to_address(&$adr, $padr, $pmask, $pnot = false, $pbeginport = 0, $pendport = 0)
+function pconfig_to_address(&$adr, $padr, $pmask, $pnot = false, $pbeginport = 0, $pendport = 0, $pportnot = false)
 {
     $adr = array();
     if ($padr == "any") {
@@ -387,6 +397,12 @@ function pconfig_to_address(&$adr, $padr, $pmask, $pnot = false, $pbeginport = 0
         } elseif ($pbeginport !== "any") {
             $adr['port'] = $pbeginport;
         }
+    }
+
+    if ($pportnot) {
+        $adr['portnot'] = true;
+    } elseif (isset($adr['portnot'])) {
+        unset($adr['portnot']);
     }
 }
 

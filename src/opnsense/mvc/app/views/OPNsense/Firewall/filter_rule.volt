@@ -502,7 +502,12 @@
                         }
 
                         const value = row[column.id] || "";
-                        const isNegated = (row[column.id.replace('net', 'not')] == 1) ? "! " : "";
+
+                        if (column.id == 'source_port' || column.id == 'destination_port') {
+                            var isNegated = (row[column.id.replace('port', 'portnot')] == 1) ? "! " : "";
+                        } else {
+                            var isNegated = (row[column.id.replace('net', 'not')] == 1) ? "! " : "";
+                        }
 
                         // Internal rule source/destination can be an object, skip them
                         if (typeof value !== 'string') {

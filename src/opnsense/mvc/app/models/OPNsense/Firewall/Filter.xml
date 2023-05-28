@@ -160,6 +160,10 @@
                     <EnableAlias>Y</EnableAlias>
                     <ValidationMessage>Please specify a valid portnumber, name, alias or range.</ValidationMessage>
                 </source_port>
+                <source_portnot type="BooleanField">
+                    <Default>0</Default>
+                    <Required>Y</Required>
+                </source_portnot>
                 <!-- XXX: should map internally to  'source' => array('destination' => destination_net, "not" => true|false) -->
                 <destination_net type="NetworkAliasField">
                     <Default>any</Default>
@@ -176,6 +180,10 @@
                     <EnableAlias>Y</EnableAlias>
                     <ValidationMessage>Please specify a valid portnumber, name, alias or range.</ValidationMessage>
                 </destination_port>
+                <destination_portnot type="BooleanField">
+                    <Default>0</Default>
+                    <Required>Y</Required>
+                </destination_portnot>
                 <divert-to type="JsonKeyValueStoreField">
                     <ConfigdPopulateAct>filter list diverts</ConfigdPopulateAct>
                     <ValidationMessage>Specify a valid divert-to target.</ValidationMessage>

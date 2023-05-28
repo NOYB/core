@@ -373,6 +373,10 @@ class FilterRule extends Rule
         }
         return '*';
     }
+    public function isUIFromPortNot()
+    {
+        return isset($this->rule['source']) && isset($this->rule['source']['portnot']);
+    }
     public function getUIToAddress()
     {
         if (!empty($this->rule['to'])) {
@@ -398,6 +402,10 @@ class FilterRule extends Rule
             return $this->rule['destination']['port'];
         }
         return '*';
+    }
+    public function isUIToPortNot()
+    {
+        return isset($this->rule['destination']) && isset($this->rule['destination']['portnot']);
     }
     public function getUIGateway()
     {

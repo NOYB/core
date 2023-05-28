@@ -621,6 +621,9 @@ function filter_generate_scrubbing(&$FilterIflist)
 
 function filter_generate_aliases()
 {
+    // need an antiports alias?
+    $antiports_alias_list = need_antiports_alias();
+
     $aliases = "# User Aliases\n";
     $aliasObject = new \OPNsense\Firewall\Alias(true);
     // list of registered aliases for faster is_alias() lookup
@@ -648,6 +651,11 @@ function filter_generate_aliases()
                     $tmp_ports = "0 <> 65535";
                 }
                 $aliases .= "{$aliased['name']} = \"{ {$tmp_ports} }\"\n";
+                // need an antiports alias?
+                if (in_array("{$aliased['name']}", $antiports_alias_list)) {
+                    $ports_alias = "{$aliased['name']} = \"{ {$tmp_ports} }\"\n";
+                    $aliases .= antiports_alias($ports_alias);
+                }
                 break;
             default:
                 /* XXX: should move to update_tables.py */
@@ -875,4 +883,145 @@ function get_tos_values($blank_label = '')
     }
 
     return $ret;
+}
+
+/**
+ * Determine if need an antiports alias
+ * return: list of needed antiports aliases
+ */
+function need_antiports_alias()
+{
+    global $config;
+    $antiports_alias_list = array();
+    if (!empty($config['filter']['rule'])) {
+        foreach ($config['filter']['rule'] as $rule) {
+            if (!empty($rule['source']['portnot']) && !empty($rule['source']['port'])) {
+                $antiports_alias_list[] = $rule['source']['port'];
+            }
+            if (!empty($rule['destination']['portnot']) && !empty($rule['destination']['port'])) {
+                $antiports_alias_list[] = $rule['destination']['port'];
+            }
+        }
+    }
+    if (!empty($config['nat']['rule'])) {
+         foreach ($config['nat']['rule'] as $rule) {
+            if (!empty($rule['source']['portnot']) && !empty($rule['source']['port'])) {
+                $antiports_alias_list[] = $rule['source']['port'];
+            }
+            if (!empty($rule['destination']['portnot']) && !empty($rule['destination']['port'])) {
+                $antiports_alias_list[] = $rule['destination']['port'];
+            }
+        }
+    }
+    if (!empty($config['nat']['outbound']['rule'])) {
+         foreach ($config['nat']['outbound']['rule'] as $rule) {
+            if (!empty($rule['source']['portnot']) && !empty($rule['sourceport'])) {
+                $antiports_alias_list[] = $rule['sourceport'];
+            }
+            if (!empty($rule['destination']['portnot']) && !empty($rule['dstport'])) {
+                $antiports_alias_list[] = $rule['dstport'];
+            }
+        }
+    }
+    return array_unique($antiports_alias_list);
+}
+
+/**
+ * Create an antiports alias to be included in firewall conf to invert port match.
+ * parameter: firewall alias string (ports)
+ * return: firewall antiports alias
+ */
+function antiports_alias ($ports_alias)
+{
+    // ports and operators regex patterns
+    $port = '(\d+)';
+    $binary = '(\d+\s*(?::|><|<>)\s*\d+)';
+    $unary = '((?:!=|<=|>=|=|<|>)\s*\d+)';
+
+    // get ports elements from alias
+    if (!preg_match_all('/(?:[^alnum_](?|'.$binary.'|'.$unary.'|'.$port.'))/', $ports_alias, $ports)) {
+        syslog(LOG_ERR, sprintf('Unable to create ANTIPORTS alias for [%s]', $ports_alias));
+        file_put_contents(
+            '/tmp/rules.error',
+            sprintf(gettext('Unable to create ANTIPORTS alias for [%s]'), $ports_alias)
+        );
+        return '';
+    }
+
+    $antiports = array_reverse(antiports($ports[1]), true);    // Reverse array so that first element matches most packets (high ports).  Preserve keys for index access.
+
+    // create antiports alias
+    $alias_name = '(\w+)';
+    $ports_list = '{.*?}';
+    $antiports_alias = preg_replace('/^'.$alias_name.'(.*?)'.$ports_list.'(.*?)$/', '${1}_ANTIPORTS${2}{ ' . implode(' ', $antiports) . ' }${3}', $ports_alias);
+
+    if($antiports_alias === null || $antiports_alias == $ports_alias) {
+        syslog(LOG_ERR, sprintf('Unable to create ANTIPORTS alias for [%s]', $ports_alias));
+        file_put_contents(
+            '/tmp/rules.error',
+            sprintf(gettext('Unable to create ANTIPORTS alias for [%s]'), $ports_alias)
+        );
+        return '';
+    }
+
+    return $antiports_alias;
+}
+
+/**
+ * Create antiports list
+ * parameter: $ports ports list
+ * return: $antiports antiports list
+ */
+function antiports($ports) {
+
+    // create array of ranges
+    $ranges = array();
+    $port_range = '/(\d+)\s*:\s*(\d+)/';
+    foreach ($ports as $port) {
+        if (preg_match($port_range, $port, $matches)) {
+            $ranges[] = array($matches[1], $matches[2]);
+        } elseif (is_numeric($port)) {
+            $ranges[] = array($port, $port);
+         }
+    }
+
+    // merge overlapping ranges
+    usort($ranges, function($a, $b) {
+        return $a[0] - $b[0];
+    });
+
+    // convert to antiports ranges
+    $n = 0; $len = count($ranges);
+    for ($i = 1; $i < $len; ++$i)
+    {
+        if ($ranges[$i][0] > $ranges[$n][1] + 1) {
+            $n = $i;
+        } else {
+            if ($ranges[$n][1] < $ranges[$i][1]) {
+                $ranges[$n][1] = $ranges[$i][1];
+            }
+            unset($ranges[$i]);
+        }
+    }
+
+    // build list of antiports
+    $antiports = array();
+    $next_antiport = 0;
+    foreach ($ranges as $range) {
+        if ($range[0] > $next_antiport) {
+            $antiports[] = $next_antiport . ':' . $range [0]-1;
+        }
+        $next_antiport = $range[1]+1;
+    }
+
+    if ($next_antiport-1 < 65535) {    // end of last range
+        $antiports[] = $next_antiport . ':' . 65535;
+    }
+
+    if ($ranges[0][0] <= 0 && $ranges[0][1] >= 65535) {    // matches everything
+        $antiports = array();
+        $antiports[] = '0<>65535';                         // matches nothing
+    }
+
+    return $antiports;
 }

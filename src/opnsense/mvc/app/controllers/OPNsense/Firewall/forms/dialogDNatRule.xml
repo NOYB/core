@@ -115,6 +115,17 @@
         </grid_view>
     </field>
     <field>
+        <id>rule.source.portnot</id>
+        <label>Invert Source Port</label>
+        <type>checkbox</type>
+        <help>Invert the sense of the port match.</help>
+        <input_label>Invert the sense of the source port range match</input_label>
+        <grid_view>
+            <ignore>true</ignore>
+            <column-id>source.portnot</column-id>
+        </grid_view>
+    </field>
+    <field>
         <id>rule.source.port</id>
         <label>Source Port</label>
         <type>text</type>
@@ -155,6 +166,17 @@
             <sequence>70</sequence>
             <min-width>100</min-width>
             <column-id>destination.network</column-id>
+        </grid_view>
+    </field>
+    <field>
+        <id>rule.destination.portnot</id>
+        <label>Invert Destination Port</label>
+        <type>checkbox</type>
+        <help>Invert the sense of the port match.</help>
+        <input_label>Invert the sense of the destination port range match</input_label>
+        <grid_view>
+            <ignore>true</ignore>
+            <column-id>destination.portnot</column-id>
         </grid_view>
     </field>
     <field>

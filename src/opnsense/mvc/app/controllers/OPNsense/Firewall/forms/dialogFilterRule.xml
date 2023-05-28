@@ -212,6 +212,16 @@
         </grid_view>
     </field>
     <field>
+        <id>rule.source_portnot</id>
+        <label>Invert Source Port</label>
+        <type>checkbox</type>
+        <help>Use this option to invert the sense of the match.</help>
+        <input_label>Invert the sense of match</input_label>
+        <grid_view>
+            <ignore>true</ignore>
+        </grid_view>
+    </field>
+    <field>
         <id>rule.source_port</id>
         <label>Source Port</label>
         <type>text</type>
@@ -245,6 +255,16 @@
             <min-width>100</min-width>
         </grid_view>
         <input_label>Invert the sense of match</input_label>
+    </field>
+    <field>
+        <id>rule.destination_portnot</id>
+        <label>Invert Destination Port</label>
+        <type>checkbox</type>
+        <help>Use this option to invert the sense of the match.</help>
+        <input_label>Invert the sense of match</input_label>
+        <grid_view>
+            <ignore>true</ignore>
+        </grid_view>
     </field>
     <field>
         <id>rule.destination_port</id>

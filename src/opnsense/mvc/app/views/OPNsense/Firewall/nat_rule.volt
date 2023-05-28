@@ -297,9 +297,15 @@
                         if (row.isGroup) {
                             return "";
                         }
+
                         const value = row[column.id] || "";
-                        // DNAT uses network, SNAT and ONAT uses net
-                        const isNegated = (row[column.id.replace(/network|net/, 'not')] == 1) ? "! " : "";
+
+                        if (column.id == 'source.port' || column.id == 'destination.port') {
+                            var isNegated = (row[column.id.replace('port', 'portnot')] == 1) ? "! " : "";
+                        } else {
+                            // DNAT uses network, SNAT and ONAT uses net
+                            var isNegated = (row[column.id.replace(/network|net/, 'not')] == 1) ? "! " : "";
+                        }
 
                         if (typeof value !== 'string') {
                             return '';

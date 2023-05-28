@@ -52,6 +52,7 @@
                     <ValidationMessage>Please specify a valid port number, well-known name, alias or range.</ValidationMessage>
                 </port>
                 <not type="BooleanField"/>
+                <portnot type="BooleanField"/>
             </source>
             <destination>
                 <network type=".\NetworkMappedField"/>
@@ -64,6 +65,7 @@
                     <ValidationMessage>Please specify a valid port number, well-known name, alias or range.</ValidationMessage>
                 </port>
                 <not type="BooleanField"/>
+                <portnot type="BooleanField"/>
             </destination>
             <target type="NetworkAliasField"/>
             <local-port type="PortField">
