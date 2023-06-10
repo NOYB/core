@@ -538,6 +538,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig['blockpriv'] = !empty($a_interfaces[$if]['blockpriv']);
     $pconfig['blockbogons'] = !empty($a_interfaces[$if]['blockbogons']);
     $pconfig['blocklin'] = !empty($a_interfaces[$if]['blocklin']);
+    $pconfig['blocknep'] = !empty($a_interfaces[$if]['blocknep']);
     $pconfig['gateway_interface'] = isset($a_interfaces[$if]['gateway_interface']);
     $pconfig['promisc'] = isset($a_interfaces[$if]['promisc']);
     $pconfig['dhcpoverridemtu'] = empty($a_interfaces[$if]['dhcphonourmtu']) ? true : null;
@@ -1069,6 +1070,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $new_config['blockpriv'] = !empty($pconfig['blockpriv']);
             $new_config['blockbogons'] = !empty($pconfig['blockbogons']);
             $new_config['blocklin'] = !empty($pconfig['blocklin']);
+            $new_config['blocknep'] = !empty($pconfig['blocknep']);
             $new_config['gateway_interface'] = !empty($pconfig['gateway_interface']);
             $new_config['promisc'] = !empty($pconfig['promisc']);
             if (!empty($pconfig['mtu'])) {
@@ -1794,6 +1796,23 @@ include("head.inc");
                               <?=gettext("When set, this option blocks traffic from IP addresses that are reserved " .
                                 "for local identification networks per RFC 6890 (0/8).  This option should " .
                                 "generally be turned on, unless this network interface serves DHCP clients.");?>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a id="help_for_blocknep" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Block traffic targeting NOT enabled TCP/UDP ports"); ?></td>
+                          <td>
+                            <label for="blocknep">
+                              <input name="blocknep" type="checkbox" id="blocknep" value="yes" <?=!empty($pconfig['blocknep']) ? "checked=\"checked\"" : ""; ?> />
+                              <?=gettext("Block traffic targeting NOT enabled TCP/UDP ports"); ?>
+                            </label>
+                            <div class="hidden" data-for="help_for_blocknep">
+                              <?=gettext("When set, this option immediately blocks inbound traffic targeting TCP/UDP " .
+                                "ports that are not enabled*.  Immediately blocking this traffic that has no " .
+                                "possibility of matching a firewall rule reduces processing unnecessary further " .
+                                "evaluations and logging.");?><br>
+                              <?=gettext("Enable only on public facing WAN interface.  Unpredictable NAT reflection behavior may occur if enabled on LAN interface.");?><br>
+                              <?=gettext("* Destination ports of enabled inbound firewall rules.");?>
                             </div>
                           </td>
                         </tr>

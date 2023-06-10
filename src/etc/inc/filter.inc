@@ -254,6 +254,11 @@ function filter_configure_sync($verbose = false, $load_aliases = true)
         }
     }
 
+    // bypass NAT for NOT enabled ports
+    foreach (create_automatic_rules_blocknep('nat') as $rule) {
+        $fw->registerForwardRule(300, $rule);
+    }
+
     foreach ((new OPNsense\Firewall\DNat())->rule->sortedBy(['sequence']) as $key => $rule) {
         $fw->registerForwardRule(600, $rule->getNodeContent());
     }

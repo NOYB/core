@@ -108,7 +108,7 @@ abstract class Rule
                     // convert 'any' to upper or lower bound when provided in range. e.g. 80:any --> 80:65535
                     $port = str_replace('any', strpos($port, ':any') !== false ? '65535' : '1', $port);
                 }
-                // invert tcp/udp port match (convert to != unary or ANTIPORTS alias)
+                // invert tcp/udp port match (convert to != unary, ANTIPORTS alias or list)
                 $invert = false;
                 $antiports_alias_ext = '';
 #                if(isset($rule[$tag]['portnot'])) {
@@ -122,6 +122,12 @@ abstract class Rule
                 } elseif (Util::isPort($port)) {
                     if ($invert) {
                         $port = (str_contains($port, ':')) ? str_replace(':', '<>', $port) : '!=' . $port;
+                        if ($port == '!=' && !empty($rule[$tag]['ANTIPORTS'])) {
+                            $port = $rule[$tag]['ANTIPORTS'];
+                        }
+                        if (isset($rule['nordr']) && !empty($rule['destination']['ANTIPORTS'])) {
+                            $port = $rule['destination']['ANTIPORTS'];
+                        }
                     }
                     $rule[$pfield] = $port;
                 } elseif (Util::isAlias($port)) {
@@ -131,6 +137,8 @@ abstract class Rule
                         $rule['disabled'] = true;
                         $this->log("Unable to map port {$port}, empty?");
                     }
+                } elseif ($invert && !empty($rule['destination']['ANTIPORTS'])) {
+                    $rule[$pfield] = $rule['destination']['ANTIPORTS'];
                 } elseif (!empty($port)) {
                     $known = PortField::getWellKnown($rule[$pfield]);
                     if (!empty($known)) {

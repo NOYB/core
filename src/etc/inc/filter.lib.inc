@@ -201,6 +201,189 @@ function filter_core_get_default_nat_outbound_networks()
     return $result;
 }
 
+
+/**
+ * Create automatic rules for blocknep (block not enabled ports)
+ * parameter: $firewall(filter | nat)
+ * return: $automatic_rules blocknep filter | nat rules array
+ */
+function create_automatic_rules_blocknep($firewall) {
+
+    global $config;
+
+    foreach ($config['interfaces'] as $intf => $intfinfo) {
+
+        $ipprotocols = array();
+        if (isset($intfinfo['enable']) && !isset($intfinfo['virtual'])) {
+            if (!empty($intfinfo['ipaddr']) && !empty($intfinfo['ipaddrv6'])) {
+                $ipprotocols[] = 'inet46';
+            }
+            if (!empty($intfinfo['ipaddr'])) {
+                $ipprotocols[] = 'inet';
+            }
+            if (!empty($intfinfo['ipaddrv6'])) {
+                $ipprotocols[] = 'inet6';
+            }
+        }
+
+        foreach ($ipprotocols as $ipprotocol) {
+
+            $ports = get_enabled_ports($intf, $ipprotocol, $firewall);
+
+            /* Get the inet46 ports */
+            if ($ipprotocol == 'inet46') {
+                $ports46 = $ports;
+                continue;
+            }
+
+            /* Include the inet46 ports in inet and inet6 */
+            foreach ($ports46 as $port46) {
+                $ports[] = $port46;
+            }
+
+            $antiports = array_reverse(antiports($ports), true);    // Reverse array so that first element matches most packets (high ports).  Preserve keys for index access.
+
+            if($firewall == 'filter') {
+                $antiports[0] = preg_replace('/^0:/', '1:', $antiports[0]);    // let system port 0 rule cover this
+                $automatic_rules[] = array(
+                    'direction' => 'in', 'interface' => $intf, 'ipprotocol' => $ipprotocol, 'protocol' => 'tcp/udp',
+                    'destination' => array('network' => $intf, 'port' => implode(' ', $ports), 'portnot' => true, 'ANTIPORTS' => implode(' ', $antiports)),
+                    '#ref' => "interfaces.php?if=" . $intf . "#blocknep",
+                    'descr' => 'block targeting NOT enabled ports',
+                    'disabled' => !isset($intfinfo['blocknep']), 'type' => 'block', 'log' => !isset($config['syslog']['nologneports']), 'quick' => true, 'category' => 'The Bad'
+                );
+            }
+
+            if($firewall == 'nat') {
+                $automatic_rules[] = array(
+                    'interface' => $intf, 'ipprotocol' => $ipprotocol, 'protocol' => 'tcp/udp',
+                    'nordr' => true, 'natreflection' => 'disable',
+                    'source' => array('any' => true),
+                    'destination' => array('any' => true, 'port' => implode(' ', $ports), 'portnot' => true, 'ANTIPORTS' => implode(' ', $antiports)),
+                    '#ref' => "interfaces.php?if=" . $intf . "#blocknep",
+                    'descr' => 'Bypass NAT for NOT enabled ports',
+                    'disabled' => !isset($intfinfo['blocknep']), 'type' => 'block', 'log' => !isset($config['syslog']['nologneports']), 'quick' => true, 'category' => 'The Bad'
+                );
+            }
+        }
+    }
+    return $automatic_rules;
+}
+
+/**
+ * Get ports of enabled inbound rules
+ * parameter: $intf interface name
+ * parameter: $ipprotocol ipprotocol (inet | inet6)
+ * parameter: $firewall(filter | nat)
+ * return: $ports ports array
+ */
+function get_enabled_ports($intf, $ipprotocol, $firewall)
+{
+    global $config;
+
+    $ipv6_disabled = !is_ipv6_allowed();
+
+    $ports = array();
+
+    // nat rules enabled ports
+    if ($firewall == 'nat') {
+        foreach ($config['nat']['rule'] as $rule) {
+            if ($rule['interface'] == $intf &&
+                !$rule['nordr'] &&
+                !$rule['disabled'] &&
+                $rule['ipprotocol'] == $ipprotocol &&
+                !$rule['destination']['portnot'] &&
+                !empty($rule['destination']['port'])) {
+                    $ports[] = $rule['destination']['port'];
+            }
+        }
+    }
+
+    // filter rules enabled ports
+    if ($firewall == 'filter') {
+        foreach ($config['filter']['rule'] as $rule) {
+            if ($rule['interface'] == $intf &&
+                ($rule['direction'] == 'in' || empty($rule['direction'])) &&
+                (!isset($rule['disabled']) || !$rule['disabled']) &&
+                $rule['ipprotocol'] == $ipprotocol &&
+                (!empty($rule['destination']['network']) && preg_match('/^' . $intf . '(?:ip)$/', $rule['destination']['network'])) &&
+                (!isset($rule['destination']['not']) || !$rule['destination']['not']) &&
+                (!isset($rule['destination']['portnot']) || !$rule['destination']['portnot']) &&
+                !empty($rule['destination']['port'])) {
+                    $ports[] = $rule['destination']['port'];
+            }
+        }
+
+        // special and services enabled ports
+        // anti-lockout
+        foreach (filter_core_get_antilockout()[$intf] as $port) {
+            $ports[] = $port;
+        }
+
+        // DHCP server
+        if (isset($config['dhcpd'][$intf]['enable'])) {
+            $ports[] = 67;
+            // failover
+            if (!empty($config['dhcpd'][$intf]['failover_peerip'])) {
+                $ports[] = 519;
+                $ports[] = 520;
+            }
+        }
+
+        // DHCP client
+        if (($ipprotocol == 'inet' || $ipprotocol == 'inet6') && strtolower($config['interfaces'][$intf]['ipaddr']) == 'dhcp') {
+            $ports[] = 68;
+        }
+
+        // DHCPv6 server
+        $dhcpdv6_enabled = isset($config['dhcpdv6'][$intf]['enable']);
+        $track6_enabled = isset($intfinfo['track6-interface']);
+        $dhcrelay6_interfaces = array();
+        if (!empty($config['dhcrelay6']['interface']) && isset($config['dhcrelay6']['enable'])) {
+            $dhcrelay6_interfaces = explode(',', $config['dhcrelay6']['interface']);
+        }
+            if ($dhcpdv6_enabled || $track6_enabled || in_array($intf, $dhcrelay6_interfaces)) {
+            $ports[] = 547;
+        }
+
+        // DHCPv6 client
+        if ($ipprotocol == 'inet6' && !$ipv6_disabled && in_array($config['interfaces'][$intf]['ipaddrv6'], array("slaac","dhcp6"))) {
+            $ports[] = 546;
+        }
+
+        // PPTP
+        if (strtolower($config['interfaces'][$intf]['ipaddr']) == 'pptp') {
+            $ports[] = 1723;
+        }
+    }
+
+    // list of registered port aliases
+    $aliasObject = new \OPNsense\Firewall\Alias();
+    $all_aliases = [];
+    foreach ($aliasObject->aliasIterator() as $aliased) {
+        if (strtolower($aliased['type']) == 'port') {
+            $all_aliases[] = $aliased['name'];
+        }
+    }
+
+    $ports_tmp = array();
+    foreach ($ports as $port) {
+        if (is_alias($port)) {
+            $aliasname = $port;
+            $alias_ports = filter_core_get_port_alias($aliasname, array(), null, $all_aliases);
+            foreach ($alias_ports as $alias_port) {
+                $ports_tmp[] = $alias_port;
+            }
+        } else {
+            $ports_tmp[] = $port;
+        }
+    }
+    sort($ports_tmp);
+
+    return array_unique($ports_tmp);
+}
+
+
 /**
  *  core system rules
  */
@@ -212,6 +395,11 @@ function filter_core_rules_system($fw, $defaults)
 
     $dhcrelay6_interfaces = plugins_run('dhcrelay_interfaces', ['inet6']);
     $dhcrelay6_interfaces = !empty($dhcrelay6_interfaces['dhcrelay']) ? $dhcrelay6_interfaces['dhcrelay'] : [];
+
+    // block targeting NOT enabled TCP/UDP ports
+    foreach (create_automatic_rules_blocknep('filter') as $rule) {
+        $fw->registerFilterRule(1, $rule, $defaults['block']);
+    }
 
     $fw->registerFilterRule(
         1,

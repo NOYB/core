@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig['logbogons'] = empty($config['syslog']['nologbogons']);
     $pconfig['logprivatenets'] = empty($config['syslog']['nologprivatenets']);
     $pconfig['loglinets'] = empty($config['syslog']['nologlinets']);
+    $pconfig['logneports'] = empty($config['syslog']['nologneports']);
 
     // Time display format: Use or override log raw time format
     $pconfig['timefmt'] = !empty($config['syslog']['timefmt']) ? $config['syslog']['timefmt'] : 'Log_Raw';
@@ -289,6 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $config['syslog']['nologbogons'] = empty($pconfig['logbogons']);
         $config['syslog']['nologprivatenets'] = empty($pconfig['logprivatenets']);
         $config['syslog']['nologlinets'] = empty($pconfig['loglinets']);
+        $config['syslog']['nologneports'] = empty($pconfig['logneports']);
         $config['syslog']['logoutboundnat'] = !empty($pconfig['logoutboundnat']);
 
         // Time display format: Use or override log raw time format
@@ -586,6 +588,15 @@ include("head.inc");
                   <label for="loglinets">
                     <input name="loglinets" type="checkbox" id="loglinets" value="yes" <?= !empty($pconfig['loglinets']) ? 'checked="checked"' : '' ?> />
                     <?=gettext("Log packets blocked by 'Block Local Identification Networks' rules");?>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td><i class="fa fa-info-circle text-muted"></i> <?=gettext('Not Enabled Ports') ?></td>
+                <td>
+                  <label for="logneports">
+                    <input name="logneports" type="checkbox" id="logneports" value="yes" <?= !empty($pconfig['logneports']) ? 'checked="checked"' : '' ?> />
+                    <?=gettext("Log packets blocked by 'Block traffic targeting NOT enabled TCP/UDP ports' rules");?>
                   </label>
                 </td>
               </tr>
