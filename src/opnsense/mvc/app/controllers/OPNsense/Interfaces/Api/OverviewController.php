@@ -313,6 +313,22 @@ class OverviewController extends ApiControllerBase
         return $result;
     }
 
+    public function releaseInterfaceAction($identifier = null)
+    {
+        $result = ['message' => 'failed'];
+
+        if (!$this->request->isPost()) {
+            return $result;
+        }
+
+        if ($identifier != null) {
+            $backend = new Backend();
+            $result['message'] = $backend->configdpRun('interface release', [$identifier]);
+        }
+
+        return $result;
+    }
+
     public function exportAction()
     {
         $this->response->setRawHeader('Content-Type: application/json');

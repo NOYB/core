@@ -126,6 +126,27 @@
                         classname: 'fa fa-fw fa-refresh',
                         title: "{{ lang._('Reload') }}"
                     },
+                    interface_release: {
+                        filter: (cell) => {
+                            const data = cell.getData();
+                            return 'link_type' in data && ["dhcp", "pppoe", "pptp", "l2tp", "ppp"].includes(data.link_type)
+                                    && ((('addr4' in data && data.addr4 != '') || ('addr6' in data && data.addr6 != '')));
+                        },
+                        method: (event, cell) => {
+                            const data = cell.getData();
+                            const $element = $(cell.getElement()).find('.command-interface_release');
+                            $element.remove('i').html('<i class="fa fa-spinner fa-spin"></i>');
+                            ajaxCall('/api/interfaces/overview/release_interface/' + data.identifier, {}, function (data, status) {
+                                /* delay slightly to allow the interface to come up */
+                                setTimeout(function() {
+                                    $element.remove('i').html('<i class="fa fa-fw fa-hand-stop-o"></i>');
+                                    $("#grid-overview").bootgrid('reload');
+                                }, 1000);
+                            });
+                        },
+                        classname: 'fa fa-fw fa-hand-stop-o',
+                        title: "{{ lang._('Release') }}"
+                    },
                     settings: {
                         filter: (cell) => {
                             const data = cell.getData();
@@ -348,7 +369,7 @@
                 <th data-column-id="ipv6" data-formatter="ipv6" data-type="string">{{ lang._('IPv6') }}</th>
                 <th data-column-id="gateways" data-formatter="gateways" data-type="string">{{ lang._('Gateway') }}</th>
                 <th data-column-id="routes" data-formatter="expand" data-type="string">{{ lang._('Routes') }}</th>
-                <th data-column-id="commands" data-width="125" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
+                <th data-column-id="commands" data-width="150" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
             </tr>
         </thead>
         <tbody>
