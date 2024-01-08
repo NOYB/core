@@ -147,6 +147,27 @@
                         classname: 'fa fa-fw fa-hand-stop-o',
                         title: "{{ lang._('Release') }}"
                     },
+                    interface_renew: {
+                        filter: (cell) => {
+                            const data = cell.getData();
+                            return 'link_type' in data && ["dhcp", "pppoe", "pptp", "l2tp", "ppp"].includes(data.link_type)
+                                    && (!(('addr4' in data && data.addr4 != '') || ('addr6' in data && data.addr6 != '')));
+                        },
+                        method: (event, cell) => {
+                            const data = cell.getData();
+                            const $element = $(cell.getElement()).find('.command-interface_renew');
+                            $element.remove('i').html('<i class="fa fa-spinner fa-spin"></i>');
+                            ajaxCall('/api/interfaces/overview/renew_interface/' + data.identifier, {}, function (data, status) {
+                                /* delay slightly to allow the interface to come up */
+                                setTimeout(function() {
+                                    $element.remove('i').html('<i class="fa fa-fw fa-handshake-o"></i>');
+                                    $("#grid-overview").bootgrid('reload');
+                                }, 1000);
+                            });
+                        },
+                        classname: 'fa fa-fw fa-handshake-o',
+                        title: "{{ lang._('Renew') }}"
+                    },
                     settings: {
                         filter: (cell) => {
                             const data = cell.getData();
