@@ -211,6 +211,8 @@ function create_automatic_rules_blocknep($firewall) {
 
     global $config;
 
+    $ipv6_disabled = !is_ipv6_allowed();
+
     foreach ($config['interfaces'] as $intf => $intfinfo) {
 
         $ipprotocols = array();
@@ -250,7 +252,8 @@ function create_automatic_rules_blocknep($firewall) {
                     'destination' => array('network' => $intf, 'port' => implode(' ', $ports), 'portnot' => true, 'ANTIPORTS' => implode(' ', $antiports)),
                     '#ref' => "interfaces.php?if=" . $intf . "#blocknep",
                     'descr' => 'block targeting NOT enabled ports',
-                    'disabled' => !isset($intfinfo['blocknep']), 'type' => 'block', 'log' => !isset($config['syslog']['nologneports']), 'quick' => true, 'category' => 'The Bad'
+                    'disabled' => ($ipprotocol == 'inet6' && $ipv6_disabled) || !isset($intfinfo['blocknep']) ? true : false,
+                    'type' => 'block', 'log' => !isset($config['syslog']['nologneports']), 'quick' => true, 'category' => 'The Bad'
                 );
             }
 
@@ -262,7 +265,8 @@ function create_automatic_rules_blocknep($firewall) {
                     'destination' => array('any' => true, 'port' => implode(' ', $ports), 'portnot' => true, 'ANTIPORTS' => implode(' ', $antiports)),
                     '#ref' => "interfaces.php?if=" . $intf . "#blocknep",
                     'descr' => 'Bypass NAT for NOT enabled ports',
-                    'disabled' => !isset($intfinfo['blocknep']), 'type' => 'block', 'log' => !isset($config['syslog']['nologneports']), 'quick' => true, 'category' => 'The Bad'
+                    'disabled' => ($ipprotocol == 'inet6' && $ipv6_disabled) || !isset($intfinfo['blocknep']) ? true : false,
+                    'type' => 'block', 'log' => !isset($config['syslog']['nologneports']), 'quick' => true, 'category' => 'The Bad'
                 );
             }
         }
@@ -479,7 +483,8 @@ function filter_core_rules_system($fw, $defaults)
         foreach ($ipv6_disabled ? ['224.0.0.18'] : ['ff02::12', '224.0.0.18'] as $to) {
             $fw->registerFilterRule(
                 1,
-                ['protocol' => 'carp', 'direction' => 'any', 'to' => $to, 'descr' => 'CARP defaults'],
+                ['protocol' => 'carp', 'direction' => 'any', 'to' => $to, 'descr' => 'CARP defaults',
+                'disabled' => ($to == 'ff02::12' && $ipv6_disabled) ? true : false],
                 $defaults['pass']
             );
         }
@@ -726,35 +731,40 @@ function filter_core_rules_system($fw, $defaults)
                         1,
                         ['protocol' => 'udp','ipprotocol' => 'inet6', 'from' => 'fe80::/10', 'to' => 'fe80::/10,ff02::/16',
                             'to_port' => 546, 'interface' => $intf,
-                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr']],
+                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr'],
+                            'disabled' => $ipv6_disabled],
                         $defaults['pass']
                     );
                       $fw->registerFilterRule(
                           1,
                           ['protocol' => 'udp','ipprotocol' => 'inet6', 'from' => 'fe80::/10', 'to' => 'ff02::/16',
                             'to_port' => 547, 'interface' => $intf,
-                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr']],
+                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr'],
+                            'disabled' => $ipv6_disabled],
                           $defaults['pass']
                       );
                       $fw->registerFilterRule(
                           1,
                           ['protocol' => 'udp','ipprotocol' => 'inet6', 'from' => 'ff02::/16', 'to' => 'fe80::/10',
                             'to_port' => 547, 'interface' => $intf,
-                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr']],
+                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr'],
+                            'disabled' => $ipv6_disabled],
                           $defaults['pass']
                       );
                       $fw->registerFilterRule(
                           1,
                           ['protocol' => 'udp','ipprotocol' => 'inet6', 'from' => 'fe80::/10', 'to' => '(self)',
                             'to_port' => 546, 'interface' => $intf, 'direction' => 'in',
-                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr']],
+                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr'],
+                            'disabled' => $ipv6_disabled],
                           $defaults['pass']
                       );
                       $fw->registerFilterRule(
                           1,
                           ['protocol' => 'udp','ipprotocol' => 'inet6', 'from' => '(self)', 'to' => 'fe80::/10',
                             'from_port' => 547, 'interface' => $intf, 'direction' => 'out',
-                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr']],
+                            'descr' => 'allow access to DHCPv6 server on ' . $intfinfo['descr'],
+                            'disabled' => $ipv6_disabled],
                           $defaults['pass']
                       );
                 }
