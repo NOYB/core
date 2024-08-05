@@ -34,6 +34,7 @@ import os
 import subprocess
 import sys
 import ujson
+import time
 
 # type mapping: r => read-only, t => boot-time, w => runtime
 
@@ -48,6 +49,7 @@ if __name__ == '__main__':
     if inputargs.values:
         result = {}
         params = inputargs.values.split(',')
+        time.sleep(0.5) # avoid probe affecting measured temperature values
         sp = subprocess.run(['/sbin/sysctl', '-i'] + params, capture_output=True, text=True)
         for line in sp.stdout.split("\n"):
             # include original oid in output so caller can match back

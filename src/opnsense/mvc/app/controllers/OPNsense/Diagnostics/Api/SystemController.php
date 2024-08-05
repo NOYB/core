@@ -228,14 +228,40 @@ class SystemController extends ApiControllerBase
 
     public function systemTemperatureAction()
     {
-        $backend = new Backend();
-        $result = [];
+        # Save/retrieve file instead of reconstructing sensors from backend every time.
+        $SYSCTLS_FILE = '/tmp/SYSCTLS_Thermal_Sensors_Widget';
+        if (time()-filemtime($SYSCTLS_FILE) > 24 * 3600) {
+            $backend = new Backend();
+
+            /* derive temperature sensors */
+            $sensors = trim($backend->configdRun('system sensors'));
+            $sensors .= "\n" . 'kern.smp.threads_per_core';
+            file_put_contents($SYSCTLS_FILE, $sensors);
+        }
 
         /* read temperatures individually from previously derived sensors */
-        $sensors = explode("\n", $backend->configdRun('system sensors'));
-        $temps = json_decode($backend->configdpRun('system sysctl values', join(',', $sensors)), true);
+        $sensors = str_replace("\n", ' ', file_get_contents($SYSCTLS_FILE));
+        sleep(1); # avoid probe affecting measured temperature values
+        $temps = $this->shellCmd('sysctl -i ' . $sensors);
 
+        /* indexed to associative array */
+        foreach($temps as $tmp) {
+            $tmp = explode(':', $tmp);
+            $temps_tmp[$tmp[0]] = $tmp[1];
+        }
+        $temps = $temps_tmp;
+
+        $result = [];
         foreach ($temps as $name => $value) {
+            /* Return only one "cpu" (thread) temperature per core if hyper-thread enabled. */
+            /* i.e. multiple threads per core. */
+            if ($temps['kern.smp.threads_per_core'] >= 2 && str_contains($name, 'dev')) {
+                preg_match_all("/.*\.([0-9]+)\.temperature.*/", $name, $thread);
+                if ($thread[1][0] % $temps['kern.smp.threads_per_core'] != 0) {
+                    continue;
+                }
+            }
+
             $tempItem = [];
             $tempItem['device'] = $name;
             $tempItem['device_seq'] = (int)filter_var($tempItem['device'], FILTER_SANITIZE_NUMBER_INT);
@@ -258,9 +284,59 @@ class SystemController extends ApiControllerBase
                 $tempItem['type'] = 'cpu';
             }
 
+            if (str_contains($name, 'threads_per_core')) {
+                $tempItem['threads_per_core'] = trim($value);
+                $tempItem['type'] = 'threads_per_core';
+                $tempItem['temperature'] = '';
+                $tempItem['type_translated'] = '';
+            }
+
             $result[] = $tempItem;
         }
+/**
+        # Return only one "cpu" (thread) temperature per core if hyper-thread enabled.  i.e. multiple threads per core.
+        if ($threads_per_core >= 1) {
+            $type = array('core', gettext('Core'));
+            $threads_per = $threads_per_core;
+        } else {
+            $type = array('cpu', gettext('CPU'));
+            $threads_per = 1; // TODO: Set according to the CPU's Hyper-Threading (threads_per_cpu)
+        }
 
+        foreach ($result as $key => $tempItem) {
+            if ($result[$key]['type'] == 'cpu') {
+                if ($result[$key]['device_seq'] % $threads_per == 0) {
+                    $result[$key]['device_seq'] = $result[$key]['device_seq'] / $threads_per;
+                    $result[$key]['type'] = $type[0];
+                    $result[$key]['type_translated'] = $type[1];
+                } else {
+                   unset($result[$key]);
+                }
+            }
+
+            elseif ($result[$key]['type'] == 'zone') {
+                if (($result[$key]['temperature'] < 11) || ($result[$key]['temperature'] == 27.9)) {
+                    unset($result[$key]);
+                }
+            }
+
+            elseif ($result[$key]['type'] == 'threads_per_core') {
+                unset($result[$key]);
+            }
+        }
+
+        return array_values($result);
+/**/
         return $result;
     }
+
+    public function shellCmd(string $cmd)
+    {
+        exec($cmd . '  2>&1', $payload, $returncode);
+        if ($returncode == 0 && !empty($payload[0])) {
+            return $payload;
+        }
+        return [];
+    }
+
 }
