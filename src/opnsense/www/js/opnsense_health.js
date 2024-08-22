@@ -102,6 +102,16 @@ class HealthGraph {
     async _fetchData() {
         const data = await fetch(`/api/diagnostics/systemhealth/get_system_health/${this.currentSystem}/${this.currentDetailLevel}`)
             .then(response => response.json());
+//alert(data['set']['data'][0]['values'][0][1]);
+//alert(Number.isNaN(data['set']['data'][0]['values'][0][1]));
+//       // RRD value strings to numbers; others to NaN
+//        for (let index = 0; index < data["set"]["data"].length; ++index) {
+//            for (let value_index = 0; value_index < data["set"]["data"][index]["values"].length; ++value_index) {
+//                data["set"]["data"][index]["values"][value_index][1] = Number(data["set"]["data"][index]["values"][value_index][1]);
+//            }
+//        }
+//alert(data['set']['data'][0]['values'][0][1]);
+//alert(Number.isNaN(data['set']['data'][0]['values'][0][1]));
         return data;
     }
 
