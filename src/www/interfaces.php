@@ -538,6 +538,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig['blockpriv'] = !empty($a_interfaces[$if]['blockpriv']);
     $pconfig['blockbogons'] = !empty($a_interfaces[$if]['blockbogons']);
     $pconfig['blocklin'] = !empty($a_interfaces[$if]['blocklin']);
+    $pconfig['blockloopbk'] = !empty($a_interfaces[$if]['blockloopbk']);
     $pconfig['blocknep'] = !empty($a_interfaces[$if]['blocknep']);
     $pconfig['gateway_interface'] = isset($a_interfaces[$if]['gateway_interface']);
     $pconfig['promisc'] = isset($a_interfaces[$if]['promisc']);
@@ -1069,6 +1070,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             $new_config['blockpriv'] = !empty($pconfig['blockpriv']);
             $new_config['blockbogons'] = !empty($pconfig['blockbogons']);
+            $new_config['blockloopbk'] = !empty($pconfig['blockloopbk']);
             $new_config['blocklin'] = !empty($pconfig['blocklin']);
             $new_config['blocknep'] = !empty($pconfig['blocknep']);
             $new_config['gateway_interface'] = !empty($pconfig['gateway_interface']);
@@ -1765,7 +1767,7 @@ include("head.inc");
                             </label>
                             <div class="hidden" data-for="help_for_blockpriv">
                               <?=gettext("When set, this option blocks traffic from IP addresses that are reserved for private networks " .
-                                "as per RFC 1918 as well as loopback, link-local and Carrier-grade NAT addresses. This option should only " .
+                                "as per RFC 1918 as well as link-local and Carrier-grade NAT addresses. This option should only " .
                                 "be set for WAN interfaces that use the public IP address space.") ?>
                             </div>
                           </td>
@@ -1782,6 +1784,20 @@ include("head.inc");
                               "(but not RFC 1918) or not yet assigned by IANA."); ?>
                               <?=gettext("Bogons are prefixes that should never appear in the Internet routing table, " .
                               "and obviously should not appear as the source address in any packets you receive."); ?>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a id="help_for_blockloopbk" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Block loopback networks"); ?></td>
+                          <td>
+                            <label for="blockloopbk">
+                              <input name="blockloopbk" type="checkbox" id="blockloopbk" value="yes" <?=!empty($pconfig['blockloopbk']) ? "checked=\"checked\"" : ""; ?> />
+                              <?=gettext("Block loopback networks"); ?>
+                            </label>
+                            <div class="hidden" data-for="help_for_blockloopbk">
+                              <?=gettext("When set, this option blocks traffic from IP addresses that are reserved " .
+                                "for loopback networks per RFC ???? (127.0.0.0/8).  This option should " .
+                                "generally be turned on.");?>
                             </div>
                           </td>
                         </tr>

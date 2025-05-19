@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig['logoutboundnat'] = !empty($config['syslog']['logoutboundnat']);
     $pconfig['logbogons'] = empty($config['syslog']['nologbogons']);
     $pconfig['logprivatenets'] = empty($config['syslog']['nologprivatenets']);
+    $pconfig['logloopbknets'] = empty($config['syslog']['nologloopbknets']);
     $pconfig['loglinets'] = empty($config['syslog']['nologlinets']);
     $pconfig['logneports'] = empty($config['syslog']['nologneports']);
 
@@ -289,6 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $config['syslog']['nologdefaultpass'] = empty($pconfig['logdefaultpass']);
         $config['syslog']['nologbogons'] = empty($pconfig['logbogons']);
         $config['syslog']['nologprivatenets'] = empty($pconfig['logprivatenets']);
+        $config['syslog']['nologloopbknets'] = empty($pconfig['logloopbknets']);
         $config['syslog']['nologlinets'] = empty($pconfig['loglinets']);
         $config['syslog']['nologneports'] = empty($pconfig['logneports']);
         $config['syslog']['logoutboundnat'] = !empty($pconfig['logoutboundnat']);
@@ -579,6 +581,15 @@ include("head.inc");
                   <label for="logprivatenets">
                     <input name="logprivatenets" type="checkbox" id="logprivatenets" value="yes" <?= !empty($pconfig['logprivatenets']) ? 'checked="checked"' : '' ?> />
                     <?=gettext("Log packets blocked by 'Block Private Networks' rules");?>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td><i class="fa fa-info-circle text-muted"></i> <?=gettext('Loopback Networks') ?></td>
+                <td>
+                  <label for="logloopbknets">
+                    <input name="logloopbknets" type="checkbox" id="logloopbknets" value="yes" <?= !empty($pconfig['logloopbknets']) ? 'checked="checked"' : '' ?> />
+                    <?=gettext("Log packets blocked by 'Block Loopback Networks' rules");?>
                   </label>
                 </td>
               </tr>
