@@ -539,6 +539,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig['blockbogons'] = !empty($a_interfaces[$if]['blockbogons']);
     $pconfig['blocklin'] = !empty($a_interfaces[$if]['blocklin']);
     $pconfig['blockloopbk'] = !empty($a_interfaces[$if]['blockloopbk']);
+    $pconfig['blockll'] = !empty($a_interfaces[$if]['blockll']);
     $pconfig['blocknep'] = !empty($a_interfaces[$if]['blocknep']);
     $pconfig['gateway_interface'] = isset($a_interfaces[$if]['gateway_interface']);
     $pconfig['promisc'] = isset($a_interfaces[$if]['promisc']);
@@ -1071,6 +1072,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $new_config['blockpriv'] = !empty($pconfig['blockpriv']);
             $new_config['blockbogons'] = !empty($pconfig['blockbogons']);
             $new_config['blockloopbk'] = !empty($pconfig['blockloopbk']);
+            $new_config['blockll'] = !empty($pconfig['blockll']);
             $new_config['blocklin'] = !empty($pconfig['blocklin']);
             $new_config['blocknep'] = !empty($pconfig['blocknep']);
             $new_config['gateway_interface'] = !empty($pconfig['gateway_interface']);
@@ -1767,7 +1769,7 @@ include("head.inc");
                             </label>
                             <div class="hidden" data-for="help_for_blockpriv">
                               <?=gettext("When set, this option blocks traffic from IP addresses that are reserved for private networks " .
-                                "as per RFC 1918 as well as link-local and Carrier-grade NAT addresses. This option should only " .
+                                "as per RFC 1918 as well as Carrier-grade NAT addresses. This option should only " .
                                 "be set for WAN interfaces that use the public IP address space.") ?>
                             </div>
                           </td>
@@ -1797,6 +1799,20 @@ include("head.inc");
                             <div class="hidden" data-for="help_for_blockloopbk">
                               <?=gettext("When set, this option blocks traffic from IP addresses that are reserved " .
                                 "for loopback networks per RFC ???? (127.0.0.0/8).  This option should " .
+                                "generally be turned on.");?>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a id="help_for_blockll" href="#" class="showhelp"><i class="fa fa-info-circle"></i></a> <?=gettext("Block link-local networks"); ?></td>
+                          <td>
+                            <label for="blockll">
+                              <input name="blockll" type="checkbox" id="blockll" value="yes" <?=!empty($pconfig['blockll']) ? "checked=\"checked\"" : ""; ?> />
+                              <?=gettext("Block link-local networks"); ?>
+                            </label>
+                            <div class="hidden" data-for="help_for_blockll">
+                              <?=gettext("When set, this option blocks traffic from IP addresses that are reserved " .
+                                "for link-local networks per RFC ???? (169.254.0.0/16).  This option should " .
                                 "generally be turned on.");?>
                             </div>
                           </td>

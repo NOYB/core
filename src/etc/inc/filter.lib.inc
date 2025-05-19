@@ -524,11 +524,12 @@ function filter_core_rules_system($fw, $defaults)
         );
     }
 
-    // block bogons, private nets, local identification nets and loopback nets
+    // block bogons, private nets, loopback nets, link local nets and local identification nets
     $bogontmpl = ['type' => 'block', 'log' => !isset($config['syslog']['nologbogons']), 'disablereplyto' => 1];
     $privtmpl = ['type' => 'block', 'log' => !isset($config['syslog']['nologprivatenets']), 'disablereplyto' => 1];
     $lintmpl = ['type' => 'block', 'log' => !isset($config['syslog']['nologlinets']), 'disablereplyto' => 1];
     $loopbktmpl = ['type' => 'block', 'log' => !isset($config['syslog']['nologloopbknets']), 'disablereplyto' => 1];
+    $lltmpl = ['type' => 'block', 'log' => !isset($config['syslog']['nologllnets']), 'disablereplyto' => 1];
     foreach ($fw->getInterfaceMapping() as $intf => $intfinfo) {
         // only render disabled rules for actual interfaces that can have a bogon option set
         if (!empty($intfinfo['virtual'])) {
@@ -576,6 +577,15 @@ function filter_core_rules_system($fw, $defaults)
             'from' => '127.0.0.0/8',
             'disabled' => !isset($intfinfo['blockloopbk'])],
           $loopbktmpl
+        );
+        $fw->registerFilterRule(
+            5,
+            ['direction' => 'in', 'interface' => $intf, 'ipprotocol' => 'inet',
+            '#ref' => "interfaces.php?if=" . $intf . "#blockll",
+            'descr' => "Block link local networks from ".$intfinfo['descr'],
+            'from' => '169.254.0.0/16',
+            'disabled' => !isset($intfinfo['blockll'])],
+          $lltmpl
         );
         $fw->registerFilterRule(
             5,

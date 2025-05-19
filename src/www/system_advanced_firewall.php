@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pconfig['logbogons'] = empty($config['syslog']['nologbogons']);
     $pconfig['logprivatenets'] = empty($config['syslog']['nologprivatenets']);
     $pconfig['logloopbknets'] = empty($config['syslog']['nologloopbknets']);
+    $pconfig['logllnets'] = empty($config['syslog']['nologllnets']);
     $pconfig['loglinets'] = empty($config['syslog']['nologlinets']);
     $pconfig['logneports'] = empty($config['syslog']['nologneports']);
 
@@ -291,6 +292,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $config['syslog']['nologbogons'] = empty($pconfig['logbogons']);
         $config['syslog']['nologprivatenets'] = empty($pconfig['logprivatenets']);
         $config['syslog']['nologloopbknets'] = empty($pconfig['logloopbknets']);
+        $config['syslog']['nologllnets'] = empty($pconfig['logllnets']);
         $config['syslog']['nologlinets'] = empty($pconfig['loglinets']);
         $config['syslog']['nologneports'] = empty($pconfig['logneports']);
         $config['syslog']['logoutboundnat'] = !empty($pconfig['logoutboundnat']);
@@ -590,6 +592,15 @@ include("head.inc");
                   <label for="logloopbknets">
                     <input name="logloopbknets" type="checkbox" id="logloopbknets" value="yes" <?= !empty($pconfig['logloopbknets']) ? 'checked="checked"' : '' ?> />
                     <?=gettext("Log packets blocked by 'Block Loopback Networks' rules");?>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td><i class="fa fa-info-circle text-muted"></i> <?=gettext('Link-Local Networks') ?></td>
+                <td>
+                  <label for="logllnets">
+                    <input name="logllnets" type="checkbox" id="logllnets" value="yes" <?= !empty($pconfig['logllnets']) ? 'checked="checked"' : '' ?> />
+                    <?=gettext("Log packets blocked by 'Block Link-Local Networks' rules");?>
                   </label>
                 </td>
               </tr>
