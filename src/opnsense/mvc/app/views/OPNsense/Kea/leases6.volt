@@ -69,6 +69,24 @@
                         }
                         $("#interface-selection").selectpicker('refresh');
                     }
+/**
+                    response['rows'].forEach(function(row) {
+                        row['hostname'] = row['hostname'].replace(/\.$/, '');
+                    });
+/**/
+                    hostnames = ['NG-Switch', 'LS-AP-AC', 'AHS-NUC1', 'Streamer', 'AHS-NB1-WiFi', 'AHS-DJ1', 'HDHR4-2US'];
+                    lowerCaseHostnames = hostnames.map(function(value) {
+                        return value.toLowerCase();
+                    });
+
+                    response['rows'].forEach(function(row) {
+                        row['hostname'] = row['hostname'].replace(/\.$/, '');
+                        index = lowerCaseHostnames.indexOf(row['hostname'].toLowerCase());
+                        if (index >= 0) {
+                            row['hostname'] = hostnames[index];
+                        }
+                    });
+/**/
                     return response;
                 },
                 formatters: {
